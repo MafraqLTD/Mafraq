@@ -3,7 +3,10 @@ package com.mafraq
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,11 +28,13 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun App() {
     MafraqTheme {
-        Surface(
+        Column(
             modifier = Modifier.fillMaxSize(),
-            color = colors.background
         ) {
-            Text(text = "Hello!",)
+            Text(text = "Hello!")
+            ElevatedButton(onClick = { /*TODO*/ }) {
+                Text(text = "Click Me!")
+            }
         }
     }
 }
