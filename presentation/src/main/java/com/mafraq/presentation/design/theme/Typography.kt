@@ -1,10 +1,14 @@
 package com.mafraq.presentation.design.theme
 
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 
+@Immutable
 data class Typography(
     val headlineSmall: TextStyle = TextStyle(
         fontSize = 16.sp,
@@ -41,4 +45,17 @@ data class Typography(
         fontWeight = FontWeight.W400,
         fontSize = 12.sp,
     ),
-)
+) {
+
+    @Composable
+    fun toM3Typography() = MaterialTheme.typography.copy(
+        headlineLarge = headlineLarge,
+        headlineMedium = headlineMedium,
+        headlineSmall = headlineSmall,
+        titleLarge = titleLarge,
+        titleMedium = titleMedium,
+        titleSmall = titleSmall,
+        bodyMedium = body,
+        labelMedium = label,
+    )
+}

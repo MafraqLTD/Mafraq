@@ -2,17 +2,20 @@ package com.mafraq.presentation.design.theme
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 
+@Stable
 object MafraqTheme {
 
     val colors: Colors
@@ -65,11 +68,17 @@ object MafraqTheme {
             LocalTypography provides Typography(),
             LocalSizes provides Sizes(),
             LocalShapes provides Shapes(),
-        ) { content(this) }
+        ) {
+            MaterialTheme(
+                shapes = shapes.toM3Shapes(),
+                colorScheme = colors.toColorScheme(),
+                typography = typography.toM3Typography()
+            ) { content(this) }
+        }
     }
 
-    private val LocalSizes = compositionLocalOf<Sizes> { error("Not Provided") }
-    private val LocalShapes = compositionLocalOf<Shapes> { error("Not Provided") }
-    private val LocalTypography = compositionLocalOf<Typography> { error("Not Provided") }
-    private val LocalColors = compositionLocalOf<Colors> { error("Not Provided") }
+    private val LocalSizes = compositionLocalOf { Sizes() }
+    private val LocalShapes = compositionLocalOf { Shapes() }
+    private val LocalTypography = compositionLocalOf { Typography() }
+    private val LocalColors = compositionLocalOf { Colors.LightColors }
 }

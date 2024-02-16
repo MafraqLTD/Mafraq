@@ -1,6 +1,9 @@
 package com.mafraq.presentation.design.theme
 
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.unit.Dp
@@ -8,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import kotlin.math.ln
 
 
+@Immutable
 data class Colors(
     val primary: Color,
     val secondary: Color,
@@ -19,13 +23,13 @@ data class Colors(
     val onPrimary: Color,
     val background: Color,
     val disable: Color,
-    val divider:Color,
+    val divider: Color,
     val success: Color,
     val successContainer: Color,
     val warning: Color,
     val warningContainer: Color,
     val surfaceTint: Color,
-){
+) {
 
     /**
      * Returns the new background [Color] to use, representing the original background [color] with an
@@ -55,7 +59,7 @@ data class Colors(
         return surfaceTint.copy(alpha = alpha).compositeOver(surface)
     }
 
-    companion object{
+    companion object {
         val LightColors = Colors(
             primary = Color(0xFF0B6464),
             secondary = Color(0xFFFFF3F2),
@@ -94,4 +98,30 @@ data class Colors(
             surfaceTint = Color(0x081F0000),
         )
     }
+
+    @Composable
+    fun toColorScheme() = MaterialTheme.colorScheme.copy(
+        primary = primary,
+        onPrimary = onPrimary,
+        onPrimaryContainer = contentPrimary,
+        secondary = secondary,
+        onSecondaryContainer = contentSecondary,
+        onTertiaryContainer = contentTertiary,
+        background = background,
+        surface = surface,
+        surfaceTint = surfaceTint,
+        primaryContainer = Color(0xFF6FF7F6),
+        onSecondary = Color(0xFFFFFFFF),
+        secondaryContainer = Color(0xFFFFDAD8),
+        tertiary = Color(0xFF1560A5),
+        onTertiary = Color(0xFFFFFFFF),
+        tertiaryContainer = Color(0xFF001C38),
+        onBackground = Color(0xFF191C1C),
+        onSurface = Color(0xFF191C1C),
+        surfaceVariant = Color(0xFFDAE5E4),
+        onSurfaceVariant = Color(0xFF3F4948),
+        outline = Color(0xFF6F7979),
+        outlineVariant = divider,
+        surfaceContainer = Color(0xFF6F7979),
+    )
 }

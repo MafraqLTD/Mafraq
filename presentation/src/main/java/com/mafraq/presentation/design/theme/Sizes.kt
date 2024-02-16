@@ -1,5 +1,6 @@
 package com.mafraq.presentation.design.theme
 
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -12,6 +13,7 @@ import androidx.compose.ui.unit.dp
  * @property large The value is 32.dp.
  * @property extraLarge The value is 64.dp.
  */
+@Immutable
 data class Sizes(
     val default: Dp = 0.dp,
     val extraSmall: Dp = 4.dp,
