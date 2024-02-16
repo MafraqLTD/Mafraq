@@ -1,5 +1,5 @@
 import org.jetbrains.compose.ExperimentalComposeLibrary
-import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -8,16 +8,16 @@ plugins {
 }
 
 kotlin {
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        moduleName = "composeApp"
-        browser {
-            commonWebpackConfig {
-                outputFileName = "composeApp.js"
-            }
-        }
-        binaries.executable()
-    }
+//    @OptIn(ExperimentalWasmDsl::class)
+//    wasmJs {
+//        moduleName = "composeApp"
+//        browser {
+//            commonWebpackConfig {
+//                outputFileName = "composeApp.js"
+//            }
+//        }
+//        binaries.executable()
+//    }
     
     androidTarget {
         compilations.all {
@@ -108,6 +108,6 @@ android {
 //    }
 //}
 
-compose.experimental {
-    web.application {}
-}
+//compose.experimental {
+//    web.application {}
+//}

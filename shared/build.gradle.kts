@@ -6,10 +6,10 @@ plugins {
 }
 
 kotlin {
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-       browser()
-    }
+//    @OptIn(ExperimentalWasmDsl::class)
+//    wasmJs {
+//       browser()
+//    }
     
     androidTarget {
         compilations.all {
