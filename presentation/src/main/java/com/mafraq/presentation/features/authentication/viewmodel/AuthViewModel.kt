@@ -1,0 +1,88 @@
+package com.mafraq.presentation.features.authentication.viewmodel
+
+import com.mafraq.data.repository.UserRepository
+import com.mafraq.presentation.features.authentication.event.AuthEvent
+import com.mafraq.presentation.features.authentication.event.LoginEvent
+import com.mafraq.presentation.features.authentication.event.RegisterEvent
+import com.mafraq.presentation.features.authentication.listener.AuthInteractionListener
+import com.mafraq.presentation.features.authentication.state.AuthUiState
+import com.mafraq.presentation.features.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+
+
+@HiltViewModel
+class AuthViewModel @Inject constructor(
+    private val userRepository: UserRepository,
+) : BaseViewModel<AuthUiState, AuthEvent>(AuthUiState()), AuthInteractionListener {
+
+    // SHARED INTERACTIONS
+    override fun setUsername(value: String) = updateState { copy(username = value, error = null) }
+
+    override fun setPassword(value: String) = updateState { copy(password = value, error = null) }
+
+    // REGISTER INTERACTIONS
+    override fun onRegister() {
+        updateState { copy(isLoading = true, error = null) }
+
+        tryToExecute(block = { userRepository.register(body = state.value.toRegisterBody()) },
+            checkSuccess = { it.isSuccess },
+            onSuccess = {
+                updateState(notifyEvent = RegisterEvent.OnRegister) {
+                    copy(
+                        error = null,
+                        isLoading = false
+                    )
+                }
+            },
+            onError = { updateState { copy(error = it, isLoading = false) } })
+    }
+
+    override fun onNavigateToLogin() {
+        updateState(notifyEvent = RegisterEvent.OnNavigateToLogin) { copy(error = null) }
+    }
+
+    override fun setConfirmPassword(value: String) =
+        updateState { copy(confirmPassword = value, error = null) }
+
+    override fun validateRegisterFields(): Boolean = state.value.run {
+        listOf(
+            address,
+            phoneNumber,
+            username,
+            password
+        ).all(String::isNotEmpty)
+                && password == confirmPassword
+    }
+
+    override fun setPhoneNumber(value: String) {
+        updateState { copy(phoneNumber = value) }
+    }
+
+    override fun setAddress(value: String) {
+        updateState { copy(address = value) }
+    }
+
+    // LOGIN INTERACTIONS
+    override fun onLogin() {
+        updateState { copy(isLoading = true, error = null) }
+
+        tryToExecute(
+            block = { userRepository.login(body = state.value.toLoginBody()) },
+            onSuccess = {
+                emitNewEvent(LoginEvent.OnLogin)
+            },
+            onError = { updateState { copy(error = it, isLoading = false) } }
+        )
+    }
+
+    override fun onNavigateToRegister() {
+        updateState(notifyEvent = LoginEvent.OnNavigateToRegister) { copy(error = null) }
+    }
+
+    override fun setRememberMe(value: Boolean) = updateState { copy(rememberMe = value) }
+
+    override fun validateLoginFields(): Boolean = state.value.run {
+        username.isNotEmpty() && password.isNotEmpty()
+    }
+}

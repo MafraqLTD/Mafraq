@@ -4,6 +4,7 @@ import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.relocation.bringIntoViewRequester
@@ -58,7 +59,7 @@ fun AppOutlinedTextField(
     trailingIcon: Painter? = null,
     prefix: @Composable (() -> Unit)? = null,
     suffix: @Composable (() -> Unit)? = null,
-    supportingText: @Composable (() -> Unit)? = null,
+    errorMessage: String? = null,
     isError: Boolean = false,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     imeAction: ImeAction = ImeAction.Next,
@@ -134,7 +135,16 @@ fun AppOutlinedTextField(
                 },
             prefix = prefix,
             suffix = suffix,
-            supportingText = supportingText,
+            supportingText = errorMessage?.optionalComposable {
+                if (isError)
+                    Text(
+                        text = it,
+                        modifier = Modifier
+                            .offset(x = -MafraqTheme.sizes.medium),
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.labelMedium
+                    )
+            },
             isError = isError,
             keyboardOptions = KeyboardOptions(
                 imeAction = imeAction,

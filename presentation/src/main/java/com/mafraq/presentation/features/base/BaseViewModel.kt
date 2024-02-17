@@ -33,7 +33,7 @@ import java.net.UnknownHostException
 
 abstract class BaseViewModel<S, E>(initState: S) : ViewModel() {
 
-    protected val _state = MutableStateFlow(initState)
+    private val _state = MutableStateFlow(initState)
     val state = _state.asStateFlow()
 
     private val _event = MutableSharedFlow<E?>()
@@ -91,10 +91,9 @@ abstract class BaseViewModel<S, E>(initState: S) : ViewModel() {
     }
 
 
-    protected fun emitNewState(newState: S) {
-        viewModelScope.launch(Dispatchers.IO) {
-            _state.emit(newState)
-        }
+    protected fun updateState(notifyEvent: E? = null, updater: S.() -> S) {
+        _state.update(updater)
+        emitNewEvent(notifyEvent ?: return)
     }
 
     protected fun emitNewEvent(newEvent: E) {
@@ -103,7 +102,7 @@ abstract class BaseViewModel<S, E>(initState: S) : ViewModel() {
         }
     }
 
-    inline fun <T> MutableStateFlow<T>.update(block: T.() -> T) {
+    private inline fun <T> MutableStateFlow<T>.update(block: T.() -> T) {
         while (true) {
             val prevValue = value
             val nextValue = block(prevValue)

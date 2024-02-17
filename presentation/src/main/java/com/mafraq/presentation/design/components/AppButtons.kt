@@ -22,6 +22,7 @@ fun AppButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    loading: Boolean = false,
     shape: Shape = MafraqTheme.shapes.medium,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
@@ -31,7 +32,7 @@ fun AppButton(
 ) = Button(
     onClick = onClick,
     modifier = modifier,
-    enabled = enabled,
+    enabled = enabled && !loading,
     shape = shape,
     colors = colors,
     elevation = elevation,
