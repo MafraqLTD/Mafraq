@@ -6,13 +6,13 @@ import com.gateway.buildscr.getLocalProperty
 //import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
 
 private object LocalConfig {
-    const val CODE = 42
-    const val NAME = "2.0.${CODE - 11}"
+    const val CODE = 1
+    const val NAME = "1.0.${CODE - 1}"
 }
 
 private object ProductionConfig {
-    const val CODE = 12
-    const val NAME = "2.0.${CODE - 7}"
+    const val CODE = 1
+    const val NAME = "1.0.${CODE - 1}"
 }
 
 plugins {
