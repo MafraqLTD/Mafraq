@@ -10,11 +10,8 @@ import javax.annotation.concurrent.Immutable
 @Immutable
 data class AuthUiState(
     val email: String = emptyString(),
-    val address: String = emptyString(),
-    val username: String = emptyString(),
     val password: String = emptyString(),
     val confirmPassword: String = emptyString(),
-    val phoneNumber: String = emptyString(),
     val rememberMe: Boolean = false,
     val isLoading: Boolean = false,
     val error: ErrorState? = null,
@@ -22,16 +19,14 @@ data class AuthUiState(
     val isError: Boolean get() = error != null
 
     fun toLoginBody() = LoginBody(
-        username = username,
+        email = email,
         password = password,
         rememberMe = rememberMe
     )
 
     fun toRegisterBody() = RegisterBody(
-        username = username,
+        email = email,
         password = password,
         confirmPassword = confirmPassword,
-        address = address,
-        phoneNumber = phoneNumber
     )
 }

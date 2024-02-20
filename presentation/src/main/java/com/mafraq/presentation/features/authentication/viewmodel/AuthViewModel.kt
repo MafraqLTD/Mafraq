@@ -17,7 +17,7 @@ class AuthViewModel @Inject constructor(
 ) : BaseViewModel<AuthUiState, AuthEvent>(AuthUiState()), AuthInteractionListener {
 
     // SHARED INTERACTIONS
-    override fun setUsername(value: String) = updateState { copy(username = value, error = null) }
+    override fun setEmail(value: String) = updateState { copy(email = value, error = null) }
 
     override fun setPassword(value: String) = updateState { copy(password = value, error = null) }
 
@@ -47,20 +47,10 @@ class AuthViewModel @Inject constructor(
 
     override fun validateRegisterFields(): Boolean = state.value.run {
         listOf(
-            address,
-            phoneNumber,
-            username,
+            email,
             password
         ).all(String::isNotEmpty)
                 && password == confirmPassword
-    }
-
-    override fun setPhoneNumber(value: String) {
-        updateState { copy(phoneNumber = value) }
-    }
-
-    override fun setAddress(value: String) {
-        updateState { copy(address = value) }
     }
 
     // LOGIN INTERACTIONS
@@ -83,6 +73,6 @@ class AuthViewModel @Inject constructor(
     override fun setRememberMe(value: Boolean) = updateState { copy(rememberMe = value) }
 
     override fun validateLoginFields(): Boolean = state.value.run {
-        username.isNotEmpty() && password.isNotEmpty()
+        email.isNotEmpty() && password.isNotEmpty()
     }
 }

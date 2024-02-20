@@ -3,6 +3,7 @@ package com.mafraq.presentation.features.authentication.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -31,7 +32,7 @@ import com.mafraq.presentation.utils.extensions.string
 fun AuthContainer(
     title: String,
     description: String,
-    content: @Composable (FocusManager) -> Unit
+    content: @Composable ColumnScope.(FocusManager) -> Unit
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -60,7 +61,7 @@ private fun ContainerCard(
     textSubHeader: String,
     logo: Painter,
     modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
+    content: @Composable ColumnScope.() -> Unit
 ) {
     Column(
         modifier = modifier
