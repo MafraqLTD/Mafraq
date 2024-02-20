@@ -20,6 +20,7 @@ import com.mafraq.presentation.features.authentication.event.RegisterEvent
 import com.mafraq.presentation.features.authentication.listener.RegisterInteractionListener
 import com.mafraq.presentation.features.authentication.state.AuthUiState
 import com.mafraq.presentation.features.authentication.ui.components.AuthContainer
+import com.mafraq.presentation.features.authentication.ui.components.HaveAnAccount
 import com.mafraq.presentation.features.authentication.viewmodel.AuthViewModel
 import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.string
@@ -40,6 +41,7 @@ fun RegisterScreen(viewModel: AuthViewModel, navController: NavController) {
         }
     }
 }
+
 
 @Composable
 private fun Content(
@@ -94,6 +96,15 @@ private fun Content(
             loading = state.isLoading,
             enabled = listener.validateRegisterFields(),
             modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer.Medium()
+
+        HaveAnAccount(
+            text = R.string.have_an_account.string,
+            clickableText = R.string.login.string,
+            isLoading = state.isLoading,
+            onClick = listener::onNavigateToLogin,
         )
     }
 

@@ -1,14 +1,10 @@
 package com.mafraq.presentation.features.authentication.ui
 
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,15 +16,14 @@ import com.mafraq.presentation.design.components.AppCheckbox
 import com.mafraq.presentation.design.components.AppOutlinedTextField
 import com.mafraq.presentation.design.components.ColumnPreview
 import com.mafraq.presentation.design.components.Spacer
-import com.mafraq.presentation.design.theme.MafraqTheme
 import com.mafraq.presentation.features.authentication.event.AuthEvent
 import com.mafraq.presentation.features.authentication.event.LoginEvent
 import com.mafraq.presentation.features.authentication.listener.LoginInteractionListener
 import com.mafraq.presentation.features.authentication.state.AuthUiState
 import com.mafraq.presentation.features.authentication.ui.components.AuthContainer
+import com.mafraq.presentation.features.authentication.ui.components.HaveAnAccount
 import com.mafraq.presentation.features.authentication.viewmodel.AuthViewModel
 import com.mafraq.presentation.utils.extensions.Listen
-import com.mafraq.presentation.utils.extensions.clickableNoRipple
 import com.mafraq.presentation.utils.extensions.string
 
 
@@ -47,6 +42,7 @@ fun LoginScreen(viewModel: AuthViewModel, navController: NavController) {
         }
     }
 }
+
 
 @Composable
 private fun Content(
@@ -102,39 +98,14 @@ private fun Content(
 
         Spacer.Medium()
 
-        DoNotHaveAnAccount(state.isLoading, listener::onNavigateToRegister)
-    }
-
-}
-
-@Composable
-private fun DoNotHaveAnAccount(
-    isLoading: Boolean,
-    onClick: () -> Unit
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
-    ) {
-        Text(
+        HaveAnAccount(
             text = R.string.dont_have_an_account.string,
-            style = MafraqTheme.typography.label,
-            color = MafraqTheme.colors.contentTertiary
-        )
-
-        Spacer.Small(vertical = false)
-
-        Text(
-            text = R.string.register.string,
-            style = MafraqTheme.typography.titleSmall,
-            color = MafraqTheme.colors.primary,
-            modifier = Modifier.clickableNoRipple(
-                enabled = !isLoading,
-                onClick = onClick
-            )
+            clickableText = R.string.register.string,
+            isLoading = state.isLoading,
+            onClick = listener::onNavigateToRegister,
         )
     }
+
 }
 
 
