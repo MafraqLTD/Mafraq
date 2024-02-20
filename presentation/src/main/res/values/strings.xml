@@ -3,7 +3,6 @@
 
     <!--  LOGIN SCREEN  -->
     <string name="login">Login</string>
-    <string name="logout">Logout</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
     <string name="remember_me">Remember Me</string>
@@ -16,5 +15,13 @@
     <string name="register_title">Just one more step!</string>
     <string name="register_description">Complete your registration</string>
 
+    <!--  PROFILE SCREEN  -->
+    <string name="username">Username</string>
+    <string name="address">Address</string>
+    <string name="phone">Phone</string>
+    <string name="fullname">Full name</string>
+    <string name="save">Save</string>
+    <string name="logout">Logout</string>
+    <string name="profile">Profile</string>
 
 </resources>
