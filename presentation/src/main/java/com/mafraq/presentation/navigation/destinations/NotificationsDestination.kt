@@ -13,7 +13,7 @@ import com.mafraq.presentation.utils.extensions.navigate
 
 
 internal fun NavController.navigateToNotifications() {
-    navigate(screen = Screen.Home, popBackstack = true)
+    navigate(screen = Screen.Notifications, popBackstack = true)
 }
 
 internal fun NavGraphBuilder.notificationsDestination(navController: NavController) {

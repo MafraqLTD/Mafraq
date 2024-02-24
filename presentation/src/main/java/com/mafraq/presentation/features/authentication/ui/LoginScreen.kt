@@ -23,6 +23,8 @@ import com.mafraq.presentation.features.authentication.state.AuthUiState
 import com.mafraq.presentation.features.authentication.ui.components.AuthContainer
 import com.mafraq.presentation.features.authentication.ui.components.HaveAnAccount
 import com.mafraq.presentation.features.authentication.viewmodel.AuthViewModel
+import com.mafraq.presentation.navigation.destinations.navigateToHome
+import com.mafraq.presentation.navigation.destinations.navigateToRegister
 import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.string
 
@@ -37,8 +39,8 @@ fun LoginScreen(viewModel: AuthViewModel, navController: NavController) {
 
     (event as? LoginEvent)?.Listen { currentEvent ->
         when (currentEvent) {
-            LoginEvent.OnLogin -> {}
-            LoginEvent.OnNavigateToRegister -> {}
+            LoginEvent.OnLogin -> navController.navigateToHome()
+            LoginEvent.OnNavigateToRegister -> navController.navigateToRegister()
         }
     }
 }

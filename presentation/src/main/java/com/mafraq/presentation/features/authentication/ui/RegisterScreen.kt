@@ -22,6 +22,8 @@ import com.mafraq.presentation.features.authentication.state.AuthUiState
 import com.mafraq.presentation.features.authentication.ui.components.AuthContainer
 import com.mafraq.presentation.features.authentication.ui.components.HaveAnAccount
 import com.mafraq.presentation.features.authentication.viewmodel.AuthViewModel
+import com.mafraq.presentation.navigation.destinations.navigateToHome
+import com.mafraq.presentation.navigation.destinations.navigateToLogin
 import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.string
 
@@ -36,8 +38,8 @@ fun RegisterScreen(viewModel: AuthViewModel, navController: NavController) {
 
     (event as? RegisterEvent)?.Listen { currentEvent ->
         when (currentEvent) {
-            RegisterEvent.OnRegister -> {}
-            RegisterEvent.OnNavigateToLogin -> {}
+            RegisterEvent.OnRegister -> navController.navigateToHome()
+            RegisterEvent.OnNavigateToLogin -> navController.navigateToLogin()
         }
     }
 }
@@ -76,11 +78,11 @@ private fun Content(
         Spacer.Medium()
 
         AppOutlinedTextField(
-            label = R.string.password.string,
-            value = state.password,
+            label = R.string.confirm_password.string,
+            value = state.confirmPassword,
             isPassword = true,
             imeAction = ImeAction.Done,
-            onValueChange = listener::setPassword,
+            onValueChange = listener::setConfirmPassword,
             isError = false,
             modifier = Modifier.fillMaxWidth()
         )
