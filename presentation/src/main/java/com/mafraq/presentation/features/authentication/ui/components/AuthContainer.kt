@@ -1,9 +1,9 @@
 package com.mafraq.presentation.features.authentication.ui.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -50,11 +50,9 @@ private fun CardHeader(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(MafraqTheme.sizes.large)
     ) {
-        Icon(
-
+        Image(
             painter = logo,
             contentDescription = null,
-            tint = MafraqTheme.colors.primary
         )
         Column(verticalArrangement = Arrangement.spacedBy(MafraqTheme.sizes.small)) {
             Text(
