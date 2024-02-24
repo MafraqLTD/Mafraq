@@ -1,37 +1,38 @@
 package com.mafraq.data.repository
 
-import com.gateway.data.remote.entities.ApiResponse
+import com.mafraq.data.entities.ApiResponse
 import com.mafraq.data.entities.login.LoginBody
 import com.mafraq.data.entities.login.User
 import com.mafraq.data.entities.register.RegisterBody
 import javax.inject.Inject
 
+
 class FakeUserRepositoryImpl @Inject constructor() : UserRepository {
+    private val user = User(id = 6400, name = "Anya")
+    private var authorized = false
+
     override suspend fun login(body: LoginBody): User {
-        TODO("Not yet implemented")
+        authorized = true
+        return user
     }
 
     override suspend fun register(body: RegisterBody): ApiResponse {
-        TODO("Not yet implemented")
+        authorized = true
+        return ApiResponse(isSuccess = true, user = user)
     }
 
     override suspend fun logout(): Boolean {
-        TODO("Not yet implemented")
+        authorized = false
+        return true
     }
 
-    override suspend fun checkAuth(): Boolean {
-        TODO("Not yet implemented")
-    }
+    override suspend fun checkAuth(): Boolean = authorized
 
-    override suspend fun getUserInfo(): User? {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getUserInfo(): User = user
 
-    override fun isTokenExists(): Boolean {
-        TODO("Not yet implemented")
-    }
+    override fun isTokenExists(): Boolean = authorized
 
     override suspend fun onSessionExpired() {
-        TODO("Not yet implemented")
+        authorized = false
     }
 }

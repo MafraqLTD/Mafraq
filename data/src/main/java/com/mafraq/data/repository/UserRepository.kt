@@ -1,6 +1,6 @@
 package com.mafraq.data.repository
 
-import com.gateway.data.remote.entities.ApiResponse
+import com.mafraq.data.entities.ApiResponse
 import com.mafraq.data.entities.login.LoginBody
 import com.mafraq.data.entities.login.User
 import com.mafraq.data.entities.register.RegisterBody
