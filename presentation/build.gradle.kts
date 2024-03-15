@@ -57,6 +57,7 @@ android {
                 "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
                 "-opt-in=com.google.accompanist.permissions.ExperimentalPermissionsApi",
                 "-opt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
+                "-opt-in=androidx.tv.material3.ExperimentalTvMaterial3Api",
             )
     }
 }

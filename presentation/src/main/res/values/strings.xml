@@ -28,5 +28,10 @@
     <!--  OTHERS  -->
     <string name="home">Home</string>
     <string name="notifications">Notifications</string>
+    <string name="find_driver">Find driver</string>
+    <string name="have_questions">Have Questions?</string>
+    <string name="chat_with_support">Chat with Support</string>
+    <string name="more">More</string>
+    <string name="searchـforـdestination">Search for a destination</string>
 
 </resources>

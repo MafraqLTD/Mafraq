@@ -8,8 +8,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.mafraq.presentation.features.home.HomeScreen
+import com.mafraq.presentation.features.home.HomeViewModel
 import com.mafraq.presentation.navigation.Screen
 import com.mafraq.presentation.utils.extensions.navigate
+import com.mafraq.presentation.utils.extensions.sharedViewModel
 
 
 internal fun NavController.navigateToHome() {
@@ -18,10 +21,7 @@ internal fun NavController.navigateToHome() {
 
 internal fun NavGraphBuilder.homeDestination(navController: NavController) {
     composable(Screen.Home.route) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text(text = "Home")
-        }
-//        val viewModel = it.sharedViewModel<HomeViewModel>(navController = navController)
-//        HomeScreen(viewModel = viewModel, navController = navController)
+        val viewModel = it.sharedViewModel<HomeViewModel>(navController = navController)
+        HomeScreen(viewModel = viewModel, navController = navController)
     }
 }
