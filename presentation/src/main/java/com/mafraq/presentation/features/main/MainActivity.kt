@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             CompositionLocalProvider(
                 LocalNavigationProvider provides rememberNavController()
-            ) { App(isAuthorized = false) }
+            ) { App(isAuthorized = true) }
         }
     }
 }

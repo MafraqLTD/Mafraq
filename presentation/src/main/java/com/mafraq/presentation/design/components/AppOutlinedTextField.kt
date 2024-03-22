@@ -40,6 +40,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.theme.MafraqTheme
+import com.mafraq.presentation.utils.extensions.clickableNoRipple
 import com.mafraq.presentation.utils.extensions.optionalComposable
 import com.mafraq.presentation.utils.extensions.painter
 import kotlinx.coroutines.launch
@@ -57,6 +58,8 @@ fun AppOutlinedTextField(
     placeholder: String? = null,
     leadingIcon: Painter? = null,
     trailingIcon: Painter? = null,
+    enabledTrailingIcon: Boolean = true,
+    onTrailingIconClick: (() -> Unit)? = null,
     prefix: @Composable (() -> Unit)? = null,
     suffix: @Composable (() -> Unit)? = null,
     errorMessage: String? = null,
@@ -129,8 +132,16 @@ fun AppOutlinedTextField(
                     Icon(
                         it,
                         contentDescription = null,
-                        tint = if (isError) MaterialTheme.colorScheme.error
-                        else MaterialTheme.colorScheme.primary
+                        tint = if (enabledTrailingIcon)
+                            MaterialTheme.colorScheme.primary
+                        else
+                            colors.disabledPrefixColor,
+                        modifier = onTrailingIconClick?.let {
+                            Modifier.clickableNoRipple(
+                                enabled = enabledTrailingIcon,
+                                onClick = onTrailingIconClick
+                            )
+                        } ?: Modifier
                     )
                 },
             prefix = prefix,

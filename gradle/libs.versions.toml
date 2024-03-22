@@ -10,11 +10,12 @@ lifecycle-ktx = "2.7.0"
 activity-compose = "1.8.2"
 compose-bom = "2024.02.02"
 compose-tv = "1.0.0-alpha10"
+constraintlayout = "1.0.1"
 coil = "2.6.0"
 hiltNavigation = "1.2.0"
 composeNavigation = "2.7.7"
 timber = "5.0.1"
-retrofit = "2.9.0"
+retrofit = "2.10.0"
 okhttp = "5.0.0-alpha.11"
 gson = "2.10.1"
 accompanist = "0.33.1-alpha"
@@ -30,6 +31,9 @@ annotations = "28.0.0"
 material3 = "1.2.1"
 appcompat = "1.6.1"
 material = "1.11.0"
+maps = "4.3.3"
+streamChatSDK = "6.1.1"
+streamLog = "1.1.4"
 
 [libraries]
 # CORE
@@ -68,6 +72,9 @@ compose-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-com
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
 compose-navigation-hilt = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigation" }
 compose-accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
+compose-constraintlayout = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayout" }
+compose-maps = { module = "com.google.maps.android:maps-compose", version.ref = "maps" }
+compose-maps-utils = { module = "com.google.maps.android:maps-compose-utils", version.ref = "maps" }
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 
 
@@ -94,8 +101,9 @@ firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 firebase-performance = { module = "com.google.firebase:firebase-perf-ktx" }
 support-annotations = { module = "com.android.support:support-annotations", version.ref = "annotations" }
-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+
 
 [plugins]
 android-library = { id = "com.android.library", version.ref = "gradle" }
@@ -111,10 +119,13 @@ google-performance = { id = "com.google.firebase.firebase-perf", version.ref = "
 implementation-compose = [
     'coil',
     'compose-ui',
+    'compose-maps',
+    'compose-maps-utils',
     'compose-tv-material',
     'compose-ui-fonts',
     'compose-ui-util',
     'compose-ui-graphics',
+    'compose-constraintlayout',
     'compose-ui-tooling-preview',
     'compose-material3',
     'compose-activity',

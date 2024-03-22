@@ -26,10 +26,10 @@ fun App(isAuthorized: Boolean) {
         val navController = LocalNavigationProvider.current
         val backStackEntry by navController.currentBackStackEntryAsState()
         val showNavigationBar = with(backStackEntry) {
-            currentRoute !in listOf(
-                null,
-                Screen.Login.route,
-                Screen.Register.route,
+            currentRoute in listOf(
+                Screen.Home.route,
+                Screen.Profile.route,
+                Screen.Notifications.route,
             )
         }
 
