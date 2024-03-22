@@ -38,7 +38,9 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-
+import com.mafraq.presentation.design.components.placeholder.PlaceholderHighlight
+import com.mafraq.presentation.design.components.placeholder.placeholder
+import com.mafraq.presentation.design.components.placeholder.shimmer
 
 
 fun Modifier.clickableNoRipple(
@@ -124,4 +126,25 @@ fun String.toRichText(vararg richTexts: RichText): AnnotatedString {
                 regexp = richText.subText
             )
     }
+}
+
+fun Modifier.placeholderShimmer(
+    visible: Boolean = true,
+    color: Color = Color.Unspecified,
+    shape: Shape? = null,
+    highlight: PlaceholderHighlight? = null,
+    placeholderFadeTransitionSpec: @Composable Transition.Segment<Boolean>.() -> FiniteAnimationSpec<Float> = { spring() },
+    contentFadeTransitionSpec: @Composable Transition.Segment<Boolean>.() -> FiniteAnimationSpec<Float> = { spring() },
+): Modifier = composed {
+    this.placeholder(
+        visible = visible,
+        color = if (color.isSpecified)
+            color
+        else
+            MaterialTheme.colorScheme.surfaceColorAtElevation(NavigationBarDefaults.Elevation),
+        shape = shape ?: MaterialTheme.shapes.small,
+        highlight = highlight ?: PlaceholderHighlight.shimmer(),
+        placeholderFadeTransitionSpec = placeholderFadeTransitionSpec,
+        contentFadeTransitionSpec = contentFadeTransitionSpec,
+    )
 }

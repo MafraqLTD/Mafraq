@@ -127,6 +127,7 @@ implementation-compose = [
     'compose-ui-graphics',
     'compose-constraintlayout',
     'compose-ui-tooling-preview',
+    'compose-material',
     'compose-material3',
     'compose-activity',
     'compose-navigation',

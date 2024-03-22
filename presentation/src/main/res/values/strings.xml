@@ -34,5 +34,6 @@
     <string name="more">More</string>
     <string name="searchـforـdestination">Search for a destination</string>
     <string name="message">Message</string>
+    <string name="no_notifications_found">No Notifications Found</string>
 
 </resources>

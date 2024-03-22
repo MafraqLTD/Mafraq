@@ -1,6 +1,6 @@
 package com.mafraq.presentation.features.chat
 
 
-interface ChatEvent {
+sealed interface ChatEvent {
     data object OnNavigateBack : ChatEvent
 }
