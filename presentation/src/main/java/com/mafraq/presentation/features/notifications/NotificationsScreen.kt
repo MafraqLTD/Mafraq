@@ -76,6 +76,6 @@ private fun Content(
 
 @Composable
 @Preview(showBackground = true)
-fun Preview() = ColumnPreview {
+private fun Preview() = ColumnPreview {
     Content(state = NotificationsUiState(dummyNotifications))
 }

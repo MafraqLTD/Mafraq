@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import com.mafraq.presentation.navigation.destinations.chatDestination
 import com.mafraq.presentation.navigation.destinations.homeDestination
 import com.mafraq.presentation.navigation.destinations.loginDestination
+import com.mafraq.presentation.navigation.destinations.mapDestination
 import com.mafraq.presentation.navigation.destinations.notificationsDestination
 import com.mafraq.presentation.navigation.destinations.profileDestination
 import com.mafraq.presentation.navigation.destinations.registerDestination
@@ -28,4 +29,5 @@ fun NavigationHostGraph(
     registerDestination(navController)
     notificationsDestination(navController)
     chatDestination(navController)
+    mapDestination(navController)
 }

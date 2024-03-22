@@ -5,6 +5,8 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.Uri
@@ -12,7 +14,9 @@ import android.net.wifi.WifiManager
 import android.os.Build
 import android.provider.Settings
 import android.telephony.TelephonyManager
+import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
+import androidx.appcompat.content.res.AppCompatResources
 
 
 fun Context.openAppSettings() {
@@ -78,3 +82,17 @@ fun Context.openAirplaneSettings() {
     }
     startActivity(settingsIntent)
 }
+
+fun Context.drawableToBitmap(@DrawableRes resId: Int): Bitmap {
+    val drawable = AppCompatResources.getDrawable(this, resId) ?: error("Fail to get the drawable")
+    val bitmap = Bitmap.createBitmap(
+        drawable.intrinsicWidth,
+        drawable.intrinsicHeight,
+        Bitmap.Config.ARGB_8888
+    )
+    val canvas = Canvas(bitmap)
+    drawable.setBounds(0, 0, canvas.width, canvas.height)
+    drawable.draw(canvas)
+    return bitmap
+}
+
