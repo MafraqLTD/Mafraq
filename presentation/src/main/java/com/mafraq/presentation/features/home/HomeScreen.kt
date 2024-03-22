@@ -148,8 +148,8 @@ private fun SupportCard(onClick: () -> Unit) {
                 TextIcon(
                     text = R.string.chat_with_support.string,
                     style = typography.titleSmall,
-                    imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
-                    onClick = onClick
+                    icon = R.drawable.ic_forward_arrow.painter,
+                    onClick = onClick,
                 )
             }
 

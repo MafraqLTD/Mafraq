@@ -18,6 +18,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -28,7 +29,7 @@ import com.mafraq.presentation.utils.extensions.clickableNoRipple
 @Composable
 fun TextIcon(
     text: String,
-    imageVector: ImageVector,
+    icon: @Composable () -> Unit,
     style: TextStyle = MaterialTheme.typography.labelLarge,
     contentColor: Color = MafraqTheme.colors.primary,
     contentPadding: PaddingValues = PaddingValues(),
@@ -58,14 +59,58 @@ fun TextIcon(
                 text = text,
                 textAlign = TextAlign.Center
             )
-            Icon(
-                imageVector = imageVector,
-                contentDescription = null,
-                modifier = Modifier.size(MafraqTheme.sizes.medium)
-            )
+
+            icon()
         }
     }
 }
+
+
+@Composable
+fun TextIcon(
+    text: String,
+    icon: ImageVector,
+    style: TextStyle = MaterialTheme.typography.labelLarge,
+    contentColor: Color = MafraqTheme.colors.primary,
+    contentPadding: PaddingValues = PaddingValues(),
+    onClick: (() -> Unit)? = null
+) = TextIcon(
+    text = text,
+    style = style,
+    onClick = onClick,
+    contentColor = contentColor,
+    contentPadding = contentPadding,
+    icon = {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            modifier = Modifier.size(MafraqTheme.sizes.medium)
+        )
+    }
+)
+
+@Composable
+fun TextIcon(
+    text: String,
+    icon: Painter,
+    style: TextStyle = MaterialTheme.typography.labelLarge,
+    contentColor: Color = MafraqTheme.colors.primary,
+    contentPadding: PaddingValues = PaddingValues(),
+    onClick: (() -> Unit)? = null
+) = TextIcon(
+    text = text,
+    style = style,
+    onClick = onClick,
+    contentColor = contentColor,
+    contentPadding = contentPadding,
+    icon = {
+        Icon(
+            painter = icon,
+            contentDescription = null,
+            modifier = Modifier.size(MafraqTheme.sizes.medium)
+        )
+    }
+)
 
 @Composable
 internal fun ProvideContentColorTextStyle(
