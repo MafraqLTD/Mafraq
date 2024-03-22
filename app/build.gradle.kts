@@ -30,6 +30,11 @@ android {
     compileSdk = Version.COMPILE_SDK
     buildToolsVersion = Version.BUILD_TOOLS
 
+    val baseUrl = "BASE_URL"
+    val baseUrlDev = "BASE_URL_DEV"
+    val baseUrlProd = "BASE_URL_PROD"
+    val mapsApiKey = "MAPS_API_KEY"
+
     defaultConfig {
         applicationId = Config.APPLICATION_ID
         minSdk = Version.MIN_SDK
@@ -41,6 +46,10 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        addManifestPlaceholders(
+            mapOf("maps_api_key" to getLocalProperty(key = mapsApiKey))
+        )
     }
 
     signingConfigs {
@@ -70,10 +79,6 @@ android {
             )
         }
     }
-
-    val baseUrl = "BASE_URL"
-    val baseUrlDev = "BASE_URL_DEV"
-    val baseUrlProd = "BASE_URL_PROD"
 
     flavorDimensions.add("mode")
 
