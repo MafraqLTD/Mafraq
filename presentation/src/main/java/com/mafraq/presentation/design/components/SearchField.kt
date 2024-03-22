@@ -2,9 +2,9 @@ package com.mafraq.presentation.design.components
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
@@ -17,9 +17,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.mafraq.presentation.R
 import com.mafraq.presentation.design.theme.MafraqTheme
 import com.mafraq.presentation.utils.extensions.clickableNoRipple
 import com.mafraq.presentation.utils.extensions.optionalComposable
+import com.mafraq.presentation.utils.extensions.painter
 
 @Composable
 fun SearchField(
@@ -45,9 +47,10 @@ fun SearchField(
         },
         leadingIcon = {
             Icon(
-                imageVector = Icons.Default.Search,
+                painter = R.drawable.ic_search.painter,
                 contentDescription = null,
-                tint = MafraqTheme.colors.primary
+                tint = MafraqTheme.colors.primary,
+                modifier = Modifier.size(20.dp)
             )
         },
         trailingIcon = optionalComposable(shouldExecute = active) {
