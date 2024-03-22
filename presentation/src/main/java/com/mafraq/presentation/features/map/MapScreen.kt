@@ -42,24 +42,24 @@ private fun Content(
     listener: MapInteractionListener = MapInteractionListener.Preview
 ) {
 
-    Box {
-        IconButton(
-            onClick = listener::onNavigateBack,
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .padding(sizes.medium)
-        ) {
-            Icon(
-                painter = R.drawable.ic_back_arrow.painter,
-                contentDescription = null
-            )
-        }
-
+    Box(modifier = Modifier.fillMaxSize()) {
         MapScreenWithMarkers(
             drivers = state.drivers,
             currentLocation = state.currentLocation.toLatLng(),
             onClick = listener::onDriverMarkClick,
             modifier = Modifier.fillMaxSize()
         )
+
+        IconButton(
+            onClick = listener::onNavigateBack,
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(sizes.extraSmall)
+        ) {
+            Icon(
+                painter = R.drawable.ic_back_arrow.painter,
+                contentDescription = null
+            )
+        }
     }
 }
