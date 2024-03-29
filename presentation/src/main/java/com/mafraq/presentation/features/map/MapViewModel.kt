@@ -15,6 +15,10 @@ class MapViewModel @Inject constructor(
         emitNewEvent(MapEvent.OnNavigateBack)
     }
 
+    override fun onPermissionGranted() = updateState {
+        copy(isPermissionGranted = true)
+    }
+
     override fun onDriverMarkClick(driver: Driver) {
         // TODO("Not yet implemented")
     }

@@ -8,7 +8,7 @@ androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
 lifecycle-ktx = "2.7.0"
 activity-compose = "1.8.2"
-compose-bom = "2024.02.02"
+compose-bom = "2024.03.00"
 compose-tv = "1.0.0-alpha10"
 constraintlayout = "1.0.1"
 coil = "2.6.0"
@@ -25,15 +25,16 @@ splashScreen = "1.1.0-alpha02"
 googleServices = "4.4.1"
 crashlytics = "2.9.9"
 performance = "1.4.2"
-firebaseBom = "32.7.4"
+firebaseBom = "32.8.0"
 kotlinx = "1.6.2"
 annotations = "28.0.0"
 material3 = "1.2.1"
 appcompat = "1.6.1"
 material = "1.11.0"
 maps = "4.3.3"
-streamChatSDK = "6.1.1"
-streamLog = "1.1.4"
+gms = "18.2.0"
+mapbox = "11.2.2"
+
 
 [libraries]
 # CORE
@@ -103,6 +104,9 @@ firebase-performance = { module = "com.google.firebase:firebase-perf-ktx" }
 support-annotations = { module = "com.android.support:support-annotations", version.ref = "annotations" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
+maps = { module = "com.google.android.gms:play-services-maps", version.ref = "gms" }
+mapbox = { module = "com.mapbox.maps:android", version.ref = "mapbox" }
+mapbox-extension = { module = "com.mapbox.extension:maps-compose", version.ref = "mapbox" }
 
 
 [plugins]
@@ -132,21 +136,25 @@ implementation-compose = [
     'compose-activity',
     'compose-navigation',
     'compose-navigation-hilt',
-    'compose.animation',
-    'compose.animation.graphics',
-    'compose.lifecycle.runtime',
-    'compose.lifecycle.viewmodel',
+    'compose-accompanist-permissions',
+    'compose-animation',
+    'compose-animation-graphics',
+    'compose-lifecycle-runtime',
+    'compose-lifecycle-viewmodel',
 ]
 
 implementation-androidx = [
-    'androidx-core.ktx',
-    'androidx.splashScreen',
+    'androidx-core-ktx',
+    'androidx-splashScreen',
     'androidx-lifecycle-ktx-viewmodel',
     'androidx-lifecycle-ktx-runtime',
 ]
 
 implementation-utils = [
     'hilt',
+    'maps',
+    'mapbox',
+    'mapbox-extension',
     'gateway-gls',
     'utils-timber',
     'altaie-prettyCode',

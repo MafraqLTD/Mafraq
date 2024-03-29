@@ -2,5 +2,7 @@ package com.mafraq.data.entities.map
 
 
 data class Driver(
-    val location: Location
+    val name: String = "",
+    val snippet: String = "",
+    val location: Location = Location()
 )

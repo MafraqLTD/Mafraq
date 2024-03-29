@@ -6,12 +6,16 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.mafraq.presentation.design.components.navigation.LocalNavigationProvider
+import com.mafraq.presentation.design.components.snackbar.LocalSnackState
+import com.mafraq.presentation.design.components.snackbar.Snackbar
 import com.mafraq.presentation.design.theme.MafraqTheme
 import com.mafraq.presentation.features.main.components.BottomNavigationBar
 import com.mafraq.presentation.navigation.NavigationHostGraph
@@ -35,6 +39,16 @@ fun App(isAuthorized: Boolean) {
 
         Scaffold(
             contentWindowInsets = WindowInsets.safeDrawing,
+            snackbarHost = {
+                SnackbarHost(hostState = LocalSnackState.current) {
+                    Snackbar(
+                        snackbarData = it,
+                        actionContentColor = MaterialTheme.colorScheme.inverseSurface,
+                        shape = MaterialTheme.shapes.medium,
+                        modifier = Modifier,
+                    )
+                }
+            },
             bottomBar = {
                 AnimatedVisibility(
                     visible = showNavigationBar,

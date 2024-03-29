@@ -25,7 +25,8 @@ fun MapScreenWithMarkers(
     onClick: (driver: Driver) -> Unit,
     modifier: Modifier = Modifier,
     zoomLevel: Float = 10f,
-    @DrawableRes markerIconResId: Int = R.drawable.map_mark
+    @DrawableRes
+    markerIconResId: Int = R.drawable.map_mark
 ) {
     val context = LocalContext.current
     val cameraPositionState = rememberCameraPositionState {
@@ -45,6 +46,8 @@ fun MapScreenWithMarkers(
             Marker(
                 state = MarkerState(driver.location.toLatLng()),
                 icon = markerIcon,
+                title = driver.name,
+                snippet = driver.snippet,
                 onClick = {
                     onClick(driver)
                     true
