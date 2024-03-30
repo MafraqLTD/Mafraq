@@ -2,8 +2,7 @@ import java.util.Properties
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-val propertiesFiles = listOf("local.properties")
-
+val propertiesFiles = listOf("local.properties", "defaults.properties")
 setProjectProperties(propertiesFiles)
 
 fun setProjectProperties(files: List<String>) = files.forEach {
