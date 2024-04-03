@@ -18,15 +18,14 @@ timber = "5.0.1"
 retrofit = "2.10.0"
 okhttp = "5.0.0-alpha.11"
 gson = "2.10.1"
-accompanist = "0.33.1-alpha"
-gateway-gls = "0.1.4"
+accompanist = "0.34.0"
 altaie-prettyCode = "0.0.4"
 splashScreen = "1.1.0-alpha02"
 googleServices = "4.4.1"
 crashlytics = "2.9.9"
 performance = "1.4.2"
 firebaseBom = "32.8.0"
-kotlinx = "1.6.2"
+kotlinx = "1.6.3"
 annotations = "28.0.0"
 material3 = "1.2.1"
 appcompat = "1.6.1"
@@ -34,7 +33,8 @@ material = "1.11.0"
 maps = "4.3.3"
 gms = "18.2.0"
 mapbox = "11.2.2"
-
+gls = "1.5.0"
+permissions = "2.0.0"
 
 [libraries]
 # CORE
@@ -93,7 +93,7 @@ web-retrofit-gson = { module = "com.squareup.retrofit2:converter-gson", version.
 
 # OTHER
 utils-timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
-gateway-gls = { module = "com.github.GatewayLegends:general-location-service", version.ref = "gateway-gls" }
+gls = { module = "com.github.Al-Taie:general-location-service", version.ref = "gls" }
 altaie-prettyCode = { module = "com.github.Al-Taie:PrettyCode", version.ref = "altaie-prettyCode" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
@@ -107,6 +107,7 @@ material = { module = "com.google.android.material:material", version.ref = "mat
 maps = { module = "com.google.android.gms:play-services-maps", version.ref = "gms" }
 mapbox = { module = "com.mapbox.maps:android", version.ref = "mapbox" }
 mapbox-extension = { module = "com.mapbox.extension:maps-compose", version.ref = "mapbox" }
+compose-permissions = { module = "dev.shreyaspatil.permission-flow:permission-flow-compose", version.ref = "permissions" }
 
 
 [plugins]
@@ -123,8 +124,8 @@ google-performance = { id = "com.google.firebase.firebase-perf", version.ref = "
 implementation-compose = [
     'coil',
     'compose-ui',
-    'compose-maps',
-    'compose-maps-utils',
+#    'compose-maps',
+#    'compose-maps-utils',
     'compose-tv-material',
     'compose-ui-fonts',
     'compose-ui-util',
@@ -135,8 +136,8 @@ implementation-compose = [
     'compose-material3',
     'compose-activity',
     'compose-navigation',
+    'compose-permissions',
     'compose-navigation-hilt',
-    'compose-accompanist-permissions',
     'compose-animation',
     'compose-animation-graphics',
     'compose-lifecycle-runtime',
@@ -152,10 +153,10 @@ implementation-androidx = [
 
 implementation-utils = [
     'hilt',
+    'gls',
     'maps',
     'mapbox',
     'mapbox-extension',
-    'gateway-gls',
     'utils-timber',
     'altaie-prettyCode',
     'firebase-messaging',
