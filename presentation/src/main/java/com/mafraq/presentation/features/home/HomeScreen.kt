@@ -47,6 +47,7 @@ import com.mafraq.presentation.utils.extensions.string
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel,
+
     navController: NavController
 ) {
     val state: HomeUiState by viewModel.state.collectAsStateWithLifecycle()
