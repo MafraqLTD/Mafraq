@@ -3,6 +3,7 @@
 import com.gateway.buildscr.Config
 import com.gateway.buildscr.Config.Version
 import com.gateway.buildscr.getLocalProperty
+
 //import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
 
 private object LocalConfig {
@@ -33,7 +34,7 @@ android {
     val baseUrl = "BASE_URL"
     val baseUrlDev = "BASE_URL_DEV"
     val baseUrlProd = "BASE_URL_PROD"
-    val mapsApiKey = "MAPS_API_KEY"
+    val mapboxToken = "MAPBOX_TOKEN"
 
     defaultConfig {
         applicationId = Config.APPLICATION_ID
@@ -47,9 +48,7 @@ android {
             useSupportLibrary = true
         }
 
-        addManifestPlaceholders(
-            mapOf("maps_api_key" to getLocalProperty(key = mapsApiKey))
-        )
+        buildConfigField(String::class.java.name, mapboxToken, getLocalProperty(key = mapboxToken))
     }
 
     signingConfigs {
@@ -106,6 +105,7 @@ android {
         jvmTarget = Version.JVM.toString()
         freeCompilerArgs =
             freeCompilerArgs + listOf(
+                "-opt-in=com.mapbox.maps.MapboxExperimental",
                 "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
                 "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
                 "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",

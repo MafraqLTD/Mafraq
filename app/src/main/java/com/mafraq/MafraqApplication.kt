@@ -1,7 +1,7 @@
 package com.mafraq
 
 import android.app.Application
-import com.google.android.gms.maps.MapsInitializer
+import com.mapbox.common.MapboxOptions
 import dagger.hilt.android.HiltAndroidApp
 
 
@@ -9,6 +9,7 @@ import dagger.hilt.android.HiltAndroidApp
 class MafraqApplication : Application(){
     override fun onCreate() {
         super.onCreate()
-        MapsInitializer.initialize(applicationContext)
+
+        MapboxOptions.accessToken = BuildConfig.MAPBOX_TOKEN
     }
 }
