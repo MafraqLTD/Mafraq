@@ -1,4 +1,4 @@
-package com.mafraq.data.repository
+package com.mafraq.data.repository.user
 
 import com.mafraq.data.entities.ApiResponse
 import com.mafraq.data.entities.login.LoginBody

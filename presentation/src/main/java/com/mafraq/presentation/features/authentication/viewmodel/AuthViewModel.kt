@@ -1,6 +1,6 @@
 package com.mafraq.presentation.features.authentication.viewmodel
 
-import com.mafraq.data.repository.UserRepository
+import com.mafraq.data.repository.user.UserRepository
 import com.mafraq.presentation.features.authentication.event.AuthEvent
 import com.mafraq.presentation.features.authentication.event.LoginEvent
 import com.mafraq.presentation.features.authentication.event.RegisterEvent
