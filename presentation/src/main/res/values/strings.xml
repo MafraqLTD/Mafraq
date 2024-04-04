@@ -37,5 +37,7 @@
     <string name="no_notifications_found">No Notifications Found</string>
     <string name="settings">Settings</string>
     <string name="app_permission_denied">App permission denied.</string>
+    <string name="enable_location">Enable Location</string>
+    <string name="location_service_disabled">Location service disabled</string>
 
 </resources>
