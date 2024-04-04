@@ -3,19 +3,19 @@ package com.mafraq.presentation.features.map
 import com.mafraq.data.entities.map.Driver
 import com.mafraq.data.repository.hardware.HardwareRepository
 import com.mafraq.presentation.features.base.BaseViewModel
+import com.mafraq.presentation.utils.location.LocationSettingsDelegate
+import com.mafraq.presentation.utils.location.LocationSettingsDelegateImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 
 @HiltViewModel
 class MapViewModel @Inject constructor(
-    private val hardwareRepository: HardwareRepository
+    private val hardwareRepository: HardwareRepository,
+    private val locationSettingsDelegate: LocationSettingsDelegateImpl
 ) : BaseViewModel<MapUiState, MapEvent>(MapUiState()),
-    MapInteractionListener {
+    MapInteractionListener, LocationSettingsDelegate by locationSettingsDelegate {
 
-    init {
-        updateLocation()
-    }
     override fun onNavigateBack() {
         emitNewEvent(MapEvent.OnNavigateBack)
     }
@@ -30,7 +30,7 @@ class MapViewModel @Inject constructor(
         // TODO("Not yet implemented")
     }
 
-    private fun updateLocation() {
+    override fun updateLocation() {
         if (hardwareRepository.isLocationSettingSatisfied)
             tryToCollect(
                 block = hardwareRepository::requestLocationUpdates,
@@ -42,5 +42,7 @@ class MapViewModel @Inject constructor(
                 }
             )
     }
+
+    override fun cancelLocationUpdates() = hardwareRepository.removeLocationUpdates()
 
 }

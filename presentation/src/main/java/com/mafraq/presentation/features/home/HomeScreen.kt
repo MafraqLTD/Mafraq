@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -43,6 +41,7 @@ import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.detectTapGestures
 import com.mafraq.presentation.utils.extensions.painter
 import com.mafraq.presentation.utils.extensions.string
+import com.mafraq.presentation.utils.rememberLocationRequester
 
 
 @Composable
@@ -54,6 +53,11 @@ fun HomeScreen(
     val event: HomeEvent? by viewModel.event.collectAsState(null)
     val listener: HomeInteractionListener = viewModel
 
+    val locationRequester = rememberLocationRequester(
+        onLocationSatisfied = navController::navigateToMap,
+        locationSettingsDelegate = viewModel
+    )
+
     Content(
         state = state,
         listener = listener
@@ -61,7 +65,7 @@ fun HomeScreen(
 
     event?.Listen { currentEvent ->
         when (currentEvent) {
-            HomeEvent.NavigateToMap -> navController.navigateToMap()
+            HomeEvent.NavigateToMap -> locationRequester.request()
             HomeEvent.NavigateToSupportChat -> navController.navigateToChat()
         }
     }
