@@ -17,32 +17,45 @@ import dev.shreyaspatil.permissionflow.compose.rememberPermissionState
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 
 
-
 @Composable
 fun rememberPermissionState(
     permission: String,
-    onGranted: () -> Unit,
+    onGranted: () -> Unit = {},
+    onDenied: () -> Unit = {},
     autoRequest: Boolean = false
-): PermissionState {
-    val context = LocalContext.current
+): MafraqPermissionState {
     val snackState = LocalSnackState.current
     val permissionState by rememberPermissionState(permission = permission)
     val permissionLauncher = rememberPermissionFlowRequestLauncher {
-        if (it[permission].isTrue) onGranted()
+        if (it[permission].isTrue)
+            onGranted()
     }
 
     if (autoRequest && snackState.isInvisible && permissionState.isGranted.not())
         SideEffect {
             if (permissionState.isRationaleRequired.isTrue)
-                snackState.showSnackbar(
-                    message = context.getString(R.string.app_permission_denied),
-                    actionLabel = context.getString(R.string.settings),
-                    duration = SnackbarDuration.Long,
-                    onAccept = context::openAppSettings,
-                )
+                onDenied()
             else
                 permissionLauncher.launch(permission)
         }
 
-    return permissionState
+    if (snackState.isInvisible
+        && permissionState.isGranted.not()
+        && permissionState.isRationaleRequired.isTrue) SideEffect{
+        onDenied()
+    }
+
+    return MafraqPermissionState(
+        permission = permission,
+        isGranted = permissionState.isGranted,
+        isRationaleRequired = permissionState.isRationaleRequired,
+        request = { permissionLauncher.launch(permission) }
+    )
 }
+
+data class MafraqPermissionState(
+    val permission: String,
+    val isGranted: Boolean,
+    val isRationaleRequired: Boolean?,
+    val request: () -> Unit
+)
