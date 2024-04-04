@@ -13,6 +13,7 @@ import com.mafraq.presentation.R
 import com.mafraq.presentation.design.theme.MafraqTheme
 import com.mafraq.presentation.utils.extensions.drawableToBitmap
 import com.mafraq.presentation.utils.extensions.toPoint
+import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
@@ -20,6 +21,7 @@ import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportS
 import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotation
 import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.TextJustify
+import com.mapbox.maps.plugin.animation.MapAnimationOptions
 import com.mapbox.maps.plugin.attribution.generated.AttributionSettings
 import com.mapbox.maps.plugin.compass.generated.CompassSettings
 import com.mapbox.maps.plugin.logo.generated.LogoSettings
@@ -36,7 +38,6 @@ fun MapScreenWithMarkers(
     zoomLevel: Double = 15.0,
     @DrawableRes
     markerIconResId: Int = R.drawable.map_mark,
-    onMapViewportStateChange: MapViewportState.() -> Unit = {},
 ) {
     val context = LocalContext.current
     val cameraPositionState = rememberMapViewportState {
@@ -48,8 +49,16 @@ fun MapScreenWithMarkers(
         }
     }
 
-    LaunchedEffect(key1 = cameraPositionState) {
-        onMapViewportStateChange(cameraPositionState)
+    val mapAnimationOptions = remember { MapAnimationOptions.Builder().duration(1500L).build() }
+
+    LaunchedEffect(key1 = currentLocation) {
+        cameraPositionState.flyTo(
+            cameraOptions = CameraOptions.Builder()
+                .center(currentLocation.toPoint())
+                .zoom(zoomLevel)
+                .build(),
+            animationOptions = mapAnimationOptions
+        )
     }
 
     val markerIcon = remember { context.drawableToBitmap(markerIconResId) }
@@ -58,7 +67,11 @@ fun MapScreenWithMarkers(
         modifier = modifier,
         mapViewportState = cameraPositionState,
         logoSettings = LogoSettings { enabled = false },
-        compassSettings = CompassSettings { enabled = false },
+        compassSettings = CompassSettings {
+            enabled = false
+            visibility = false
+            opacity = 0.0f
+        },
         scaleBarSettings = ScaleBarSettings { enabled = false },
         attributionSettings = AttributionSettings { enabled = false },
     ) {

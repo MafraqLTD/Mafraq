@@ -57,8 +57,7 @@ private fun Content(
     state: MapUiState = MapUiState(),
     listener: MapInteractionListener = MapInteractionListener.Preview
 ) {
-    val zoomLevel = 15.0
-    val mapAnimationOptions = remember { MapAnimationOptions.Builder().duration(1500L).build() }
+    val zoomLevel = 13.0
 
     Box(modifier = Modifier.fillMaxSize()) {
         MapScreenWithMarkers(
@@ -67,15 +66,7 @@ private fun Content(
             currentLocation = state.currentLocation.toLatLng(),
             onClick = listener::onDriverMarkClick,
             modifier = Modifier.fillMaxSize()
-        ) {
-            flyTo(
-                cameraOptions = CameraOptions.Builder()
-                    .center(state.currentLocation.toPoint())
-                    .zoom(zoomLevel)
-                    .build(),
-                animationOptions = mapAnimationOptions
-            )
-        }
+        )
 
         IconButton(
             onClick = listener::onNavigateBack,
