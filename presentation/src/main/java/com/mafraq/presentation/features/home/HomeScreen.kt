@@ -1,6 +1,7 @@
 package com.mafraq.presentation.features.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -47,6 +48,7 @@ import com.mafraq.presentation.utils.rememberLocationRequester
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel,
+
     navController: NavController
 ) {
     val state: HomeUiState by viewModel.state.collectAsStateWithLifecycle()
@@ -140,6 +142,7 @@ private fun FindDriverCard(onClick: () -> Unit) {
 @Composable
 private fun SupportCard(onClick: () -> Unit) {
     AppCard(
+        modifier = Modifier.clickable(onClick = onClick),
         containerColor = colors.onPrimary,
         contentPadding = PaddingValues(sizes.medium),
         rowContent = {
