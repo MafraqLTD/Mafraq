@@ -42,5 +42,7 @@
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
     <string name="send_subscribe_request">Send subscribe request</string>
+    <string name="set_destination">Set Destination</string>
+    <string name="where_is_your_destination">Where is your destination?</string>
 
 </resources>
