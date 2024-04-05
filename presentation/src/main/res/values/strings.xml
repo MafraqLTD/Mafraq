@@ -39,5 +39,8 @@
     <string name="app_permission_denied">App permission denied.</string>
     <string name="enable_location">Enable Location</string>
     <string name="location_service_disabled">Location service disabled</string>
+    <string name="accept">Accept</string>
+    <string name="cancel">Cancel</string>
+    <string name="send_subscribe_request">Send subscribe request</string>
 
 </resources>

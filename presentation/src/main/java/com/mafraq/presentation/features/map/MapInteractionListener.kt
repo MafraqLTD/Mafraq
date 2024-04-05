@@ -10,6 +10,7 @@ interface MapInteractionListener : LocationSettingsDelegate {
     fun cancelLocationUpdates()
     fun onNavigateBack()
     fun onPermissionGranted()
+    fun onDismissDriverDetails()
     fun onDriverMarkClick(driver: Driver)
 
     object Preview : MapInteractionListener,
@@ -18,6 +19,7 @@ interface MapInteractionListener : LocationSettingsDelegate {
         override fun cancelLocationUpdates() = Unit
         override fun onNavigateBack() = Unit
         override fun onPermissionGranted() = Unit
+        override fun onDismissDriverDetails() = Unit
         override fun onDriverMarkClick(driver: Driver) = Unit
 
     }

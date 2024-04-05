@@ -41,17 +41,18 @@ fun TextIcon(
     ) {
         Row(
             Modifier
+                .padding(contentPadding)
                 .then(
                     if (onClick != null)
-                        Modifier.clickableNoRipple(onClick = onClick)
+                        Modifier
+                            .clickableNoRipple(onClick = onClick)
+                            .defaultMinSize(
+                                minWidth = ButtonDefaults.MinWidth,
+                                minHeight = ButtonDefaults.MinHeight
+                            )
                     else
                         Modifier
-                )
-                .defaultMinSize(
-                    minWidth = ButtonDefaults.MinWidth,
-                    minHeight = ButtonDefaults.MinHeight
-                )
-                .padding(contentPadding),
+                ),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -93,9 +94,11 @@ fun TextIcon(
 fun TextIcon(
     text: String,
     icon: Painter,
+    tint: Color = Color.Unspecified,
     style: TextStyle = MaterialTheme.typography.labelLarge,
     contentColor: Color = MafraqTheme.colors.primary,
     contentPadding: PaddingValues = PaddingValues(),
+    iconPadding: PaddingValues = PaddingValues(),
     onClick: (() -> Unit)? = null
 ) = TextIcon(
     text = text,
@@ -107,7 +110,10 @@ fun TextIcon(
         Icon(
             painter = icon,
             contentDescription = null,
-            modifier = Modifier.size(MafraqTheme.sizes.medium)
+            tint = tint,
+            modifier = Modifier
+                .padding(iconPadding)
+                .size(MafraqTheme.sizes.medium)
         )
     }
 )

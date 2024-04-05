@@ -26,8 +26,12 @@ class MapViewModel @Inject constructor(
         }
     }
 
-    override fun onDriverMarkClick(driver: Driver) {
-        // TODO("Not yet implemented")
+    override fun onDriverMarkClick(driver: Driver) = updateState {
+        copy(selectedDriver = driver, showDriverDetails = true)
+    }
+
+    override fun onDismissDriverDetails() = updateState {
+        copy(showDriverDetails = false)
     }
 
     override fun updateLocation() {

@@ -8,7 +8,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.LifecycleResumeEffect
@@ -16,14 +15,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.theme.MafraqTheme.sizes
+import com.mafraq.presentation.features.map.components.DriverBottomSheet
 import com.mafraq.presentation.features.map.components.MapScreenWithMarkers
 import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.painter
 import com.mafraq.presentation.utils.extensions.toLatLng
-import com.mafraq.presentation.utils.extensions.toPoint
 import com.mafraq.presentation.utils.rememberLocationRequester
-import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.plugin.animation.MapAnimationOptions
 
 
 @Composable
@@ -59,9 +56,21 @@ private fun Content(
 ) {
     val zoomLevel = 13.0
 
+    with(state.selectedDriver) {
+        DriverBottomSheet(
+            car = car,
+            name = name,
+            rating = rating,
+            carNumber = carNumber,
+            profilePic = profilePic,
+            isVisible = state.showDriverDetails,
+            onDismissRequest = listener::onDismissDriverDetails,
+        )
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         MapScreenWithMarkers(
-            drivers = state.drivers,
+            drivers = state.availableDrivers,
             zoomLevel = zoomLevel,
             currentLocation = state.currentLocation.toLatLng(),
             onClick = listener::onDriverMarkClick,

@@ -7,6 +7,8 @@ import com.mafraq.data.entities.map.Location
 
 data class MapUiState(
     val isPermissionGranted: Boolean = false,
+    val showDriverDetails: Boolean = false,
     val currentLocation: Location = Location(33.2232, 43.6793),
-    val drivers: List<Driver> = emptyList()
+    val selectedDriver: Driver = Driver(),
+    val availableDrivers: List<Driver> = emptyList(),
 )

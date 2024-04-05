@@ -39,5 +39,7 @@
     <string name="app_permission_denied">تم رفض إذن التطبيق.</string>
     <string name="enable_location">تمكين الموقع</string>
     <string name="location_service_disabled">تم تعطيل خدمة الموقع</string>
-
+    <string name="accept">قبول</string>
+    <string name="cancel">إلغاء</string>
+    <string name="send_subscribe_request">إرسال طلب الاشتراك</string>
 </resources>
