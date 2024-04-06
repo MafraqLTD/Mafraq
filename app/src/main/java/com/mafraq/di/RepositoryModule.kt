@@ -2,8 +2,8 @@ package com.mafraq.di
 
 import com.mafraq.data.repository.hardware.HardwareRepository
 import com.mafraq.data.repository.hardware.HardwareRepositoryImpl
-import com.mafraq.data.repository.user.FakeUserRepositoryImpl
 import com.mafraq.data.repository.user.UserRepository
+import com.mafraq.data.repository.user.UserRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -17,7 +17,7 @@ interface RepositoryModule {
 
     @Binds
     @Singleton
-    fun bindUserRepository(repository: FakeUserRepositoryImpl): UserRepository
+    fun bindUserRepository(repository: UserRepositoryImpl): UserRepository
 
     @Binds
     @Singleton

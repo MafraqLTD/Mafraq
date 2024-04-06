@@ -6,11 +6,11 @@ import com.altaie.prettycode.core.exceptions.GpsProviderIsDisabledException
 import com.altaie.prettycode.core.exceptions.ResponseException
 import com.altaie.prettycode.core.exceptions.ValidationException
 import com.mafraq.data.entities.ApiResponse
-import com.mafraq.data.errors.ConnectionException
-import com.mafraq.data.errors.EmptyBodyException
-import com.mafraq.data.errors.InternetDisconnectedException
-import com.mafraq.data.errors.TimeoutException
-import com.mafraq.data.errors.UnAuthorizedException
+import com.mafraq.data.remote.errors.ConnectionException
+import com.mafraq.data.remote.errors.EmptyBodyException
+import com.mafraq.data.remote.errors.InternetDisconnectedException
+import com.mafraq.data.remote.errors.TimeoutException
+import com.mafraq.data.remote.errors.UnAuthorizedException
 import com.mafraq.data.utils.errorMessage
 import com.mafraq.data.utils.getValueOf
 import kotlinx.coroutines.CoroutineScope

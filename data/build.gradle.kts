@@ -50,6 +50,7 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.bundles.implementation.androidx)
     implementation(libs.bundles.implementation.utils)
+    api(libs.bundles.implementation.web)
     kapt(libs.hilt.compiler)
     androidTestImplementation(libs.bundles.androidTestImplementation)
     testImplementation(libs.test.junit)

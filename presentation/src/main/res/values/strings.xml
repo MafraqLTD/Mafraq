@@ -44,5 +44,7 @@
     <string name="send_subscribe_request">Send subscribe request</string>
     <string name="set_destination">Set Destination</string>
     <string name="where_is_your_destination">Where is your destination?</string>
+    <string name="please_check_your_email">Please check your email for verification</string>
+    <string name="done">Done</string>
 
 </resources>
