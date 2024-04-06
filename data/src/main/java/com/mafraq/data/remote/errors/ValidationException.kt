@@ -1,4 +1,4 @@
-package com.mafraq.data.errors
+package com.mafraq.data.remote.errors
 
 import com.altaie.prettycode.core.exceptions.base.BaseException
 import org.apache.http.HttpStatus

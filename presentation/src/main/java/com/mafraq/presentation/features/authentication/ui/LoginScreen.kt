@@ -76,15 +76,6 @@ private fun Content(
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer.Small()
-
-        AppCheckbox(
-            modifier = Modifier.fillMaxWidth(),
-            initialState = state.rememberMe,
-            label = R.string.remember_me.string,
-            onCheckedChange = listener::setRememberMe
-        )
-
         Spacer.Large()
 
         AppButton(

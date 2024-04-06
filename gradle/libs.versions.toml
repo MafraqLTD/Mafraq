@@ -25,6 +25,7 @@ googleServices = "4.4.1"
 crashlytics = "2.9.9"
 performance = "1.4.2"
 firebaseBom = "32.8.0"
+googleAuth = "21.0.0"
 kotlinx = "1.6.3"
 annotations = "28.0.0"
 material3 = "1.2.1"
@@ -101,6 +102,8 @@ firebase-messaging = { module = "com.google.firebase:firebase-messaging-ktx" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 firebase-performance = { module = "com.google.firebase:firebase-perf-ktx" }
+firebase-auth = { module = "com.google.firebase:firebase-auth-ktx" }
+google-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "googleAuth" }
 support-annotations = { module = "com.android.support:support-annotations", version.ref = "annotations" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
@@ -158,10 +161,21 @@ implementation-utils = [
     'mapbox',
     'mapbox-extension',
     'utils-timber',
+#    'google-auth',
+    "firebase-auth",
     'altaie-prettyCode',
+    'firebase-analytics',
     'firebase-messaging',
     'firebase-crashlytics',
     'firebase-performance',
+    'kotlinx-serialization-json',
+]
+
+implementation-web = [
+    'web-retrofit',
+    'web-okhttp',
+    'web-okhttp-interceptor',
+    "web-retrofit-gson",
     'kotlinx-serialization-json',
 ]
 
