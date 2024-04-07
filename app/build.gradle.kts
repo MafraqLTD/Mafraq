@@ -3,8 +3,10 @@
 import com.gateway.buildscr.Config
 import com.gateway.buildscr.Config.Version
 import com.gateway.buildscr.getLocalProperty
+import com.gateway.buildscr.buildConfigField
+import com.gateway.buildscr.ignoreExperimentalWarnings
 
-//import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
+import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
 
 private object LocalConfig {
     const val CODE = 1
@@ -17,24 +19,18 @@ private object ProductionConfig {
 }
 
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
-//    alias(libs.plugins.google.services)
-//    alias(libs.plugins.google.crashlytics)
-//    alias(libs.plugins.google.performance)
-    id("com.google.dagger.hilt.android")
+    id(libs.plugins.android.application.get().pluginId)
+    id(libs.plugins.kotlin.android.get().pluginId)
+    id(libs.plugins.kotlin.kapt.get().pluginId)
+    id(libs.plugins.google.services.asProvider().get().pluginId)
+    id(libs.plugins.google.crashlytics.asProvider().get().pluginId)
+    id(libs.plugins.hilt.get().pluginId)
 }
 
 android {
     namespace = Config.APPLICATION_ID
     compileSdk = Version.COMPILE_SDK
     buildToolsVersion = Version.BUILD_TOOLS
-
-    val baseUrl = "BASE_URL"
-    val baseUrlDev = "BASE_URL_DEV"
-    val baseUrlProd = "BASE_URL_PROD"
-    val mapboxToken = "MAPBOX_TOKEN"
 
     defaultConfig {
         applicationId = Config.APPLICATION_ID
@@ -48,16 +44,16 @@ android {
             useSupportLibrary = true
         }
 
-        buildConfigField(String::class.java.name, mapboxToken, getLocalProperty(key = mapboxToken))
+        buildConfigField<String>(key = "MAPBOX_TOKEN")
+        buildConfigField<String>(key = "RETABLE_API_KEY")
     }
 
     signingConfigs {
         create("release") {
-            val keyPropertiesFile = "key.properties"
-            keyAlias = getLocalProperty(key = "keyAlias", file = keyPropertiesFile)
-            keyPassword = getLocalProperty(key = "keyPassword", file = keyPropertiesFile)
-            storeFile = file(getLocalProperty(key = "storeFile", file = keyPropertiesFile))
-            storePassword = getLocalProperty(key = "storePassword", file = keyPropertiesFile)
+            keyAlias = getLocalProperty(key = "keyAlias")
+            keyPassword = getLocalProperty(key = "keyPassword")
+            storeFile = file(getLocalProperty(key = "storeFile"))
+            storePassword = getLocalProperty(key = "storePassword")
         }
     }
 
@@ -68,9 +64,9 @@ android {
             isShrinkResources = true
             signingConfig = signingConfigs.getByName("release")
 
-//            configure<CrashlyticsExtension> {
-//                mappingFileUploadEnabled = true
-//            }
+            configure<CrashlyticsExtension> {
+                mappingFileUploadEnabled = true
+            }
 
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -85,12 +81,12 @@ android {
         create("development") {
             dimension = "mode"
             applicationIdSuffix = ".dev"
-            buildConfigField("String", baseUrl, getLocalProperty(key = baseUrlDev))
+            buildConfigField<String>(key = "BASE_URL_DEV")
         }
 
         create("production") {
             dimension = "mode"
-            buildConfigField("String", baseUrl, getLocalProperty(key = baseUrlProd))
+            buildConfigField<String>(key = "BASE_URL_PROD")
             versionCode = ProductionConfig.CODE
             versionName = ProductionConfig.NAME
         }
@@ -103,14 +99,7 @@ android {
 
     kotlinOptions {
         jvmTarget = Version.JVM.toString()
-        freeCompilerArgs =
-            freeCompilerArgs + listOf(
-                "-opt-in=com.mapbox.maps.MapboxExperimental",
-                "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
-                "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
-                "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
-                "-opt-in=com.google.accompanist.permissions.ExperimentalPermissionsApi",
-            )
+        ignoreExperimentalWarnings()
     }
 
     buildFeatures {

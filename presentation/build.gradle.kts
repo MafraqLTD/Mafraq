@@ -1,64 +1,24 @@
 @file:Suppress("UnstableApiUsage")
 
-import com.gateway.buildscr.Config
 import com.gateway.buildscr.Config.Version
+import com.gateway.buildscr.applyConfiguration
+import com.gateway.buildscr.ignoreExperimentalWarnings
 
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
-    id("com.google.dagger.hilt.android")
+    id(libs.plugins.android.library.get().pluginId)
+    id(libs.plugins.kotlin.android.get().pluginId)
+    id(libs.plugins.kotlin.kapt.get().pluginId)
+    id(libs.plugins.hilt.get().pluginId)
 }
 
 android {
     namespace = "com.mafraq.presentation"
-    compileSdk = Version.COMPILE_SDK
-    buildToolsVersion = Version.BUILD_TOOLS
 
-    defaultConfig {
-        minSdk = Version.MIN_SDK
-
-        testInstrumentationRunner = Config.ANDROID_TEST_INSTRUMENTATION
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = Version.JVM
-        targetCompatibility = Version.JVM
-    }
-
-    buildFeatures {
-        compose = true
-        buildConfig = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = Version.COMPOSE_COMPILER
-    }
+    applyConfiguration()
 
     kotlinOptions {
         jvmTarget = Version.JVM.toString()
-        freeCompilerArgs =
-            freeCompilerArgs + listOf(
-                "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
-                "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
-                "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
-                "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
-                "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
-                "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
-                "-opt-in=com.google.accompanist.permissions.ExperimentalPermissionsApi",
-                "-opt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
-                "-opt-in=androidx.tv.material3.ExperimentalTvMaterial3Api",
-            )
+        ignoreExperimentalWarnings()
     }
 }
 
