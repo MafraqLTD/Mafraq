@@ -41,6 +41,8 @@ class MapViewModel @Inject constructor(
     }
 
     override fun updateLocation() {
+        // TODO ( REMOVE RETURN LATER )
+        return
         if (hardwareRepository.isLocationSettingSatisfied)
             tryToCollect(
                 block = hardwareRepository::requestLocationUpdates,
@@ -60,6 +62,7 @@ class MapViewModel @Inject constructor(
         tryToExecute(
             block = { crmRepository.getDrivers() },
             onSuccess = {
+                // TODO( REMOVE CURRENT LOCATION ASSIGNMENT LATER )
                 updateState { copy(availableDrivers = it, currentLocation = it.first().location) }
             },
         )
