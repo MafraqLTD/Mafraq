@@ -81,12 +81,12 @@ android {
         create("development") {
             dimension = "mode"
             applicationIdSuffix = ".dev"
-            buildConfigField<String>(key = "BASE_URL_DEV")
+            buildConfigField<String>(key = "BASE_URL_DEV", name = "BASE_URL")
         }
 
         create("production") {
             dimension = "mode"
-            buildConfigField<String>(key = "BASE_URL_PROD")
+            buildConfigField<String>(key = "BASE_URL_PROD", name = "BASE_URL")
             versionCode = ProductionConfig.CODE
             versionName = ProductionConfig.NAME
         }
@@ -112,7 +112,7 @@ android {
     }
 
     hilt {
-        enableAggregatingTask = true
+        enableAggregatingTask = false
     }
 
     packaging {

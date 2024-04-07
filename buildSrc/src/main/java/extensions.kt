@@ -24,10 +24,12 @@ fun getLocalProperty(key: String, file: String = "local.properties"): String {
 }
 
 
-inline fun <reified T> VariantDimension.buildConfigField(key: String) =
-    buildConfigField(
+inline fun <reified T> VariantDimension.buildConfigField(
+    key: String,
+    name: String? = null
+) = buildConfigField(
         type = T::class.java.name,
-        name = key,
+        name = name ?: key,
         value = getLocalProperty(key = key),
     )
 
@@ -46,7 +48,7 @@ fun KotlinJvmOptions.ignoreExperimentalWarnings() {
     )
 }
 
-fun LibraryExtension.applyConfiguration() {
+fun LibraryExtension.applyConfiguration(enableCompose: Boolean = false) {
     compileSdk = Config.Version.COMPILE_SDK
     buildToolsVersion = Config.Version.BUILD_TOOLS
 
@@ -69,6 +71,8 @@ fun LibraryExtension.applyConfiguration() {
         sourceCompatibility = Config.Version.JVM
         targetCompatibility = Config.Version.JVM
     }
+
+    if (enableCompose.not()) return
 
     buildFeatures {
         compose = true

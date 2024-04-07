@@ -14,7 +14,7 @@ plugins {
 android {
     namespace = "com.mafraq.presentation"
 
-    applyConfiguration()
+    applyConfiguration(enableCompose = true)
 
     kotlinOptions {
         jvmTarget = Version.JVM.toString()
