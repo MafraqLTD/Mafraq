@@ -1,10 +1,12 @@
 package com.mafraq.presentation.features.map
 
 
+import androidx.compose.runtime.Immutable
 import com.mafraq.data.entities.map.Driver
 import com.mafraq.data.entities.map.Location
 
 
+@Immutable
 data class MapUiState(
     val isPermissionGranted: Boolean = false,
     val showDriverDetails: Boolean = false,

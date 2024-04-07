@@ -35,7 +35,6 @@ import com.mafraq.presentation.utils.extensions.string
 @Composable
 fun DestinationBottomSheet(
     destination: String,
-    isVisible: Boolean,
     onFindDestinationClick: () -> Unit,
     onMyLocationClick: () -> Unit,
     onNavigateBack: () -> Unit,
@@ -44,7 +43,6 @@ fun DestinationBottomSheet(
 ) {
 
     BottomSheet(
-        isVisible = isVisible,
         onDismissRequest = onDismissRequest
     ) { hideSheet ->
         Row(
@@ -125,7 +123,6 @@ fun DestinationBottomSheet(
 private fun Preview() = ColumnPreview {
     DestinationBottomSheet(
         destination = "Street,124,ninavah collage",
-        isVisible = true,
         onDismissRequest = {},
         onSelectDestination = {},
         onFindDestinationClick = {},

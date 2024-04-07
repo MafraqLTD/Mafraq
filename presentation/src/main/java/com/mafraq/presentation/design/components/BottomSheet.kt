@@ -22,20 +22,15 @@ import kotlinx.coroutines.launch
 @Composable
 fun BottomSheet(
     onDismissRequest: () -> Unit,
-    isVisible: Boolean,
     sheetSwipeEnabled: Boolean = false,
     content: @Composable (ColumnScope.(hideSheet: () -> Unit) -> Unit)
 ) {
     val sheetState = rememberModalBottomSheetState { sheetSwipeEnabled }
     val scope = rememberCoroutineScope()
-    var showBottomSheet by remember { mutableStateOf(isVisible) }
-
-    if (showBottomSheet.not()) return
 
     fun hideSheet() {
         scope.launch { sheetState.hide() }.invokeOnCompletion {
             if (!sheetState.isVisible) {
-                showBottomSheet = false
                 onDismissRequest()
             }
         }
@@ -43,7 +38,6 @@ fun BottomSheet(
 
     ModalBottomSheet(
         onDismissRequest = {
-            showBottomSheet = false
             onDismissRequest()
         },
         sheetState = sheetState,

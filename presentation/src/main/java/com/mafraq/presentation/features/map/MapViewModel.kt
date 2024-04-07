@@ -1,6 +1,7 @@
 package com.mafraq.presentation.features.map
 
 import com.mafraq.data.entities.map.Driver
+import com.mafraq.data.repository.crm.CRMRepository
 import com.mafraq.data.repository.hardware.HardwareRepository
 import com.mafraq.presentation.features.base.BaseViewModel
 import com.mafraq.presentation.utils.location.LocationSettingsDelegate
@@ -11,10 +12,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MapViewModel @Inject constructor(
+    private val crmRepository: CRMRepository,
     private val hardwareRepository: HardwareRepository,
     private val locationSettingsDelegate: LocationSettingsDelegateImpl
 ) : BaseViewModel<MapUiState, MapEvent>(MapUiState()),
     MapInteractionListener, LocationSettingsDelegate by locationSettingsDelegate {
+
+    init {
+        initialize()
+    }
 
     override fun onNavigateBack() {
         emitNewEvent(MapEvent.OnNavigateBack)
@@ -49,4 +55,13 @@ class MapViewModel @Inject constructor(
 
     override fun cancelLocationUpdates() = hardwareRepository.removeLocationUpdates()
 
+
+    private fun initialize() {
+        tryToExecute(
+            block = { crmRepository.getDrivers() },
+            onSuccess = {
+                updateState { copy(availableDrivers = it, currentLocation = it.first().location) }
+            },
+        )
+    }
 }
