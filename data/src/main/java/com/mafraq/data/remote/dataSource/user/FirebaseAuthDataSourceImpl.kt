@@ -5,7 +5,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.userProfileChangeRequest
 import com.mafraq.data.entities.login.LoginBody
-import com.mafraq.data.entities.login.User
+import com.mafraq.data.entities.login.AuthUser
 import com.mafraq.data.entities.register.RegisterBody
 import com.mafraq.data.remote.mappers.UserAuthFromRemoteMapper
 import com.mafraq.data.utils.awaitBoolean
@@ -18,7 +18,7 @@ class FirebaseAuthDataSourceImpl @Inject constructor(
     private val auth: FirebaseAuth,
     private val userAuthFromRemoteMapper: UserAuthFromRemoteMapper
 ) : FirebaseAuthDataSource {
-    override val currentUser: User?
+    override val currentUser: AuthUser?
         get() = auth.currentUser?.let(userAuthFromRemoteMapper::map)
 
     override suspend fun login(body: LoginBody): Boolean =
@@ -43,7 +43,7 @@ class FirebaseAuthDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateUser(user: User): Boolean {
+    override suspend fun updateUser(user: AuthUser): Boolean {
         var isProfileUpdated = false
         var isUpdatedSuccessful = false
         val firebaseUser: FirebaseUser = auth.currentUser ?: return false

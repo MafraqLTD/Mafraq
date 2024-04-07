@@ -179,6 +179,7 @@ implementation-web = [
     'web-retrofit',
     'web-okhttp',
     'web-okhttp-interceptor',
+    "web-gson",
     "web-retrofit-gson",
     'kotlinx-serialization-json',
 ]

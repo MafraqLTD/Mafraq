@@ -3,6 +3,7 @@
 import com.gateway.buildscr.Config
 import com.gateway.buildscr.Config.Version
 import com.gateway.buildscr.applyConfiguration
+import com.gateway.buildscr.buildConfigField
 
 plugins {
     id(libs.plugins.kotlin.serialization.get().pluginId)
@@ -15,7 +16,9 @@ plugins {
 android {
     namespace = "com.mafraq.data"
 
-    applyConfiguration()
+    applyConfiguration {
+        buildConfigField<String>(key = "RETABLE_DRIVER_TABLE_ID")
+    }
 
     kotlinOptions {
         jvmTarget = Version.JVM.toString()

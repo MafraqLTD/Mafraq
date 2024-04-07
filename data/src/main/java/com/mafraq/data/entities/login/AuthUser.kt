@@ -1,7 +1,7 @@
 package com.mafraq.data.entities.login
 
 
-data class User(
+data class AuthUser(
     val id: String? = null,
     val name: String? = null,
     val email: String? = null,

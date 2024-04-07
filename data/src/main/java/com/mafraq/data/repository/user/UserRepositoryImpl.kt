@@ -1,7 +1,7 @@
 package com.mafraq.data.repository.user
 
 import com.mafraq.data.entities.login.LoginBody
-import com.mafraq.data.entities.login.User
+import com.mafraq.data.entities.login.AuthUser
 import com.mafraq.data.entities.register.RegisterBody
 import com.mafraq.data.remote.dataSource.user.FirebaseAuthDataSource
 import javax.inject.Inject
@@ -18,5 +18,5 @@ class UserRepositoryImpl @Inject constructor(
 
     override fun isAuthorized(): Boolean = authDataSource.isAuthorized()
 
-    override fun getUserInfo(): User? = authDataSource.currentUser
+    override fun getUserInfo(): AuthUser? = authDataSource.currentUser
 }
