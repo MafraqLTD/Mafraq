@@ -28,10 +28,10 @@ inline fun <reified T> VariantDimension.buildConfigField(
     key: String,
     name: String? = null
 ) = buildConfigField(
-        type = T::class.java.name,
-        name = name ?: key,
-        value = getLocalProperty(key = key),
-    )
+    type = T::class.java.name,
+    name = name ?: key,
+    value = getLocalProperty(key = key),
+)
 
 fun KotlinJvmOptions.ignoreExperimentalWarnings() {
     freeCompilerArgs += listOf(
@@ -54,6 +54,7 @@ fun LibraryExtension.applyConfiguration(enableCompose: Boolean = false) {
 
     defaultConfig {
         minSdk = Config.Version.MIN_SDK
+        buildConfigField<String>(key = "BASE_URL")
         testInstrumentationRunner = Config.ANDROID_TEST_INSTRUMENTATION
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -72,14 +73,14 @@ fun LibraryExtension.applyConfiguration(enableCompose: Boolean = false) {
         targetCompatibility = Config.Version.JVM
     }
 
-    if (enableCompose.not()) return
 
     buildFeatures {
-        compose = true
+        compose = enableCompose
         buildConfig = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = Config.Version.COMPOSE_COMPILER
-    }
+    if (enableCompose)
+        composeOptions {
+            kotlinCompilerExtensionVersion = Config.Version.COMPOSE_COMPILER
+        }
 }

@@ -44,8 +44,10 @@ android {
             useSupportLibrary = true
         }
 
+        buildConfigField<String>(key = "BASE_URL")
         buildConfigField<String>(key = "MAPBOX_TOKEN")
         buildConfigField<String>(key = "RETABLE_API_KEY")
+
     }
 
     signingConfigs {
@@ -81,12 +83,10 @@ android {
         create("development") {
             dimension = "mode"
             applicationIdSuffix = ".dev"
-            buildConfigField<String>(key = "BASE_URL_DEV", name = "BASE_URL")
         }
 
         create("production") {
             dimension = "mode"
-            buildConfigField<String>(key = "BASE_URL_PROD", name = "BASE_URL")
             versionCode = ProductionConfig.CODE
             versionName = ProductionConfig.NAME
         }
