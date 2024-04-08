@@ -1,5 +1,7 @@
 package com.mafraq.di
 
+import com.mafraq.data.remote.dataSource.crm.CRMRemoteDataSource
+import com.mafraq.data.remote.dataSource.crm.CRMRemoteDataSourceImpl
 import com.mafraq.data.remote.dataSource.user.FirebaseAuthDataSource
 import com.mafraq.data.remote.dataSource.user.FirebaseAuthDataSourceImpl
 import dagger.Binds
@@ -16,5 +18,9 @@ interface DataSourceModule {
     @Binds
     @Singleton
     fun bindUserFirebaseAuthDataSource(source: FirebaseAuthDataSourceImpl): FirebaseAuthDataSource
+
+    @Binds
+    @Singleton
+    fun bindCRMRemoteDataSource(dataSource: CRMRemoteDataSourceImpl): CRMRemoteDataSource
 
 }

@@ -16,16 +16,11 @@ import com.mafraq.presentation.utils.extensions.toPoint
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMap
-import com.mapbox.maps.extension.compose.animation.viewport.MapViewportState
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotation
 import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.TextJustify
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
-import com.mapbox.maps.plugin.attribution.generated.AttributionSettings
-import com.mapbox.maps.plugin.compass.generated.CompassSettings
-import com.mapbox.maps.plugin.logo.generated.LogoSettings
-import com.mapbox.maps.plugin.scalebar.generated.ScaleBarSettings
 
 
 @OptIn(MapboxExperimental::class)
@@ -66,23 +61,20 @@ fun MapScreenWithMarkers(
     MapboxMap(
         modifier = modifier,
         mapViewportState = cameraPositionState,
-        logoSettings = LogoSettings { enabled = false },
-        compassSettings = CompassSettings {
-            enabled = false
-            visibility = false
-            opacity = 0.0f
-        },
-        scaleBarSettings = ScaleBarSettings { enabled = false },
-        attributionSettings = AttributionSettings { enabled = false },
+        logo = {},
+        compass = {},
+        scaleBar = {},
+        attribution = {},
     ) {
         drivers.forEach { driver ->
             val point = driver.location.toPoint()
             PointAnnotation(
                 iconImageBitmap = markerIcon,
                 iconSize = 1.3,
+                textSize = 11.5,
                 point = point,
-                textField = driver.snippet,
-                textOffset = listOf(0.0, -3.0),
+                textField = driver.car,
+                textOffset = listOf(0.0, -3.5),
                 textAnchor = TextAnchor.TOP,
                 textJustify = TextJustify.CENTER,
                 textColorInt = MafraqTheme.colors.primary.toArgb(),

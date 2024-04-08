@@ -1,8 +1,7 @@
 package com.mafraq.data.repository.user
 
-import com.mafraq.data.entities.ApiResponse
 import com.mafraq.data.entities.login.LoginBody
-import com.mafraq.data.entities.login.User
+import com.mafraq.data.entities.login.AuthUser
 import com.mafraq.data.entities.register.RegisterBody
 
 
@@ -16,5 +15,5 @@ interface UserRepository {
 
     fun isAuthorized(): Boolean
 
-    fun getUserInfo(): User?
+    fun getUserInfo(): AuthUser?
 }

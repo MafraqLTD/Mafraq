@@ -6,12 +6,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.compose.LifecycleResumeEffect
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.withResumed
 import androidx.navigation.NavController
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.theme.MafraqTheme.sizes
@@ -34,9 +36,11 @@ fun MapScreen(viewModel: MapViewModel, navController: NavController) {
         locationSettingsDelegate = viewModel
     )
 
-    LifecycleResumeEffect {
-        locationRequester.request()
-        onPauseOrDispose { listener.cancelLocationUpdates() }
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(key1 = Unit) {
+        lifecycleOwner.withResumed {
+            locationRequester.request()
+        }
     }
 
     Content(state, listener)
@@ -56,17 +60,18 @@ private fun Content(
 ) {
     val zoomLevel = 13.0
 
-    with(state.selectedDriver) {
-        DriverBottomSheet(
-            car = car,
-            name = name,
-            rating = rating,
-            carNumber = carNumber,
-            profilePic = profilePic,
-            isVisible = state.showDriverDetails,
-            onDismissRequest = listener::onDismissDriverDetails,
-        )
-    }
+    if (state.showDriverDetails)
+        with(state.selectedDriver) {
+            DriverBottomSheet(
+                car = car,
+                name = fullName,
+                rating = rating,
+                carNumber = carNumber,
+                profilePic = profilePicture,
+                snippet = snippet,
+                onDismissRequest = listener::onDismissDriverDetails,
+            )
+        }
 
     Box(modifier = Modifier.fillMaxSize()) {
         MapScreenWithMarkers(

@@ -3,11 +3,10 @@ package com.mafraq.data.utils
 import android.content.Context
 import android.content.SharedPreferences
 import android.location.LocationManager
-import com.altaie.prettycode.core.exceptions.ResponseException
-import com.altaie.prettycode.core.utils.extenstions.fromJson
+import com.altaie.prettycode.core.base.Resource
 import com.google.android.gms.tasks.Task
 import com.mafraq.data.entities.map.Location
-import com.mafraq.data.remote.models.ApiResponseDto
+import com.mafraq.data.remote.errors.EmptyBodyException
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
@@ -34,10 +33,7 @@ fun String?.getValueOf(key: String) = runCatching {
     toJsonObject()?.get(key)?.jsonPrimitive?.content
 }.getOrNull()
 
-val ResponseException.errorMessage
-    get() = runCatching {
-        message.fromJson<ApiResponseDto>().message
-    }.getOrNull()
+fun <T> Resource<T>?.getOrThrowEmpty() = this?.toData ?: throw EmptyBodyException()
 
 val Context.locationManager: LocationManager
     get() = getSystemService(Context.LOCATION_SERVICE) as LocationManager

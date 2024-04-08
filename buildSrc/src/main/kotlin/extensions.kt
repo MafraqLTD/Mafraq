@@ -1,5 +1,6 @@
 package com.gateway.buildscr
 
+import com.android.build.api.dsl.LibraryDefaultConfig
 import com.android.build.api.dsl.LibraryExtension
 import java.io.File
 import java.io.FileInputStream
@@ -48,15 +49,18 @@ fun KotlinJvmOptions.ignoreExperimentalWarnings() {
     )
 }
 
-fun LibraryExtension.applyConfiguration(enableCompose: Boolean = false) {
+fun LibraryExtension.applyConfiguration(
+    enableCompose: Boolean = false,
+    defaultConfig: LibraryDefaultConfig.() -> Unit = {}
+) {
     compileSdk = Config.Version.COMPILE_SDK
     buildToolsVersion = Config.Version.BUILD_TOOLS
 
-    defaultConfig {
+    this.defaultConfig {
         minSdk = Config.Version.MIN_SDK
-        buildConfigField<String>(key = "BASE_URL")
         testInstrumentationRunner = Config.ANDROID_TEST_INSTRUMENTATION
         consumerProguardFiles("consumer-rules.pro")
+        defaultConfig(this)
     }
 
     buildTypes {

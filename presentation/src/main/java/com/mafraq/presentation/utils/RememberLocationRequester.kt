@@ -71,10 +71,12 @@ fun rememberLocationRequester(
             locationSettingsDelegate.requestEnableLocation(resultLauncher)
     }
 
-    return LocationRequesterState(
-        isSatisfied = locationSettingsDelegate.isLocationSettingSatisfied,
-        isLocationEnabled = locationSettingsDelegate.isLocationSettingSatisfied,
-        isPermissionGranted = permissionState.isGranted,
-        request = requestEnablingLocationCallback
-    )
+    return remember{
+        LocationRequesterState(
+            isSatisfied = locationSettingsDelegate.isLocationSettingSatisfied,
+            isLocationEnabled = locationSettingsDelegate.isLocationSettingSatisfied,
+            isPermissionGranted = permissionState.isGranted,
+            request = requestEnablingLocationCallback
+        )
+    }
 }

@@ -8,12 +8,16 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -23,6 +27,7 @@ import com.mafraq.presentation.design.components.ColumnPreview
 import com.mafraq.presentation.design.components.Spacer
 import com.mafraq.presentation.design.components.TextButton
 import com.mafraq.presentation.design.components.TextIcon
+import com.mafraq.presentation.design.theme.MafraqTheme
 import com.mafraq.presentation.design.theme.MafraqTheme.shapes
 import com.mafraq.presentation.design.theme.MafraqTheme.sizes
 import com.mafraq.presentation.design.theme.MafraqTheme.typography
@@ -33,16 +38,15 @@ import com.mafraq.presentation.utils.extensions.string
 @Composable
 fun DriverBottomSheet(
     name: String,
+    snippet: String,
     profilePic: String,
     rating: String,
     car: String,
     carNumber: String,
-    isVisible: Boolean,
     onDismissRequest: () -> Unit
 ) {
 
     BottomSheet(
-        isVisible = isVisible,
         onDismissRequest = onDismissRequest
     ) { hideSheet ->
         Row(
@@ -94,7 +98,16 @@ fun DriverBottomSheet(
                 car = car,
                 carNumber = carNumber
             )
+
         }
+
+        Spacer.Medium()
+
+        Text(
+            text = snippet,
+            modifier = Modifier.padding(horizontal = sizes.medium),
+            style = typography.body
+        )
 
         Spacer.Large()
     }
@@ -116,12 +129,27 @@ private fun RowScope.DriverDetails(
             style = typography.titleMedium
         )
 
-        TextIcon(
-            text = rating,
-            icon = R.drawable.ic_star.painter,
-            style = typography.label,
-            iconPadding = PaddingValues(horizontal = sizes.extraSmall),
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = rating,
+                textAlign = TextAlign.Center,
+                color = MafraqTheme.colors.primary,
+                style = MaterialTheme.typography.labelLarge,
+            )
+
+            Spacer.ExtraSmall(vertical = false)
+
+            repeat(rating.toDouble().toInt()) {
+                Icon(
+                    painter = R.drawable.ic_star.painter,
+                    contentDescription = null,
+                    tint = Color.Unspecified,
+                    modifier = Modifier.size(sizes.medium)
+                )
+            }
+        }
     }
 
     Column(
@@ -152,7 +180,7 @@ private fun Preview() = ColumnPreview {
         rating = "4.5",
         car = "Toyota Rav4 2021",
         carNumber = "1234",
-        isVisible = true,
+        snippet = "Ahmed Mones",
         onDismissRequest = {}
     )
 }
