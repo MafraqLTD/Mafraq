@@ -59,6 +59,7 @@ class AuthViewModel @Inject constructor(
 
         tryToExecute(
             block = { userRepository.login(body = state.value.toLoginBody()) },
+            checkSuccess = { it },
             onSuccess = {
                 emitNewEvent(LoginEvent.OnLogin)
             },
