@@ -11,7 +11,7 @@ on:
       - develop
 
 jobs:
-  build_and_test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -36,7 +36,7 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v4
+        uses: android-actions/setup-android@v3
         with:
           sdk-version: 'latest'
 
