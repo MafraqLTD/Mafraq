@@ -1,0 +1,34 @@
+name: Auto Update
+on:
+  push:
+    branches:
+      - master
+      - develop
+  pull_request:
+    branches:
+      - master
+      - develop
+
+jobs:
+  autoupdate:
+    name: Auto Update
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+      repository-projects: write
+
+    steps:
+      - uses: chinthakagodawita/autoupdate@v1.7.0
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          DRY_RUN: "false"
+          PR_FILTER: "protected"
+          #PR_FILTER: "labelled"
+          #PR_LABELS: "autoupdate,keep up-to-date,integration"
+          #EXCLUDED_LABELS: "dependencies,wontfix"
+          MERGE_MSG: "Branch was auto-updated."
+          RETRY_COUNT: "5"
+          RETRY_SLEEP: "300"
+          MERGE_CONFLICT_ACTION: "fail"
