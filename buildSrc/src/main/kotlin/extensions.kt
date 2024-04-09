@@ -12,7 +12,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 
 fun getLocalProperty(key: String, file: String? = null): String {
     val properties = Properties()
-    val defaultFiles = listOf("local.properties", "default.properties")
+    val defaultFiles = listOf("local.properties", "defaults.properties")
     val files = (defaultFiles + file).mapNotNull { it }
 
     files.forEach {
