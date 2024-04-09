@@ -45,6 +45,12 @@ fun AndroidLocation.toDomain() = Location(
 
 fun String.titlecase() = lowercase().replaceFirstChar { it.uppercase() }
 
+/**
+ * Awaits the completion of the task and returns a boolean value indicating whether the task was successful.
+ *
+ * @param logLabel A label to use for logging.
+ * @return True if the task was successful, false otherwise.
+ */
 suspend fun <T> Task<T>.awaitBoolean(logLabel: String): Boolean =
     suspendCoroutine { continuation ->
         addOnCompleteListener {
