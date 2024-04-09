@@ -17,3 +17,4 @@ local.properties
 key.properties
 google-services.json
 stash.diff
+*.jks
