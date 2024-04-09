@@ -43,12 +43,12 @@ jobs:
       - name: Create Google Services JSON File
         env:
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
-        run: echo $GOOGLE_SERVICES_JSON > ./app/google-services.json
+        run: echo "$GOOGLE_SERVICES_JSON" > ./app/google-services.json
 
       - name: Create Local Properties File
         env:
           LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
-        run: echo $LOCAL_PROPERTIES > ./local.properties
+        run: echo "$LOCAL_PROPERTIES" > ./local.properties
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
