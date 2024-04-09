@@ -46,7 +46,8 @@ jobs:
       - name: Create Local Properties File
         env:
           LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
-        run: echo $LOCAL_PROPERTIES > ./local.properties
+        run: |
+          echo "$LOCAL_PROPERTIES" | base64 -d > local.properties
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
