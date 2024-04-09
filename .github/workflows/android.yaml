@@ -50,6 +50,14 @@ jobs:
         run: |
           echo "$LOCAL_PROPERTIES" | base64 -d > local.properties
 
+      - name: Create Key Store File
+        env:
+          RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
+          RELEASE_KEYSTORE_PASSPHRASE: ${{ secrets.RELEASE_KEYSTORE_PASSPHRASE }}
+        run: |
+          echo "$RELEASE_KEYSTORE" > testKeyStore.jks.asc
+          gpg -d --passphrase "$RELEASE_KEYSTORE_PASSPHRASE" --batch testKeyStore.jks.asc > app/testKeyStore.jks
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
