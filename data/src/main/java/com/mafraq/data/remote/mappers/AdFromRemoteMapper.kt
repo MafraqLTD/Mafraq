@@ -11,6 +11,7 @@ class AdFromRemoteMapper @Inject constructor(
 
     override fun map(from: AdRemote): Ad = from.run {
         Ad(
+            id = id.orEmpty(),
             title = title.orEmpty(),
             description = description.orEmpty(),
             imageUrl = imageUrl.orEmpty()

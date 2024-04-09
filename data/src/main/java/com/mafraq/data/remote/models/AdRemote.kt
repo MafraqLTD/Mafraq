@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 
 data class AdRemote(
+    @SerializedName("Ad ID")
+    val id: String?,
     @SerializedName("Title")
     val title: String?,
     @SerializedName("Description")
