@@ -9,7 +9,12 @@ fun setProjectProperties(files: List<String>) = files.forEach {
     Properties().apply {
         load(file(it).inputStream())
         forEach { key, value ->
-            extra.set(key.toString(), value.toString().replace("\"", ""))
+            if (extra.has(key.toString())) {
+                if ((extra[key.toString()] as? String).isNullOrEmpty())
+                    extra.set(key.toString(), value.toString().replace("\"", ""))
+            } else {
+                extra.set(key.toString(), value.toString().replace("\"", ""))
+            }
         }
     }
 }
