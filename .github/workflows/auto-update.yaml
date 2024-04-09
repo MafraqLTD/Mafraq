@@ -13,6 +13,12 @@ jobs:
   autoupdate:
     name: Auto Update
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+      repository-projects: write
+
     steps:
       - uses: chinthakagodawita/autoupdate@v1.7.0
         env:
