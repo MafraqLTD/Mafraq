@@ -1,6 +1,14 @@
 name: Auto Update
 on:
-  push: {}
+  push:
+    branches:
+      - master
+      - develop
+  pull_request:
+    branches:
+      - master
+      - develop
+
 jobs:
   autoupdate:
     name: Auto Update
