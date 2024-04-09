@@ -16,15 +16,16 @@ fun getLocalProperty(key: String, file: String? = null): String {
     val files = (defaultFiles + file).mapNotNull { it }
 
     files.forEach {
-       val localProperties = File(it)
-       if (localProperties.isFile) {
-           runCatching {
-               InputStreamReader(FileInputStream(localProperties), Charsets.UTF_8).use { reader ->
-                   properties.load(reader)
-               }
-           }
-       }
-   }
+        val localProperties = File(it)
+        if (localProperties.isFile) {
+            runCatching {
+                InputStreamReader(FileInputStream(localProperties), Charsets.UTF_8).use { reader ->
+                    if (properties[key] in listOf(null, ""))
+                        properties.load(reader)
+                }
+            }
+        }
+    }
 
     return properties.getProperty(key).toString()
 }
