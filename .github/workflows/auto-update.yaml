@@ -1,12 +1,12 @@
-name: autoupdate
+name: Auto Update
 on:
   push: {}
 jobs:
   autoupdate:
-    name: autoupdate
-    runs-on: ubuntu-22.04
+    name: Auto Update
+    runs-on: ubuntu-latest
     steps:
-      - uses: docker://chinthakagodawita/autoupdate-action:v1.7.0
+      - uses: chinthakagodawita/autoupdate@v1.7.0
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           DRY_RUN: "false"
