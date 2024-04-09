@@ -21,7 +21,6 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
         maven(url = "https://jitpack.io")
-        maven(url = "https://jitpack.io")
         maven(url = "https://developer.huawei.com/repo/")
     }
 }
@@ -36,7 +35,7 @@ dependencyResolutionManagement {
         maven(url = "https://jitpack.io")
         // Mapbox Maven repository
         maven(url = "https://api.mapbox.com/downloads/v2/releases/maven") {
-            val mapboxDownloadToken: String by settings
+            val mapboxDownloadToken: String = extra.get("MAPBOX_DOWNLOAD_TOKEN") as String
             credentials.username = "mapbox"
             credentials.password = mapboxDownloadToken
             authentication.create<BasicAuthentication>("basic")

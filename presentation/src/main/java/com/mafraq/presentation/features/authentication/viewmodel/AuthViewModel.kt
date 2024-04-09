@@ -26,7 +26,7 @@ class AuthViewModel @Inject constructor(
         updateState { copy(isLoading = true, error = null) }
 
         tryToExecute(block = { userRepository.register(body = state.value.toRegisterBody()) },
-            checkSuccess = { it.isSuccess },
+            checkSuccess = { it },
             onSuccess = {
                 updateState(notifyEvent = RegisterEvent.OnRegister) {
                     copy(
@@ -59,6 +59,7 @@ class AuthViewModel @Inject constructor(
 
         tryToExecute(
             block = { userRepository.login(body = state.value.toLoginBody()) },
+            checkSuccess = { it },
             onSuccess = {
                 emitNewEvent(LoginEvent.OnLogin)
             },
@@ -70,9 +71,7 @@ class AuthViewModel @Inject constructor(
         updateState(notifyEvent = LoginEvent.OnNavigateToRegister) { copy(error = null) }
     }
 
-    override fun setRememberMe(value: Boolean) = updateState { copy(rememberMe = value) }
-
     override fun validateLoginFields(): Boolean = state.value.run {
-        email.isNotEmpty() && password.isNotEmpty()
+        email.isNotEmpty() && password.isNotEmpty() && password.length >= 6
     }
 }

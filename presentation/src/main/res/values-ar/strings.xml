@@ -42,4 +42,8 @@
     <string name="accept">قبول</string>
     <string name="cancel">إلغاء</string>
     <string name="send_subscribe_request">إرسال طلب الاشتراك</string>
+    <string name="set_destination">تعيين الوجهة</string>
+    <string name="where_is_your_destination">أين تكون وجهتك؟</string>
+    <string name="please_check_your_email">يرجى التحقق من تأكيد بريدك الإلكتروني</string>
+    <string name="done">تم</string>
 </resources>

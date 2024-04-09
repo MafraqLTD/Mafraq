@@ -1,4 +1,4 @@
-package com.mafraq.data.errors
+package com.mafraq.data.remote.errors
 
 import java.io.IOException
 import java.net.ConnectException
