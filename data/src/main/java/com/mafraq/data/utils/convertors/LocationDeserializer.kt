@@ -1,4 +1,4 @@
-package com.mafraq.data.remote.service
+package com.mafraq.data.utils.convertors
 
 import com.altaie.prettycode.core.utils.extenstions.fromJson
 import com.google.gson.*
