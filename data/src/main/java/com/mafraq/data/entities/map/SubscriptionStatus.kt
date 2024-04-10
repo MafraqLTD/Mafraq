@@ -1,6 +1,6 @@
 package com.mafraq.data.entities.map
 
-import com.mafraq.data.utils.titlecase
+import com.mafraq.data.utils.pascalcase
 
 
 enum class SubscriptionStatus {
@@ -10,7 +10,7 @@ enum class SubscriptionStatus {
 
     companion object {
         fun fromString(value: String?): SubscriptionStatus =
-            when (value?.titlecase()) {
+            when (value?.pascalcase()?.replace(" ", "")) {
                 Full.name -> Full
                 NeedMore.name -> NeedMore
                 Empty.name -> Empty

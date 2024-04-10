@@ -20,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import com.mafraq.data.utils.convertors.LocationDeserializer
-import com.mafraq.data.utils.convertors.SeparatedValuesListDeserializer
+import com.mafraq.data.utils.convertors.SeparatedValuesListOfStringDeserializer
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -33,7 +33,7 @@ object RemoteApiModule {
             .setLenient()
             .disableHtmlEscaping()
             .registerTypeAdapter(LocationRemote::class.java, LocationDeserializer())
-            .registerTypeAdapter(SeparatedValuesList::class.java, SeparatedValuesListDeserializer())
+            .registerTypeAdapter(SeparatedValuesList::class.java, SeparatedValuesListOfStringDeserializer())
             .create()
     }
 

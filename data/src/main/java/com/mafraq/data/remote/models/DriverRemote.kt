@@ -23,6 +23,12 @@ data class DriverRemote(
     val subscriptionStatus: String?,
     @SerializedName("Subscribers Ids")
     val subscribersIds: SeparatedValuesList<String>?,
+    @SerializedName("Subscribers Name")
+    val subscribersName: SeparatedValuesList<String>?,
+    @SerializedName("Subscribers Picture")
+    val subscribersPicture: SeparatedValuesList<String>?,
+    @SerializedName("Subscribers Location")
+    val subscribersLocation: SeparatedValuesList<String>?,
     @SerializedName("Car")
     val car: String?,
     @SerializedName("Car Number")

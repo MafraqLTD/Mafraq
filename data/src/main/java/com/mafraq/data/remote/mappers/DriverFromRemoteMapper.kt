@@ -23,7 +23,7 @@ class DriverFromRemoteMapper @Inject constructor()
             carNumber = carNumber.orEmpty(),
             rating = rating?.toDoubleOrNull()?.toString().orEmpty(),
             snippet = snippet.orEmpty(),
-            subscribersIds = subscribersIds?.value.orEmpty(),
+            subscribers = toSubscribers(),
             subscriptionStatus = SubscriptionStatus.fromString(subscriptionStatus)
         )
     }
