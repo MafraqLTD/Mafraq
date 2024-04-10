@@ -5,18 +5,16 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.mafraq.presentation.features.chat.ChatScreen
-import com.mafraq.presentation.features.chat.ChatViewModel
 import com.mafraq.presentation.navigation.Screen
 import com.mafraq.presentation.utils.extensions.navigate
-import com.mafraq.presentation.utils.extensions.sharedViewModel
 
 
-internal fun NavController.navigateToChat() {
-    navigate(screen = Screen.Chat, popBackstack = false)
+internal fun NavController.navigateToChatWithSupport() {
+    navigate(screen = Screen.ChatWithSupport, popBackstack = false)
 }
 
-internal fun NavGraphBuilder.chatDestination(navController: NavController) {
-    composable(Screen.Chat.route) {
+internal fun NavGraphBuilder.chatWithSupportDestination(navController: NavController) {
+    composable(Screen.ChatWithSupport.route) {
         ChatScreen(viewModel = hiltViewModel(), navController = navController)
     }
 }

@@ -32,6 +32,7 @@ fun App(isAuthorized: Boolean) {
         val showNavigationBar = with(backStackEntry) {
             currentRoute in listOf(
                 Screen.Home.route,
+                Screen.GroupChat.route,
                 Screen.Profile.route,
                 Screen.Notifications.route,
             )

@@ -46,5 +46,6 @@
     <string name="where_is_your_destination">Where is your destination?</string>
     <string name="please_check_your_email">Please check your email for verification</string>
     <string name="done">Done</string>
+    <string name="group">Group</string>
 
 </resources>
