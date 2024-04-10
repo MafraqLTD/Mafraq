@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.mafraq.BuildConfig
 import com.mafraq.Constants
-import com.mafraq.data.entities.SeparatedValuesList
+import com.mafraq.data.entities.SeparatedValuesListOfString
 import com.mafraq.data.remote.interceptor.HeaderInterceptor
 import com.mafraq.data.remote.models.LocationRemote
 import com.mafraq.data.remote.service.RetableService
@@ -33,7 +33,7 @@ object RemoteApiModule {
             .setLenient()
             .disableHtmlEscaping()
             .registerTypeAdapter(LocationRemote::class.java, LocationDeserializer())
-            .registerTypeAdapter(SeparatedValuesList::class.java, SeparatedValuesListOfStringDeserializer())
+            .registerTypeAdapter(SeparatedValuesListOfString::class.java, SeparatedValuesListOfStringDeserializer())
             .create()
     }
 

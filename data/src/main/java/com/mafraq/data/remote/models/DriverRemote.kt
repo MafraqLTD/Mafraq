@@ -1,7 +1,7 @@
 package com.mafraq.data.remote.models
 
 import com.google.gson.annotations.SerializedName
-import com.mafraq.data.entities.SeparatedValuesList
+import com.mafraq.data.entities.SeparatedValuesListOfString
 
 
 data class DriverRemote(
@@ -22,13 +22,13 @@ data class DriverRemote(
     @SerializedName("Subscription Status")
     val subscriptionStatus: String?,
     @SerializedName("Subscribers Ids")
-    val subscribersIds: SeparatedValuesList<String>?,
+    val subscribersIds: SeparatedValuesListOfString?,
     @SerializedName("Subscribers Name")
-    val subscribersName: SeparatedValuesList<String>?,
+    val subscribersName: SeparatedValuesListOfString?,
     @SerializedName("Subscribers Picture")
-    val subscribersPicture: SeparatedValuesList<String>?,
+    val subscribersPicture: SeparatedValuesListOfString?,
     @SerializedName("Subscribers Location")
-    val subscribersLocation: SeparatedValuesList<String>?,
+    val subscribersLocation: SeparatedValuesListOfString?,
     @SerializedName("Car")
     val car: String?,
     @SerializedName("Car Number")
