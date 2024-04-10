@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.mafraq.BuildConfig
 import com.mafraq.Constants
+import com.mafraq.data.entities.SeparatedValuesList
 import com.mafraq.data.remote.interceptor.HeaderInterceptor
 import com.mafraq.data.remote.models.LocationRemote
 import com.mafraq.data.remote.service.RetableService
@@ -18,7 +19,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
-import com.mafraq.data.remote.service.LocationDeserializer
+import com.mafraq.data.utils.convertors.LocationDeserializer
+import com.mafraq.data.utils.convertors.SeparatedValuesListDeserializer
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -31,6 +33,7 @@ object RemoteApiModule {
             .setLenient()
             .disableHtmlEscaping()
             .registerTypeAdapter(LocationRemote::class.java, LocationDeserializer())
+            .registerTypeAdapter(SeparatedValuesList::class.java, SeparatedValuesListDeserializer())
             .create()
     }
 
