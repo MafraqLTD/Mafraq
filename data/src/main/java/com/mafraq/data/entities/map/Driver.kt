@@ -1,5 +1,7 @@
 package com.mafraq.data.entities.map
 
+import com.mafraq.data.entities.Subscriber
+
 
 data class Driver(
     val birthday: String = "",
@@ -13,5 +15,6 @@ data class Driver(
     val fullName: String = "",
     val phone: String = "",
     val profilePicture: String = "",
-    val subscriptionStatus: String = ""
+    val subscriptionStatus: SubscriptionStatus = SubscriptionStatus.Empty,
+    val subscribers: List<Subscriber> = emptyList()
 )
