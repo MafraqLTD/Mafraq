@@ -14,7 +14,7 @@ class FirebaseFireStoreDelegationImpl @Inject constructor(
         chatCollection.asFlow()
     }
     override val chatCollection: CollectionReference
-        get() = error("Not yet implemented")
+        get() = error("Not yet implemented, chatCollection should be overrided in the subclass")
 
     override suspend fun fetchMessages(): List<Message> =
         chatCollection.fetchAll()
