@@ -63,7 +63,7 @@ fun MessageItem(
                             .clip(CircleShape)
                     )
                 else
-                    FirstCharItem(text = message.senderName)
+                    FirstCharAvatarReplacement(text = message.senderName)
 
                 Spacer.ExtraSmall(vertical = false)
 
@@ -98,7 +98,7 @@ private fun Content(
             if (showSender)
                 Text(
                     text = message.senderName,
-                    style = MafraqTheme.typography.label,
+                    style = typography.label,
                     color = senderNameColor
                 )
 
@@ -110,7 +110,7 @@ private fun Content(
             ) {
                 Text(
                     text = message.receiveDate,
-                    style = MafraqTheme.typography.label,
+                    style = typography.label,
                 )
 
                 Icon(
@@ -125,7 +125,7 @@ private fun Content(
 }
 
 @Composable
-private fun FirstCharItem(
+private fun FirstCharAvatarReplacement(
     text: String,
     size: Dp = 32.dp,
     shape: Shape = CircleShape,
