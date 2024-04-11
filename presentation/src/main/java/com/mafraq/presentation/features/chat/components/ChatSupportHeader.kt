@@ -23,7 +23,7 @@ import com.mafraq.presentation.design.theme.MafraqTheme
 import com.mafraq.presentation.utils.extensions.painter
 
 @Composable
-fun ChatHeader(
+fun ChatSupportHeader(
     title: String,
     isUserActive: Boolean,
     onNavigateBack: () -> Unit,
@@ -46,7 +46,10 @@ fun ChatHeader(
                     alignment = Alignment.CenterHorizontally
                 )
             ) {
-                Text(text = title)
+                Text(
+                    text = title,
+                    style = MafraqTheme.typography.titleLarge
+                )
 
                 Badge(
                     containerColor = statusColor,
