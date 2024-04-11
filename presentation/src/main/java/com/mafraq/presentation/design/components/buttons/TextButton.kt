@@ -1,4 +1,4 @@
-package com.mafraq.presentation.design.components
+package com.mafraq.presentation.design.components.buttons
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

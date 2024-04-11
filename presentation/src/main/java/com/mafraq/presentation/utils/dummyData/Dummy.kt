@@ -2,7 +2,7 @@ package com.mafraq.presentation.utils.dummyData
 
 import com.mafraq.data.entities.chat.Message
 import com.mafraq.data.entities.notifications.Notification
-import com.mafraq.presentation.features.chat.ChatUiState
+import com.mafraq.presentation.features.chat.support.ChatSupportUiState
 import com.mafraq.presentation.utils.extensions.emptyString
 import java.util.UUID
 
@@ -78,13 +78,13 @@ internal object Dummy {
     )
 
     object DummyChatUiState {
-        val activeState = ChatUiState(
+        val activeState = ChatSupportUiState(
             title = "Support",
             isUserActive = true,
             messages = dummyMessages
         )
 
-        val inactiveState = ChatUiState(
+        val inactiveState = ChatSupportUiState(
             title = "Support",
             isUserActive = false,
             messages = dummyMessages

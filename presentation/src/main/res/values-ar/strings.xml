@@ -46,4 +46,6 @@
     <string name="where_is_your_destination">أين تكون وجهتك؟</string>
     <string name="please_check_your_email">يرجى التحقق من تأكيد بريدك الإلكتروني</string>
     <string name="done">تم</string>
+    <string name="group">المجموعة</string>
+    <string name="members">%d أعضاء، %d متصل الآن</string>
 </resources>

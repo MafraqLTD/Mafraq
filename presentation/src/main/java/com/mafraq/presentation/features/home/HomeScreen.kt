@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.mafraq.presentation.R
-import com.mafraq.presentation.design.components.AppButtonIcon
+import com.mafraq.presentation.design.components.buttons.AppButtonIcon
 import com.mafraq.presentation.design.components.AppCard
 import com.mafraq.presentation.design.components.ColumnPreview
 import com.mafraq.presentation.design.components.SearchField
@@ -37,7 +37,7 @@ import com.mafraq.presentation.design.theme.MafraqTheme.sizes
 import com.mafraq.presentation.design.theme.MafraqTheme.typography
 import com.mafraq.presentation.features.home.components.AdsCarouselCard
 import com.mafraq.presentation.features.home.components.VerificationStatus
-import com.mafraq.presentation.navigation.destinations.navigateToChat
+import com.mafraq.presentation.navigation.destinations.navigateToChatSupport
 import com.mafraq.presentation.navigation.destinations.navigateToMap
 import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.detectTapGestures
@@ -72,7 +72,7 @@ fun HomeScreen(
     event?.Listen { currentEvent ->
         when (currentEvent) {
             HomeEvent.NavigateToMap -> locationRequester.request()
-            HomeEvent.NavigateToSupportChat -> navController.navigateToChat()
+            HomeEvent.NavigateToSupportChat -> navController.navigateToChatSupport()
         }
     }
 }

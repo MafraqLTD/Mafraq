@@ -1,4 +1,4 @@
-package com.mafraq.presentation.features.chat
+package com.mafraq.presentation.features.chat.support
 
 import com.mafraq.data.entities.chat.Message
 import com.mafraq.presentation.features.base.BaseViewModel
@@ -8,9 +8,10 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class ChatViewModel @Inject constructor(
+class ChatSupportViewModel @Inject constructor(
 
-) : BaseViewModel<ChatUiState, ChatEvent>(ChatUiState()), ChatInteractionListener {
+) : BaseViewModel<ChatSupportUiState, ChatSupportEvent>(ChatSupportUiState()),
+    ChatSupportInteractionListener {
     override fun onSendMessage() {
         val message = Message(
             isFromMe = true,
@@ -28,7 +29,7 @@ class ChatViewModel @Inject constructor(
     }
 
     override fun onNavigateBack() {
-        emitNewEvent(ChatEvent.OnNavigateBack)
+        emitNewEvent(ChatSupportEvent.OnNavigateBack)
     }
 
     override fun onMessageChange(value: String) = updateState {
