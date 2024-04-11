@@ -1,4 +1,4 @@
-package com.mafraq.presentation.features.chatSupport
+package com.mafraq.presentation.features.chat.support
 
 
 sealed interface ChatSupportEvent {

@@ -1,4 +1,4 @@
-package com.mafraq.presentation.features.chatSupport
+package com.mafraq.presentation.features.chat.support
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
@@ -21,8 +21,8 @@ import com.mafraq.presentation.R
 import com.mafraq.presentation.design.components.AppOutlinedTextField
 import com.mafraq.presentation.design.components.ColumnPreview
 import com.mafraq.presentation.design.theme.MafraqTheme.sizes
-import com.mafraq.presentation.features.chatSupport.components.ChatHeader
-import com.mafraq.presentation.features.chatSupport.components.MessageItem
+import com.mafraq.presentation.features.chat.components.ChatHeader
+import com.mafraq.presentation.features.chat.components.MessageItem
 import com.mafraq.presentation.utils.dummyData.Dummy
 import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.detectTapGestures

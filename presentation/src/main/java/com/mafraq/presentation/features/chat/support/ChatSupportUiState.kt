@@ -1,4 +1,4 @@
-package com.mafraq.presentation.features.chatSupport
+package com.mafraq.presentation.features.chat.support
 
 import com.mafraq.data.entities.chat.Message
 import com.mafraq.presentation.utils.extensions.emptyString

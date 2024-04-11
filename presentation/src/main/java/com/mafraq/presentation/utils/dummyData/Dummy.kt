@@ -2,7 +2,7 @@ package com.mafraq.presentation.utils.dummyData
 
 import com.mafraq.data.entities.chat.Message
 import com.mafraq.data.entities.notifications.Notification
-import com.mafraq.presentation.features.chatSupport.ChatSupportUiState
+import com.mafraq.presentation.features.chat.support.ChatSupportUiState
 import com.mafraq.presentation.features.home.components.AdModel
 import com.mafraq.presentation.utils.extensions.emptyString
 import java.util.UUID
