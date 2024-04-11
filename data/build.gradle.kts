@@ -1,40 +1,23 @@
 @file:Suppress("UnstableApiUsage")
 
-import com.gateway.buildscr.Config
 import com.gateway.buildscr.Config.Version
+import com.gateway.buildscr.applyConfiguration
+import com.gateway.buildscr.buildConfigField
 
 plugins {
-    alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
-    id("com.google.dagger.hilt.android")
+    id(libs.plugins.kotlin.serialization.get().pluginId)
+    id(libs.plugins.android.library.get().pluginId)
+    id(libs.plugins.kotlin.android.get().pluginId)
+    id(libs.plugins.kotlin.kapt.get().pluginId)
+    id(libs.plugins.hilt.get().pluginId)
 }
 
 android {
     namespace = "com.mafraq.data"
-    compileSdk = Version.COMPILE_SDK
-    buildToolsVersion = Version.BUILD_TOOLS
 
-    defaultConfig {
-        minSdk = Version.MIN_SDK
-
-        testInstrumentationRunner = Config.ANDROID_TEST_INSTRUMENTATION
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = Version.JVM
-        targetCompatibility = Version.JVM
+    applyConfiguration {
+        buildConfigField<String>(key = "RETABLE_ADS_TABLE_ID")
+        buildConfigField<String>(key = "RETABLE_DRIVER_TABLE_ID")
     }
 
     kotlinOptions {
@@ -50,6 +33,7 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.bundles.implementation.androidx)
     implementation(libs.bundles.implementation.utils)
+    api(libs.bundles.implementation.web)
     kapt(libs.hilt.compiler)
     androidTestImplementation(libs.bundles.androidTestImplementation)
     testImplementation(libs.test.junit)

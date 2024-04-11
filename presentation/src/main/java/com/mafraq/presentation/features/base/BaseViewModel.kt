@@ -5,13 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.altaie.prettycode.core.exceptions.GpsProviderIsDisabledException
 import com.altaie.prettycode.core.exceptions.ResponseException
 import com.altaie.prettycode.core.exceptions.ValidationException
-import com.mafraq.data.entities.ApiResponse
-import com.mafraq.data.errors.ConnectionException
-import com.mafraq.data.errors.EmptyBodyException
-import com.mafraq.data.errors.InternetDisconnectedException
-import com.mafraq.data.errors.TimeoutException
-import com.mafraq.data.errors.UnAuthorizedException
-import com.mafraq.data.utils.errorMessage
+import com.mafraq.data.remote.errors.ConnectionException
+import com.mafraq.data.remote.errors.EmptyBodyException
+import com.mafraq.data.remote.errors.InternetDisconnectedException
+import com.mafraq.data.remote.errors.TimeoutException
+import com.mafraq.data.remote.errors.UnAuthorizedException
 import com.mafraq.data.utils.getValueOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -50,15 +48,13 @@ abstract class BaseViewModel<S, E>(initState: S) : ViewModel() {
         return inScope.launch(Dispatchers.IO) {
             runCatching { block() }
                 .onSuccess { response ->
+                    Timber.d(response.toString())
                     if (checkSuccess(response)) {
                         onSuccess(response)
                         return@onSuccess
                     }
 
-                    if (response is ApiResponse)
-                        onError(ErrorState.RequestFailed(response.message.also(Timber::d)))
-                    else
-                        onError(ErrorState.RequestFailed())
+                    onError(ErrorState.RequestFailed())
                 }
                 .onFailure { mapExceptionToErrorState(throwable = it, onError = onError) }
             onCompleted()
@@ -112,6 +108,7 @@ abstract class BaseViewModel<S, E>(initState: S) : ViewModel() {
     }
 
     private fun mapExceptionToErrorState(throwable: Throwable, onError: (ErrorState) -> Unit) {
+        Timber.e(throwable)
         val message = throwable.message.getValueOf("message")
 
         val exception = when (throwable) {
@@ -133,12 +130,12 @@ abstract class BaseViewModel<S, E>(initState: S) : ViewModel() {
             is GpsProviderIsDisabledException -> ErrorState.GpsProviderIsDisabled(exception.message)
             is ResponseException -> {
                 when (exception.code) {
-                    HttpStatus.SC_UNAUTHORIZED -> ErrorState.UnAuthorized(exception.errorMessage)
+                    HttpStatus.SC_UNAUTHORIZED -> ErrorState.UnAuthorized(exception.message)
                     HttpStatus.SC_TOO_MANY_REQUESTS -> ErrorState.RequestFailed(
                         TOO_MANY_REQUESTS
                     )
 
-                    else -> ErrorState.RequestFailed(exception.errorMessage)
+                    else -> ErrorState.RequestFailed(exception.message)
                 }
             }
 

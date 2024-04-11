@@ -11,8 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.mafraq.presentation.R
-import com.mafraq.presentation.design.components.AppButton
-import com.mafraq.presentation.design.components.AppCheckbox
+import com.mafraq.presentation.design.components.buttons.AppButton
 import com.mafraq.presentation.design.components.AppOutlinedTextField
 import com.mafraq.presentation.design.components.ColumnPreview
 import com.mafraq.presentation.design.components.Spacer
@@ -74,15 +73,6 @@ private fun Content(
             onValueChange = listener::setPassword,
             isError = false,
             modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer.Small()
-
-        AppCheckbox(
-            modifier = Modifier.fillMaxWidth(),
-            initialState = state.rememberMe,
-            label = R.string.remember_me.string,
-            onCheckedChange = listener::setRememberMe
         )
 
         Spacer.Large()

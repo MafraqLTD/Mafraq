@@ -9,7 +9,12 @@ fun setProjectProperties(files: List<String>) = files.forEach {
     Properties().apply {
         load(file(it).inputStream())
         forEach { key, value ->
-            extra.set(key.toString(), value.toString().replace("\"", ""))
+            if (extra.has(key.toString())) {
+                if ((extra[key.toString()] as? String).isNullOrEmpty())
+                    extra.set(key.toString(), value.toString().replace("\"", ""))
+            } else {
+                extra.set(key.toString(), value.toString().replace("\"", ""))
+            }
         }
     }
 }
@@ -20,7 +25,6 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
-        maven(url = "https://jitpack.io")
         maven(url = "https://jitpack.io")
         maven(url = "https://developer.huawei.com/repo/")
     }
@@ -36,7 +40,7 @@ dependencyResolutionManagement {
         maven(url = "https://jitpack.io")
         // Mapbox Maven repository
         maven(url = "https://api.mapbox.com/downloads/v2/releases/maven") {
-            val mapboxDownloadToken: String by settings
+            val mapboxDownloadToken: String = extra.get("MAPBOX_DOWNLOAD_TOKEN") as String
             credentials.username = "mapbox"
             credentials.password = mapboxDownloadToken
             authentication.create<BasicAuthentication>("basic")

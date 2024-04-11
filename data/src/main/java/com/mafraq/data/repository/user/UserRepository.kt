@@ -1,24 +1,19 @@
 package com.mafraq.data.repository.user
 
-import com.mafraq.data.entities.ApiResponse
 import com.mafraq.data.entities.login.LoginBody
-import com.mafraq.data.entities.login.User
+import com.mafraq.data.entities.login.AuthUser
 import com.mafraq.data.entities.register.RegisterBody
 
 
 interface UserRepository {
 
-    suspend fun login(body: LoginBody): User
+    suspend fun login(body: LoginBody): Boolean
 
-    suspend fun register(body: RegisterBody): ApiResponse
+    suspend fun register(body: RegisterBody): Boolean
 
     suspend fun logout(): Boolean
 
-    suspend fun checkAuth(): Boolean
+    fun isAuthorized(): Boolean
 
-    suspend fun getUserInfo(): User?
-
-    fun isTokenExists(): Boolean
-
-    suspend fun onSessionExpired()
+    fun getUserInfo(): AuthUser?
 }

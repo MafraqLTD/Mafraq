@@ -12,7 +12,6 @@ data class AuthUiState(
     val email: String = emptyString(),
     val password: String = emptyString(),
     val confirmPassword: String = emptyString(),
-    val rememberMe: Boolean = false,
     val isLoading: Boolean = false,
     val error: ErrorState? = null,
 ) {
@@ -21,7 +20,6 @@ data class AuthUiState(
     fun toLoginBody() = LoginBody(
         email = email,
         password = password,
-        rememberMe = rememberMe
     )
 
     fun toRegisterBody() = RegisterBody(
