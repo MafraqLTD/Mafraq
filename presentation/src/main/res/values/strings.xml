@@ -47,6 +47,6 @@
     <string name="please_check_your_email">Please check your email for verification</string>
     <string name="done">Done</string>
     <string name="group">Group</string>
-    <string name="members">%d members, %d online now</string>
+    <string name="members" formatted="false">%d members, %d online now</string>
 
 </resources>
