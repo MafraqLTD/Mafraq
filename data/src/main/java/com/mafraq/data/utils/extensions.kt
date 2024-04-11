@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.location.LocationManager
 import com.altaie.prettycode.core.base.Resource
+import com.altaie.prettycode.core.utils.extenstions.fromJson
 import com.google.android.gms.tasks.Task
+import com.google.gson.JsonElement
 import com.mafraq.data.entities.map.Location
 import com.mafraq.data.remote.errors.EmptyBodyException
 import kotlinx.serialization.json.Json
@@ -43,7 +45,10 @@ fun AndroidLocation.toDomain() = Location(
     longitude = longitude
 )
 
-fun String.titlecase() = lowercase().replaceFirstChar { it.uppercase() }
+fun String.titlecase() = lowercase().replaceFirstChar(Char::uppercase)
+
+fun String.pascalcase() = lowercase().split(" ")
+    .joinToString(transform = String::titlecase, separator = " ")
 
 /**
  * Awaits the completion of the task and returns a boolean value indicating whether the task was successful.
@@ -62,3 +67,25 @@ suspend fun <T> Task<T>.awaitBoolean(logLabel: String): Boolean =
             continuation.resume(isSuccessful)
         }
     }
+
+/**
+ * Converts a JSON element to a list of strings.
+ *
+ * @receiver The JSON element to convert.
+ * @return A list of strings, or an empty list if the JSON element is null or empty.
+ */
+fun JsonElement?.toStringList(separator: String = ";"): List<String> = this
+    ?.asString
+    ?.split(separator)
+    ?.filter(String::isNotBlank)
+    ?: emptyList()
+
+
+/**
+ * Maps a list of strings to a list of objects of type `R`.
+ *
+ * @return A list of objects of type `R`, or an empty list if the input list is null.
+ */
+inline fun <reified R> List<String>?.mapToListOf(): List<R> = this?.map {
+    it.fromJson<R>()
+} ?: emptyList()
