@@ -8,23 +8,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.components.AppOutlinedTextField
-import com.mafraq.presentation.design.components.ColumnPreview
 import com.mafraq.presentation.design.theme.MafraqTheme.sizes
 import com.mafraq.presentation.features.chat.components.ChatSupportHeader
 import com.mafraq.presentation.features.chat.components.MessageItem
-import com.mafraq.presentation.utils.dummyData.Dummy
 import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.detectTapGestures
 import com.mafraq.presentation.utils.extensions.painter
@@ -100,11 +96,4 @@ private fun Content(
                 .padding(sizes.medium)
         )
     }
-}
-
-
-@Composable
-@Preview(showBackground = true)
-private fun Preview() = ColumnPreview {
-    Content(state = Dummy.DummyChatUiState.activeState)
 }
