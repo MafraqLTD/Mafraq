@@ -1,4 +1,4 @@
-package com.mafraq.presentation.features.chat.components
+package com.mafraq.presentation.features.chatSupport.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

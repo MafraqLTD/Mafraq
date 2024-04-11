@@ -37,7 +37,7 @@ import com.mafraq.presentation.design.theme.MafraqTheme.sizes
 import com.mafraq.presentation.design.theme.MafraqTheme.typography
 import com.mafraq.presentation.features.home.components.AdsCarouselCard
 import com.mafraq.presentation.features.home.components.VerificationStatus
-import com.mafraq.presentation.navigation.destinations.navigateToChatWithSupport
+import com.mafraq.presentation.navigation.destinations.navigateToChatSupport
 import com.mafraq.presentation.navigation.destinations.navigateToMap
 import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.detectTapGestures
@@ -72,7 +72,7 @@ fun HomeScreen(
     event?.Listen { currentEvent ->
         when (currentEvent) {
             HomeEvent.NavigateToMap -> locationRequester.request()
-            HomeEvent.NavigateToSupportChat -> navController.navigateToChatWithSupport()
+            HomeEvent.NavigateToSupportChat -> navController.navigateToChatSupport()
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.mafraq.presentation.features.chat
+package com.mafraq.presentation.features.chatSupport
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
@@ -17,13 +17,12 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.mafraq.data.entities.chat.Message
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.components.AppOutlinedTextField
 import com.mafraq.presentation.design.components.ColumnPreview
 import com.mafraq.presentation.design.theme.MafraqTheme.sizes
-import com.mafraq.presentation.features.chat.components.ChatHeader
-import com.mafraq.presentation.features.chat.components.MessageItem
+import com.mafraq.presentation.features.chatSupport.components.ChatHeader
+import com.mafraq.presentation.features.chatSupport.components.MessageItem
 import com.mafraq.presentation.utils.dummyData.Dummy
 import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.detectTapGestures
@@ -32,10 +31,10 @@ import com.mafraq.presentation.utils.extensions.string
 
 
 @Composable
-fun ChatScreen(viewModel: ChatViewModel, navController: NavController) {
-    val state: ChatUiState by viewModel.state.collectAsStateWithLifecycle()
-    val event: ChatEvent? by viewModel.event.collectAsState(null)
-    val listener: ChatInteractionListener = viewModel
+fun ChatScreen(viewModel: ChatSupportViewModel, navController: NavController) {
+    val state: ChatSupportUiState by viewModel.state.collectAsStateWithLifecycle()
+    val event: ChatSupportEvent? by viewModel.event.collectAsState(null)
+    val listener: ChatSupportInteractionListener = viewModel
 
     Content(
         state = state,
@@ -44,7 +43,7 @@ fun ChatScreen(viewModel: ChatViewModel, navController: NavController) {
 
     event?.Listen { currentEvent ->
         when (currentEvent) {
-            ChatEvent.OnNavigateBack -> navController.navigateUp()
+            ChatSupportEvent.OnNavigateBack -> navController.navigateUp()
         }
     }
 }
@@ -52,8 +51,8 @@ fun ChatScreen(viewModel: ChatViewModel, navController: NavController) {
 
 @Composable
 private fun Content(
-    state: ChatUiState = ChatUiState(),
-    listener: ChatInteractionListener = ChatInteractionListener.Preview
+    state: ChatSupportUiState = ChatSupportUiState(),
+    listener: ChatSupportInteractionListener = ChatSupportInteractionListener.Preview
 ) {
     val focusManager = LocalFocusManager.current
     Column(
