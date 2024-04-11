@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -74,8 +75,15 @@ private fun Content(
             contentPadding = PaddingValues(sizes.medium),
             verticalArrangement = Arrangement.spacedBy(sizes.small)
         ) {
-            items(items = state.messages) { message ->
-                MessageItem(message = message)
+            itemsIndexed(
+                items = state.messages,
+                key = { _, message -> message.id }) { index, message ->
+                MessageItem(
+                    message = message,
+                    onClick = {
+                        // TODO: Implement context menu
+                    }
+                )
             }
         }
 

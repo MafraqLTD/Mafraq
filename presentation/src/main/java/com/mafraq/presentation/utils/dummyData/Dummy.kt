@@ -13,67 +13,67 @@ internal object Dummy {
             isFromMe = false,
             isRead = true,
             content = "This is other test message",
-            receiveDate = "2:11 PM"
+            timestamp = "2:11 PM"
         ),
         Message(
             isFromMe = true,
             isRead = true,
             content = "This is test message",
-            receiveDate = "2:12 PM"
+            timestamp = "2:12 PM"
         ),
         Message(
             isFromMe = false,
             isRead = false,
             content = "This is other test message",
-            receiveDate = "2:13 PM"
+            timestamp = "2:13 PM"
         ),
         Message(
             isFromMe = true,
             isRead = false,
             content = "This is test message",
-            receiveDate = "2:14 PM"
+            timestamp = "2:14 PM"
         ),
         Message(
             isFromMe = false,
             isRead = false,
             content = "This is other test message",
-            receiveDate = "2:15 PM"
+            timestamp = "2:15 PM"
         ),
         Message(
             isFromMe = true,
             isRead = false,
             content = "This is test message",
-            receiveDate = "2:16 PM"
+            timestamp = "2:16 PM"
         ),
         Message(
             isFromMe = true,
             isRead = false,
             content = "This is test message",
-            receiveDate = "2:17 PM"
+            timestamp = "2:17 PM"
         ),
         Message(
             isFromMe = false,
             isRead = false,
             content = "This is other test message",
-            receiveDate = "2:18 PM"
+            timestamp = "2:18 PM"
         ),
         Message(
             isFromMe = true,
             isRead = false,
             content = "This is test message",
-            receiveDate = "2:19 PM"
+            timestamp = "2:19 PM"
         ),
         Message(
             isFromMe = false,
             isRead = false,
             content = "This is other test message",
-            receiveDate = "2:20 PM"
+            timestamp = "2:20 PM"
         ),
         Message(
             isFromMe = false,
             isRead = false,
             content = "This is other test message",
-            receiveDate = "2:21 PM"
+            timestamp = "2:21 PM"
         ),
     )
 

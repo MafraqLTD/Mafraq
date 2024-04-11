@@ -1,5 +1,7 @@
 package com.mafraq.di
 
+import com.mafraq.data.local.session.SessionLocalDataSource
+import com.mafraq.data.local.session.SessionLocalDataSourceImpl
 import com.mafraq.data.remote.dataSource.crm.CRMRemoteDataSource
 import com.mafraq.data.remote.dataSource.crm.CRMRemoteDataSourceImpl
 import com.mafraq.data.remote.dataSource.user.FirebaseAuthDataSource
@@ -22,5 +24,9 @@ interface DataSourceModule {
     @Binds
     @Singleton
     fun bindCRMRemoteDataSource(dataSource: CRMRemoteDataSourceImpl): CRMRemoteDataSource
+
+    @Binds
+    @Singleton
+    fun bindSessionLocalDataSource(source: SessionLocalDataSourceImpl): SessionLocalDataSource
 
 }
