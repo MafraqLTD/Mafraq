@@ -9,7 +9,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.components.navigation.NavigationBarItem
 import com.mafraq.presentation.navigation.Screen
-import com.mafraq.presentation.navigation.destinations.navigateToGroupChat
+import com.mafraq.presentation.navigation.destinations.navigateToChatGroup
 import com.mafraq.presentation.navigation.destinations.navigateToHome
 import com.mafraq.presentation.navigation.destinations.navigateToNotifications
 import com.mafraq.presentation.navigation.destinations.navigateToProfile
@@ -33,13 +33,13 @@ fun BottomNavigationBar(navController: NavController) {
             onClick = navController::navigateToHome
         )
 
-        val isGroupChatSelected = remember(currentRoute) { Screen.GroupChat.route == currentRoute }
+        val isGroupChatSelected = remember(currentRoute) { Screen.ChatGroup.route == currentRoute }
         NavigationBarItem(
             label = R.string.group.string,
             icon = R.drawable.users_group_outlined.painter,
             iconSelected = R.drawable.users_group_filled.painter,
             selected = isGroupChatSelected,
-            onClick = navController::navigateToGroupChat
+            onClick = navController::navigateToChatGroup
         )
 
         val isProfileSelected = remember(currentRoute) { Screen.Profile.route == currentRoute }

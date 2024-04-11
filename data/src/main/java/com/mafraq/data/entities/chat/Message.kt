@@ -2,8 +2,11 @@ package com.mafraq.data.entities.chat
 
 
 data class Message(
+    val id: String = "",
     val isFromMe: Boolean = false,
     val isRead: Boolean = false,
     val content: String = "",
     val receiveDate: String = "",
+    val senderName: String = "",
+    val senderImageUrl: String = "",
 )

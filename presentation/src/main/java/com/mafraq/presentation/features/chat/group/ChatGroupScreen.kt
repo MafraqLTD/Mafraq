@@ -1,4 +1,4 @@
-package com.mafraq.presentation.features.chat
+package com.mafraq.presentation.features.chat.group
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
@@ -14,16 +14,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.mafraq.data.entities.chat.Message
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.components.AppOutlinedTextField
-import com.mafraq.presentation.design.components.ColumnPreview
 import com.mafraq.presentation.design.theme.MafraqTheme.sizes
-import com.mafraq.presentation.features.chat.components.ChatHeader
+import com.mafraq.presentation.features.chat.components.ChatGroupHeader
+import com.mafraq.presentation.features.chat.components.ChatSupportHeader
 import com.mafraq.presentation.features.chat.components.MessageItem
-import com.mafraq.presentation.utils.dummyData.Dummy
 import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.detectTapGestures
 import com.mafraq.presentation.utils.extensions.painter
@@ -31,10 +30,10 @@ import com.mafraq.presentation.utils.extensions.string
 
 
 @Composable
-fun ChatScreen(viewModel: ChatViewModel, navController: NavController) {
-    val state: ChatUiState by viewModel.state.collectAsStateWithLifecycle()
-    val event: ChatEvent? by viewModel.event.collectAsState(null)
-    val listener: ChatInteractionListener = viewModel
+fun ChatGroupScreen(viewModel: ChatGroupViewModel, navController: NavController) {
+    val state: ChatGroupUiState by viewModel.state.collectAsStateWithLifecycle()
+    val event: ChatGroupEvent? by viewModel.event.collectAsState(null)
+    val listener: ChatGroupInteractionListener = viewModel
 
     Content(
         state = state,
@@ -43,7 +42,7 @@ fun ChatScreen(viewModel: ChatViewModel, navController: NavController) {
 
     event?.Listen { currentEvent ->
         when (currentEvent) {
-            ChatEvent.OnNavigateBack -> navController.navigateUp()
+            ChatGroupEvent.OnNavigateBack -> navController.navigateUp()
         }
     }
 }
@@ -51,8 +50,8 @@ fun ChatScreen(viewModel: ChatViewModel, navController: NavController) {
 
 @Composable
 private fun Content(
-    state: ChatUiState = ChatUiState(),
-    listener: ChatInteractionListener = ChatInteractionListener.Preview
+    state: ChatGroupUiState = ChatGroupUiState(),
+    listener: ChatGroupInteractionListener = ChatGroupInteractionListener.Preview
 ) {
     val focusManager = LocalFocusManager.current
     Column(
@@ -60,10 +59,10 @@ private fun Content(
             .fillMaxSize()
             .detectTapGestures { focusManager.clearFocus() }
     ) {
-        ChatHeader(
+        ChatGroupHeader(
             title = state.title,
-            isUserActive = state.isUserActive,
-            onNavigateBack = listener::onNavigateBack,
+            members = state.members,
+            connectedMembers = state.connectedMembers,
         )
 
         LazyColumn(
@@ -74,12 +73,10 @@ private fun Content(
             contentPadding = PaddingValues(sizes.medium),
             verticalArrangement = Arrangement.spacedBy(sizes.small)
         ) {
-            items(items = state.messages) { message ->
+            items(items = state.messages, key = { it.id }) { message ->
                 MessageItem(
-                    message = message.content,
-                    receiveDate = message.receiveDate,
-                    isFromMe = message.isFromMe,
-                    isRead = message.isRead
+                    message = message,
+                    showSender = true,
                 )
             }
         }
@@ -97,11 +94,4 @@ private fun Content(
                 .padding(sizes.medium)
         )
     }
-}
-
-
-@Composable
-@Preview(showBackground = true)
-private fun Preview() = ColumnPreview {
-    Content(state = Dummy.DummyChatUiState.activeState)
 }
