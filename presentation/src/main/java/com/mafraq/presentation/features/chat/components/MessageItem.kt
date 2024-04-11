@@ -27,7 +27,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.google.firebase.Timestamp
 import com.mafraq.data.entities.chat.Message
+import com.mafraq.data.utils.toFormattedDateTime
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.components.ColumnPreview
 import com.mafraq.presentation.design.components.Spacer
@@ -43,6 +45,7 @@ import com.mafraq.presentation.utils.extensions.painter
 fun MessageItem(
     message: Message,
     showSender: Boolean = false,
+    onClick: () -> Unit = {}
 ) {
     val alignment = if (message.isFromMe) Alignment.CenterEnd else Alignment.CenterStart
     Box(Modifier.fillMaxWidth()) {
@@ -67,10 +70,10 @@ fun MessageItem(
 
                 Spacer.ExtraSmall(vertical = false)
 
-                Content(message = message, showSender = true)
+                Content(message = message, showSender = true, onClick = onClick)
             }
         else
-            Content(message = message, modifier = modifier)
+            Content(message = message, modifier = modifier, onClick = onClick)
     }
 }
 
@@ -80,6 +83,7 @@ private fun Content(
     message: Message,
     modifier: Modifier = Modifier,
     showSender: Boolean = false,
+    onClick: () -> Unit = {},
 ) {
     val receiveIcon = if (message.isRead) R.drawable.ic_read else R.drawable.ic_unread
     val containerColor = if (message.isFromMe) colors.primary else colorScheme.surfaceVariant
@@ -87,6 +91,7 @@ private fun Content(
 
     Card(
         modifier = modifier,
+        onClick = onClick,
         colors = CardDefaults.cardColors(containerColor = containerColor)
     ) {
         Column(
@@ -98,7 +103,7 @@ private fun Content(
             if (showSender)
                 Text(
                     text = message.senderName,
-                    style = MafraqTheme.typography.label,
+                    style = typography.label,
                     color = senderNameColor
                 )
 
@@ -109,8 +114,8 @@ private fun Content(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = message.receiveDate,
-                    style = MafraqTheme.typography.label,
+                    text = message.timestamp.toFormattedDateTime(),
+                    style = typography.label,
                 )
 
                 Icon(
@@ -157,7 +162,7 @@ private fun Preview() = ColumnPreview {
     MessageItem(
         message = Message(
             content = "Hello, World!",
-            receiveDate = "10:11 AM",
+            timestamp = Timestamp.now(),
             isRead = false,
             isFromMe = true,
             senderName = "Ahmed Mones",
@@ -169,7 +174,7 @@ private fun Preview() = ColumnPreview {
     MessageItem(
         message = Message(
             content = "Hello, World!",
-            receiveDate = "10:11 AM",
+            timestamp = Timestamp.now(),
             isRead = false,
             isFromMe = false,
             senderName = "Ahmed Mones",
