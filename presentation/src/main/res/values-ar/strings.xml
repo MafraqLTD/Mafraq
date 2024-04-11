@@ -47,5 +47,5 @@
     <string name="please_check_your_email">يرجى التحقق من تأكيد بريدك الإلكتروني</string>
     <string name="done">تم</string>
     <string name="group">المجموعة</string>
-    <string name="members" formatted="false">%d أعضاء، %d متصل الآن</string>
+    <string name="members" formatted="true">%d أعضاء، %d متصل الآن</string>
 </resources>
