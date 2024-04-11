@@ -1,4 +1,4 @@
-package com.mafraq.data.source.location
+package com.mafraq.data.local.location
 
 import com.mafraq.data.entities.map.Location
 import kotlinx.coroutines.flow.Flow

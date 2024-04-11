@@ -102,6 +102,7 @@ firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 firebase-performance = { module = "com.google.firebase:firebase-perf-ktx" }
 firebase-auth = { module = "com.google.firebase:firebase-auth-ktx" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore-ktx" }
 google-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "googleAuth" }
 support-annotations = { module = "com.android.support:support-annotations", version.ref = "annotations" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
@@ -170,6 +171,7 @@ implementation-utils = [
     'altaie-prettyCode',
     'firebase-analytics',
     'firebase-messaging',
+    'firebase-firestore',
     'firebase-crashlytics',
     'firebase-performance',
     'kotlinx-serialization-json',
