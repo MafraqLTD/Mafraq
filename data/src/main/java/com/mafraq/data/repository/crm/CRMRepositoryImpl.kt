@@ -18,7 +18,7 @@ class CRMRepositoryImpl @Inject constructor(
         crmRemoteDataSource.getDrivers()
 
     override suspend fun getDriver(): Driver {
-        val driverId = sessionLocalDataSource.get()?.driverId ?: error("driverId is null")
-        return crmRemoteDataSource.getDriver(id =driverId)
+        private val session: Session? = sessionLocalDataSource.get()
+        return crmRemoteDataSource.getDriver(id = requireNotNull(session?.driverId))
     }
 }
