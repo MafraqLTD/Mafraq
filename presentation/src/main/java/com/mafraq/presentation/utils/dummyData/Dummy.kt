@@ -6,7 +6,7 @@ import java.util.UUID
 
 
 internal object Dummy {
-
+  
     val dummyNotifications = listOf(
         Notification(
             id = UUID.randomUUID().toString(),

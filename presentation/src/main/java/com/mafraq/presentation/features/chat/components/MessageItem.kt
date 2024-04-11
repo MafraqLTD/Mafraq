@@ -66,7 +66,7 @@ fun MessageItem(
                             .clip(CircleShape)
                     )
                 else
-                    FirstCharItem(text = message.senderName)
+                    FirstCharAvatarReplacement(text = message.senderName)
 
                 Spacer.ExtraSmall(vertical = false)
 
@@ -130,7 +130,7 @@ private fun Content(
 }
 
 @Composable
-private fun FirstCharItem(
+private fun FirstCharAvatarReplacement(
     text: String,
     size: Dp = 32.dp,
     shape: Shape = CircleShape,
