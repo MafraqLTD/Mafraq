@@ -50,9 +50,10 @@ fun InfoCard(
 }
 
 
-@Preview
 @Composable
-fun SimpleComposablePreview() {
+@Preview(showBackground = true)
+fun SimpleComposablePreview() = ColumnPreview{
+    InfoCard("University of Baghdad", "Iraq,street 2018/9")
+    InfoCard("University of Baghdad", "Iraq,street 2018/9")
     InfoCard("University of Baghdad", "Iraq,street 2018/9")
 }
-
