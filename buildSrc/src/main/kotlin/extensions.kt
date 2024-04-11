@@ -10,13 +10,19 @@ import com.android.build.api.dsl.VariantDimension
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 
 
-fun getLocalProperty(key: String, file: String = "local.properties"): String {
+fun getLocalProperty(key: String, file: String? = null): String {
     val properties = Properties()
-    val localProperties = File(file)
-    if (localProperties.isFile) {
-        runCatching {
-            InputStreamReader(FileInputStream(localProperties), Charsets.UTF_8).use { reader ->
-                properties.load(reader)
+    val defaultFiles = listOf("local.properties", "defaults.properties")
+    val files = (defaultFiles + file).mapNotNull { it }
+
+    files.forEach {
+        val localProperties = File(it)
+        if (localProperties.isFile) {
+            runCatching {
+                InputStreamReader(FileInputStream(localProperties), Charsets.UTF_8).use { reader ->
+                    if (properties[key] in listOf(null, ""))
+                        properties.load(reader)
+                }
             }
         }
     }
