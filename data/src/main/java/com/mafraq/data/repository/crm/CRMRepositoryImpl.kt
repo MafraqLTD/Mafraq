@@ -1,5 +1,6 @@
 package com.mafraq.data.repository.crm
 
+import com.mafraq.data.entities.Session
 import com.mafraq.data.entities.home.Ad
 import com.mafraq.data.entities.map.Driver
 import com.mafraq.data.local.session.SessionLocalDataSource
@@ -18,7 +19,7 @@ class CRMRepositoryImpl @Inject constructor(
         crmRemoteDataSource.getDrivers()
 
     override suspend fun getDriver(): Driver {
-        private val session: Session? = sessionLocalDataSource.get()
+        val session: Session? = sessionLocalDataSource.get()
         return crmRemoteDataSource.getDriver(id = requireNotNull(session?.driverId))
     }
 }
