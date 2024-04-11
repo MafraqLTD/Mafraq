@@ -6,4 +6,6 @@ data class Message(
     val isRead: Boolean = false,
     val content: String = "",
     val receiveDate: String = "",
+    val senderName: String = "",
+    val senderImageUrl: String = "",
 )

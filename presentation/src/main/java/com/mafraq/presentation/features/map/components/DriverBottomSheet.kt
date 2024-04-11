@@ -2,7 +2,6 @@ package com.mafraq.presentation.features.map.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
@@ -25,8 +24,7 @@ import com.mafraq.presentation.R
 import com.mafraq.presentation.design.components.BottomSheet
 import com.mafraq.presentation.design.components.ColumnPreview
 import com.mafraq.presentation.design.components.Spacer
-import com.mafraq.presentation.design.components.TextButton
-import com.mafraq.presentation.design.components.TextIcon
+import com.mafraq.presentation.design.components.buttons.TextButton
 import com.mafraq.presentation.design.theme.MafraqTheme
 import com.mafraq.presentation.design.theme.MafraqTheme.shapes
 import com.mafraq.presentation.design.theme.MafraqTheme.sizes

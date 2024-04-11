@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.mafraq.presentation.R
-import com.mafraq.presentation.design.components.AppButtonIcon
+import com.mafraq.presentation.design.components.buttons.AppButtonIcon
 import com.mafraq.presentation.design.components.AppCard
 import com.mafraq.presentation.design.components.ColumnPreview
 import com.mafraq.presentation.design.components.SearchField
