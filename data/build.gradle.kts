@@ -1,6 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-import com.gateway.buildscr.Config
 import com.gateway.buildscr.Config.Version
 import com.gateway.buildscr.applyConfiguration
 import com.gateway.buildscr.buildConfigField
@@ -17,6 +16,7 @@ android {
     namespace = "com.mafraq.data"
 
     applyConfiguration {
+        buildConfigField<String>(key = "RETABLE_ADS_TABLE_ID")
         buildConfigField<String>(key = "RETABLE_DRIVER_TABLE_ID")
     }
 
