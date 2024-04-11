@@ -6,6 +6,7 @@ import android.location.LocationManager
 import com.altaie.prettycode.core.base.Resource
 import com.altaie.prettycode.core.utils.extenstions.fromJson
 import com.google.android.gms.tasks.Task
+import com.google.firebase.Timestamp
 import com.google.gson.JsonElement
 import com.mafraq.data.entities.map.Location
 import com.mafraq.data.remote.errors.EmptyBodyException
@@ -14,6 +15,9 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.TimeZone
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 import android.location.Location as AndroidLocation
@@ -89,3 +93,16 @@ fun JsonElement?.toStringList(separator: String = ";"): List<String> = this
 inline fun <reified R> List<String>?.mapToListOf(): List<R> = this?.map {
     it.fromJson<R>()
 } ?: emptyList()
+
+
+/**
+ * Converts a [Timestamp] object to a formatted date and time string.
+ *
+ * @return The formatted date and time string.
+ */
+fun Timestamp.toFormattedDateTime(): String {
+    val outputFormat = SimpleDateFormat("yy-MM-dd hh:mm a", Locale.US).apply {
+        timeZone = TimeZone.getTimeZone("GMT")
+    }
+    return outputFormat.format(toDate())
+}

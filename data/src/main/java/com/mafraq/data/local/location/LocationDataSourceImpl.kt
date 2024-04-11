@@ -1,4 +1,4 @@
-package com.mafraq.data.source.location
+package com.mafraq.data.local.location
 
 import android.Manifest
 import android.content.Context

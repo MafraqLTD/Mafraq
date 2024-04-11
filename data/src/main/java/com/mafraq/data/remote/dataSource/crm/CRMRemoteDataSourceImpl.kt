@@ -24,4 +24,9 @@ class CRMRemoteDataSourceImpl @Inject constructor(
         suspendFunction = apiService::getDrivers,
         mapper = { driverFromRemoteMapper.mapList(it.items) }
     ).getOrThrowEmpty()
+
+    override suspend fun getDriver(id: String): Driver = apiCall(
+        suspendFunction = { apiService.getDriver(id) },
+        mapper = { driverFromRemoteMapper.map(it.item ?: error("Driver not found")) }
+    ).getOrThrowEmpty()
 }

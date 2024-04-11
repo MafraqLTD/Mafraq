@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -32,19 +33,12 @@ import com.mafraq.presentation.utils.extensions.string
 @Composable
 fun ChatGroupScreen(viewModel: ChatGroupViewModel, navController: NavController) {
     val state: ChatGroupUiState by viewModel.state.collectAsStateWithLifecycle()
-    val event: ChatGroupEvent? by viewModel.event.collectAsState(null)
     val listener: ChatGroupInteractionListener = viewModel
 
     Content(
         state = state,
         listener = listener
     )
-
-    event?.Listen { currentEvent ->
-        when (currentEvent) {
-            ChatGroupEvent.OnNavigateBack -> navController.navigateUp()
-        }
-    }
 }
 
 
@@ -73,10 +67,15 @@ private fun Content(
             contentPadding = PaddingValues(sizes.medium),
             verticalArrangement = Arrangement.spacedBy(sizes.small)
         ) {
-            items(items = state.messages, key = { it.id }) { message ->
+            itemsIndexed(
+                items = state.messages,
+                key = { _, message -> message.id }) { index, message ->
                 MessageItem(
                     message = message,
                     showSender = true,
+                    onClick = {
+                        // TODO: Implement context menu
+                    }
                 )
             }
         }
