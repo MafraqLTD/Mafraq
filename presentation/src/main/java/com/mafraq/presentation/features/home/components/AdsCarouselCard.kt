@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,7 +27,6 @@ import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
@@ -37,24 +34,17 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.tv.material3.Carousel
-import androidx.tv.material3.CarouselDefaults
 import androidx.tv.material3.CarouselState
 import androidx.tv.material3.rememberCarouselState
 import coil.compose.AsyncImage
+import com.mafraq.data.entities.home.Ad
 import com.mafraq.presentation.design.theme.MafraqTheme
 
 
-@Immutable
-data class AdModel(
-    val title: String,
-    val description: String,
-    val imageUrl: String
-)
 
 @Composable
-fun AdsCarouselCard(ads: List<AdModel>, onClick: (Int) -> Unit) {
+fun AdsCarouselCard(ads: List<Ad>, onClick: (Int) -> Unit) {
     var showMore by remember { mutableStateOf(false) }
     val configurations = LocalConfiguration.current
     val cardHeight = with(LocalDensity.current) {
@@ -94,7 +84,7 @@ fun AdsCarouselCard(ads: List<AdModel>, onClick: (Int) -> Unit) {
 
 @Composable
 private fun CarouselItemForeground(
-    adModel: AdModel,
+    adModel: Ad,
     modifier: Modifier = Modifier,
     showMore: Boolean = false,
     onClick: () -> Unit
@@ -154,7 +144,7 @@ private fun CarouselItemForeground(
 
 @Composable
 private fun CarouselItemBackground(
-    adModel: AdModel,
+    adModel: Ad,
     modifier: Modifier = Modifier
 ) {
     AsyncImage(
