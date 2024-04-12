@@ -1,13 +1,13 @@
 package com.mafraq.presentation.features.authentication.listener
 
+import com.mafraq.presentation.utils.validation.ValidationState
 
-interface RegisterInteractionListener {
+
+interface RegisterInteractionListener : AuthInteractionListener {
     fun onRegister()
     fun onNavigateToLogin()
-    fun setEmail(value: String)
-    fun setPassword(value: String)
     fun setConfirmPassword(value: String)
-    fun validateRegisterFields(): Boolean
+    fun validateRegisterFields(): ValidationState
 
     object PreviewInstance: RegisterInteractionListener {
         override fun onRegister() {}
@@ -15,6 +15,6 @@ interface RegisterInteractionListener {
         override fun setEmail(value: String) {}
         override fun setPassword(value: String) {}
         override fun setConfirmPassword(value: String) {}
-        override fun validateRegisterFields(): Boolean = true
+        override fun validateRegisterFields(): ValidationState = ValidationState.Empty
     }
 }
