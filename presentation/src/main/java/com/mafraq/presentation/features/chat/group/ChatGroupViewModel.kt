@@ -1,6 +1,6 @@
 package com.mafraq.presentation.features.chat.group
 
-import com.mafraq.data.remote.models.chat.MessageRemote
+import com.mafraq.data.entities.chat.Message
 import com.mafraq.data.repository.chat.group.GroupChatRepository
 import com.mafraq.presentation.features.base.BaseViewModel
 import com.mafraq.presentation.utils.extensions.emptyString
@@ -14,19 +14,19 @@ class ChatGroupViewModel @Inject constructor(
 ) : BaseViewModel<ChatGroupUiState, ChatGroupEvent>(ChatGroupUiState()),
     ChatGroupInteractionListener {
     override fun onSendMessage() {
-        val messageRemote = MessageRemote(
+        val message = Message(
             content = state.value.message,
         )
 
         updateState {
             copy(
                 message = emptyString(),
-                messageRemotes = messageRemotes + messageRemote
+                messages = messages + message
             )
         }
 
         tryToExecute(
-            block = { groupChatRepository.sendMessage(messageRemote) },
+            block = { groupChatRepository.sendMessage(message) },
             onSuccess = {
                 // TODO: Handle success
             },
@@ -36,9 +36,9 @@ class ChatGroupViewModel @Inject constructor(
         )
     }
 
-    override fun onEditMessage(originalMessageRemote: MessageRemote, index: Int) {
-        val messages = state.value.messageRemotes.toMutableList()
-        val message = originalMessageRemote.copy(content = state.value.message)
+    override fun onEditMessage(originalMessage: Message, index: Int) {
+        val messages = state.value.messages.toMutableList()
+        val message = originalMessage.copy(content = state.value.message)
         tryToExecute(
             block = { groupChatRepository.sendMessage(message) },
             onSuccess = {
@@ -46,7 +46,7 @@ class ChatGroupViewModel @Inject constructor(
                 updateState {
                     copy(
                         message = emptyString(),
-                        messageRemotes = messages
+                        messages = messages
                     )
                 }
             },
@@ -57,12 +57,12 @@ class ChatGroupViewModel @Inject constructor(
     }
 
     override fun onDeleteMessage(messageId: String, index: Int) {
-        val messages = state.value.messageRemotes.toMutableList()
+        val messages = state.value.messages.toMutableList()
         tryToExecute(
             block = { groupChatRepository.deleteMessage(messageId) },
             onSuccess = {
                 messages.removeAt(index)
-                updateState { copy(messageRemotes = messages) }
+                updateState { copy(messages = messages) }
             },
             onError = {
                 // TODO: Handle error

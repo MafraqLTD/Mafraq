@@ -72,10 +72,10 @@ private fun Content(
             verticalArrangement = Arrangement.spacedBy(sizes.small)
         ) {
             itemsIndexed(
-                items = state.messageRemotes,
+                items = state.messages,
                 key = { _, message -> message.id }) { index, message ->
                 MessageItem(
-                    messageRemote = message,
+                    message = message,
                     onClick = {
                         // TODO: Implement context menu
                     }

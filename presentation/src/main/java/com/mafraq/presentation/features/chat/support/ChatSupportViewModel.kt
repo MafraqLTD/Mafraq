@@ -1,6 +1,6 @@
 package com.mafraq.presentation.features.chat.support
 
-import com.mafraq.data.remote.models.chat.MessageRemote
+import com.mafraq.data.entities.chat.Message
 import com.mafraq.data.repository.chat.support.SupportChatRepository
 import com.mafraq.presentation.features.base.BaseViewModel
 import com.mafraq.presentation.utils.extensions.emptyString
@@ -20,20 +20,19 @@ class ChatSupportViewModel @Inject constructor(
     }
 
     override fun onSendMessage() {
-        val messageRemote = MessageRemote(
-            fromMe = true,
+        val message = Message(
             content = state.value.message,
         )
 
         updateState {
             copy(
                 message = emptyString(),
-                messageRemotes = messageRemotes + messageRemote
+                messages = messages + message
             )
         }
 
         tryToExecute(
-            block = { supportChatRepository.sendMessage(messageRemote) },
+            block = { supportChatRepository.sendMessage(message) },
             onSuccess = {
                 // TODO: Handle success
             },
@@ -43,9 +42,9 @@ class ChatSupportViewModel @Inject constructor(
         )
     }
 
-    override fun onEditMessage(originalMessageRemote: MessageRemote, index: Int) {
-        val messages = state.value.messageRemotes.toMutableList()
-        val message = originalMessageRemote.copy(content = state.value.message)
+    override fun onEditMessage(originalMessage: Message, index: Int) {
+        val messages = state.value.messages.toMutableList()
+        val message = originalMessage.copy(content = state.value.message)
         tryToExecute(
             block = { supportChatRepository.sendMessage(message) },
             onSuccess = {
@@ -53,7 +52,7 @@ class ChatSupportViewModel @Inject constructor(
                 updateState {
                     copy(
                         message = emptyString(),
-                        messageRemotes = messages
+                        messages = messages
                     )
                 }
             },
@@ -64,12 +63,12 @@ class ChatSupportViewModel @Inject constructor(
     }
 
     override fun onDeleteMessage(messageId: String, index: Int) {
-        val messages = state.value.messageRemotes.toMutableList()
+        val messages = state.value.messages.toMutableList()
         tryToExecute(
             block = { supportChatRepository.deleteMessage(messageId) },
             onSuccess = {
                 messages.removeAt(index)
-                updateState { copy(messageRemotes = messages) }
+                updateState { copy(messages = messages) }
             },
             onError = {
                 // TODO: Handle error
@@ -103,7 +102,7 @@ class ChatSupportViewModel @Inject constructor(
             block = { supportChatRepository.chatFlow },
             onNewValue = {
                 Timber.d("Messages: $it")
-                updateState { copy(messageRemotes = it) }
+                updateState { copy(messages = it) }
             }
         )
     }

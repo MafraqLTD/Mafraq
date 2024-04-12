@@ -27,9 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.google.firebase.Timestamp
-import com.mafraq.data.remote.models.chat.MessageRemote
-import com.mafraq.data.utils.toFormattedDateTime
+import com.mafraq.data.entities.chat.Message
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.components.ColumnPreview
 import com.mafraq.presentation.design.components.Spacer
@@ -43,22 +41,22 @@ import com.mafraq.presentation.utils.extensions.painter
 
 @Composable
 fun MessageItem(
-    messageRemote: MessageRemote,
+    message: Message,
     showSender: Boolean = false,
     onClick: () -> Unit = {}
 ) {
-    val alignment = if (messageRemote.isFromMe) Alignment.CenterEnd else Alignment.CenterStart
+    val alignment = if (message.isFromMe) Alignment.CenterEnd else Alignment.CenterStart
     Box(Modifier.fillMaxWidth()) {
         val modifier = Modifier.align(alignment)
 
-        if (showSender && !messageRemote.isFromMe)
+        if (showSender && !message.isFromMe)
             Row(
                 modifier = modifier,
                 verticalAlignment = Alignment.Bottom
             ) {
-                if (messageRemote.senderImageUrl.isNotEmpty())
+                if (message.senderImageUrl.isNotEmpty())
                     AsyncImage(
-                        model = messageRemote.senderImageUrl,
+                        model = message.senderImageUrl,
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
@@ -66,28 +64,28 @@ fun MessageItem(
                             .clip(CircleShape)
                     )
                 else
-                    FirstCharAvatarReplacement(text = messageRemote.senderName)
+                    FirstCharAvatarReplacement(text = message.senderName)
 
                 Spacer.ExtraSmall(vertical = false)
 
-                Content(messageRemote = messageRemote, showSender = true, onClick = onClick)
+                Content(message = message, showSender = true, onClick = onClick)
             }
         else
-            Content(messageRemote = messageRemote, modifier = modifier, onClick = onClick)
+            Content(message = message, modifier = modifier, onClick = onClick)
     }
 }
 
 
 @Composable
 private fun Content(
-    messageRemote: MessageRemote,
+    message: Message,
     modifier: Modifier = Modifier,
     showSender: Boolean = false,
     onClick: () -> Unit = {},
 ) {
-    val receiveIcon = if (messageRemote.isRead) R.drawable.ic_read else R.drawable.ic_unread
-    val containerColor = if (messageRemote.isFromMe) colors.primary else colorScheme.surfaceVariant
-    val senderNameColor = if (messageRemote.isFromMe) colorScheme.surfaceVariant else colors.primary
+    val receiveIcon = if (message.isRead) R.drawable.ic_read else R.drawable.ic_unread
+    val containerColor = if (message.isFromMe) colors.primary else colorScheme.surfaceVariant
+    val senderNameColor = if (message.isFromMe) colorScheme.surfaceVariant else colors.primary
 
     Card(
         modifier = modifier,
@@ -102,19 +100,19 @@ private fun Content(
         ) {
             if (showSender)
                 Text(
-                    text = messageRemote.senderName,
+                    text = message.senderName,
                     style = typography.label,
                     color = senderNameColor
                 )
 
-            Text(text = messageRemote.content)
+            Text(text = message.content)
 
             Row(
                 modifier = Modifier.align(Alignment.End),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = messageRemote.timestamp.toFormattedDateTime(),
+                    text = message.receivedAt,
                     style = typography.label,
                 )
 
@@ -160,11 +158,11 @@ private fun FirstCharAvatarReplacement(
 private fun Preview() = ColumnPreview {
 
     MessageItem(
-        messageRemote = MessageRemote(
+        message = Message(
             content = "Hello, World!",
-            timestamp = Timestamp.now(),
-            read = false,
-            fromMe = true,
+            isRead = false,
+            isFromMe = true,
+            receivedAt = "11:00 AM",
             senderName = "Ahmed Mones",
             senderImageUrl = "https://picsum.photos/200/300",
         ),
@@ -172,11 +170,11 @@ private fun Preview() = ColumnPreview {
     )
 
     MessageItem(
-        messageRemote = MessageRemote(
+        message = Message(
             content = "Hello, World!",
-            timestamp = Timestamp.now(),
-            read = false,
-            fromMe = false,
+            isRead = false,
+            isFromMe = false,
+            receivedAt = "12:00 AM",
             senderName = "Ahmed Mones",
             senderImageUrl = "https://picsum.photos/200/300",
         ),
