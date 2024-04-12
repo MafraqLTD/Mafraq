@@ -8,8 +8,8 @@ import com.mafraq.data.repository.crm.CRMRepository
 import com.mafraq.data.repository.crm.CRMRepositoryImpl
 import com.mafraq.data.repository.hardware.HardwareRepository
 import com.mafraq.data.repository.hardware.HardwareRepositoryImpl
-import com.mafraq.data.repository.user.UserRepository
-import com.mafraq.data.repository.user.UserRepositoryImpl
+import com.mafraq.data.repository.auth.AuthRepository
+import com.mafraq.data.repository.auth.AuthRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -23,7 +23,7 @@ interface RepositoryModule {
 
     @Binds
     @Singleton
-    fun bindUserRepository(repository: UserRepositoryImpl): UserRepository
+    fun bindUserRepository(repository: AuthRepositoryImpl): AuthRepository
 
     @Binds
     @Singleton

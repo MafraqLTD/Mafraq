@@ -1,6 +1,6 @@
 package com.mafraq.presentation.features.authentication.viewmodel
 
-import com.mafraq.data.repository.user.UserRepository
+import com.mafraq.data.repository.auth.AuthRepository
 import com.mafraq.presentation.features.authentication.event.AuthEvent
 import com.mafraq.presentation.features.authentication.event.LoginEvent
 import com.mafraq.presentation.features.authentication.event.RegisterEvent
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val userRepository: UserRepository,
+    private val authRepository: AuthRepository,
 ) : BaseViewModel<AuthUiState, AuthEvent>(AuthUiState()), AuthInteractionListener {
 
     // SHARED INTERACTIONS
@@ -25,7 +25,7 @@ class AuthViewModel @Inject constructor(
     override fun onRegister() {
         updateState { copy(isLoading = true, error = null) }
 
-        tryToExecute(block = { userRepository.register(body = state.value.toRegisterBody()) },
+        tryToExecute(block = { authRepository.register(body = state.value.toRegisterBody()) },
             checkSuccess = { it },
             onSuccess = {
                 updateState(notifyEvent = RegisterEvent.OnRegister) {
@@ -58,7 +58,7 @@ class AuthViewModel @Inject constructor(
         updateState { copy(isLoading = true, error = null) }
 
         tryToExecute(
-            block = { userRepository.login(body = state.value.toLoginBody()) },
+            block = { authRepository.login(body = state.value.toLoginBody()) },
             checkSuccess = { it },
             onSuccess = {
                 emitNewEvent(LoginEvent.OnLogin)

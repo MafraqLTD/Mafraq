@@ -1,8 +1,7 @@
 package com.mafraq.data.remote.dataSource.chat
 
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.EventListener
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.toObject
 import com.mafraq.data.remote.errors.DeleteException
 import com.mafraq.data.remote.errors.FetchException
@@ -16,25 +15,19 @@ import kotlin.coroutines.suspendCoroutine
 
 
 inline fun <reified T> CollectionReference.asFlow(): Flow<List<T>> = callbackFlow {
-    val eventListener = EventListener<QuerySnapshot> { snapshot, exception ->
+    val eventListener = addSnapshotListener { snapshot, exception ->
         if (exception != null) {
             close(exception)
-            return@EventListener
+            return@addSnapshotListener
         }
 
-        if (snapshot == null)
-            return@EventListener
-
-        val data = snapshot
-            .mapNotNull { it.toObject<T>() }
-
-        trySend(data)
+        snapshot?.mapNotNull { it.toObject<T>() }?.let {
+            trySend(it)
+        }
     }
 
-    val registration = addSnapshotListener(eventListener)
-
     awaitClose {
-        registration.remove()
+        eventListener.remove()
     }
 }
 
@@ -50,8 +43,37 @@ suspend inline fun <reified T> CollectionReference.fetchAll(): List<T> =
             }
     }
 
+inline fun <reified T> DocumentReference.asFlow(): Flow<T> = callbackFlow {
+val eventListener = addSnapshotListener { snapshot, exception ->
+        if (exception != null) {
+            close(exception)
+            return@addSnapshotListener
+        }
 
-suspend fun<T: Any> CollectionReference.insert(entry: T, id: String): Boolean {
+        snapshot?.toObject<T>()?.let {
+            trySend(it)
+        }
+    }
+
+    awaitClose {
+        eventListener.remove()
+    }
+}
+
+suspend inline fun <reified T : Any> DocumentReference.fetch(): T {
+    return suspendCoroutine { continuation ->
+        get()
+            .addOnSuccessListener { snapshot ->
+                continuation.resume(snapshot.toObject<T>()!!)
+            }
+            .addOnFailureListener { exception ->
+                val errorMessage = exception.message ?: "Fetch data failed!"
+                continuation.resumeWithException(FetchException(message = errorMessage))
+            }
+    }
+}
+
+suspend fun <T : Any> CollectionReference.insert(entry: T, id: String): Boolean {
     val dataRef = document(id)
     return suspendCoroutine { continuation ->
         dataRef

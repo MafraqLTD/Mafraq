@@ -1,4 +1,4 @@
-package com.mafraq.data.remote.dataSource.user
+package com.mafraq.data.remote.dataSource.auth
 
 import androidx.core.net.toUri
 import com.google.firebase.auth.FirebaseAuth

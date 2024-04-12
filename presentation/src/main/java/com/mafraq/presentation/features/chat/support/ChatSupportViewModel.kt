@@ -1,10 +1,11 @@
 package com.mafraq.presentation.features.chat.support
 
-import com.mafraq.data.entities.chat.Message
+import com.mafraq.data.remote.models.chat.MessageRemote
 import com.mafraq.data.repository.chat.support.SupportChatRepository
 import com.mafraq.presentation.features.base.BaseViewModel
 import com.mafraq.presentation.utils.extensions.emptyString
 import dagger.hilt.android.lifecycle.HiltViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -14,21 +15,25 @@ class ChatSupportViewModel @Inject constructor(
 ) : BaseViewModel<ChatSupportUiState, ChatSupportEvent>(ChatSupportUiState()),
     ChatSupportInteractionListener {
 
+    init {
+        initialization()
+    }
+
     override fun onSendMessage() {
-        val message = Message(
-            isFromMe = true,
+        val messageRemote = MessageRemote(
+            fromMe = true,
             content = state.value.message,
         )
 
         updateState {
             copy(
                 message = emptyString(),
-                messages = messages + message
+                messageRemotes = messageRemotes + messageRemote
             )
         }
 
         tryToExecute(
-            block = { supportChatRepository.sendMessage(message) },
+            block = { supportChatRepository.sendMessage(messageRemote) },
             onSuccess = {
                 // TODO: Handle success
             },
@@ -38,9 +43,9 @@ class ChatSupportViewModel @Inject constructor(
         )
     }
 
-    override fun onEditMessage(originalMessage: Message, index: Int) {
-        val messages = state.value.messages.toMutableList()
-        val message = originalMessage.copy(content = state.value.message)
+    override fun onEditMessage(originalMessageRemote: MessageRemote, index: Int) {
+        val messages = state.value.messageRemotes.toMutableList()
+        val message = originalMessageRemote.copy(content = state.value.message)
         tryToExecute(
             block = { supportChatRepository.sendMessage(message) },
             onSuccess = {
@@ -48,7 +53,7 @@ class ChatSupportViewModel @Inject constructor(
                 updateState {
                     copy(
                         message = emptyString(),
-                        messages = messages
+                        messageRemotes = messages
                     )
                 }
             },
@@ -59,12 +64,12 @@ class ChatSupportViewModel @Inject constructor(
     }
 
     override fun onDeleteMessage(messageId: String, index: Int) {
-        val messages = state.value.messages.toMutableList()
+        val messages = state.value.messageRemotes.toMutableList()
         tryToExecute(
             block = { supportChatRepository.deleteMessage(messageId) },
             onSuccess = {
                 messages.removeAt(index)
-                updateState { copy(messages = messages) }
+                updateState { copy(messageRemotes = messages) }
             },
             onError = {
                 // TODO: Handle error
@@ -78,5 +83,28 @@ class ChatSupportViewModel @Inject constructor(
 
     override fun onMessageChange(value: String) = updateState {
         copy(message = value)
+    }
+
+    private fun initialization() {
+        tryToCollect(
+            block = { supportChatRepository.chatMemberStateFlow },
+            onNewValue = {
+                Timber.d("ChatMemberStateFlow: $it")
+                updateState {
+                    copy(
+                        memberName = it.name,
+                        isMemberActive = it.isActive,
+                    )
+                }
+            }
+        )
+
+        tryToCollect(
+            block = { supportChatRepository.chatFlow },
+            onNewValue = {
+                Timber.d("Messages: $it")
+                updateState { copy(messageRemotes = it) }
+            }
+        )
     }
 }

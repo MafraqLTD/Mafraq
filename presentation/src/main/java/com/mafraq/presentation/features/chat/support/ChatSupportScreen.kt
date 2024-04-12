@@ -58,8 +58,8 @@ private fun Content(
             .detectTapGestures { focusManager.clearFocus() }
     ) {
         ChatSupportHeader(
-            title = state.title,
-            isUserActive = state.isUserActive,
+            title = state.memberName,
+            isMemberActive = state.isMemberActive,
             onNavigateBack = listener::onNavigateBack,
         )
 
@@ -72,10 +72,10 @@ private fun Content(
             verticalArrangement = Arrangement.spacedBy(sizes.small)
         ) {
             itemsIndexed(
-                items = state.messages,
+                items = state.messageRemotes,
                 key = { _, message -> message.id }) { index, message ->
                 MessageItem(
-                    message = message,
+                    messageRemote = message,
                     onClick = {
                         // TODO: Implement context menu
                     }

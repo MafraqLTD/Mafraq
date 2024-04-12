@@ -1,12 +1,12 @@
 package com.mafraq.presentation.features.chat.support
 
-import com.mafraq.data.entities.chat.Message
+import com.mafraq.data.remote.models.chat.MessageRemote
 import com.mafraq.presentation.utils.extensions.emptyString
 
 
 data class ChatSupportUiState(
-    val title: String = emptyString(),
+    val memberName: String = emptyString(),
     val message: String = emptyString(),
-    val messages: List<Message> = emptyList(),
-    val isUserActive: Boolean = false,
+    val messageRemotes: List<MessageRemote> = emptyList(),
+    val isMemberActive: Boolean = false,
 )

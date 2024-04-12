@@ -25,13 +25,13 @@ import com.mafraq.presentation.utils.extensions.painter
 @Composable
 fun ChatSupportHeader(
     title: String,
-    isUserActive: Boolean,
+    isMemberActive: Boolean,
     onNavigateBack: () -> Unit,
 ) {
     val statusCircleSize = 12.dp
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val statusColor by animateColorAsState(
-        targetValue = if (isUserActive) Color.Green else Color.Gray,
+        targetValue = if (isMemberActive) Color.Green else Color.Gray,
         label = "statusColor"
     )
     TopAppBar(
