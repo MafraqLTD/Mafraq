@@ -1,6 +1,9 @@
 package com.mafraq.presentation.features.chat.components
 
+import android.view.MenuItem
+import androidx.appcompat.widget.PopupMenu
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -169,15 +172,15 @@ private fun Preview() = ColumnPreview {
         showSender = false,
     )
 
-    MessageItem(
-        message = Message(
-            content = "Hello, World!",
-            isRead = false,
-            isFromMe = false,
-            receivedAt = "12:00 AM",
-            senderName = "Ahmed Mones",
-            senderImageUrl = "https://picsum.photos/200/300",
-        ),
-        showSender = true,
-    )
+//    MessageItem(
+//        message = Message(
+//            content = "Hello, World!",
+//            isRead = false,
+//            isFromMe = false,
+//            receivedAt = "12:00 AM",
+//            senderName = "Ahmed Mones",
+//            senderImageUrl = "https://picsum.photos/200/300",
+//        ),
+//        showSender = true,
+//    )
 }

@@ -1,24 +1,38 @@
 package com.mafraq.presentation.features.chat.group
 
+import android.view.MenuItem
+import android.widget.PopupMenu
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.components.AppOutlinedTextField
 import com.mafraq.presentation.design.theme.MafraqTheme.sizes
 import com.mafraq.presentation.features.chat.components.ChatGroupHeader
+import com.mafraq.presentation.features.chat.components.ContextDropDown
 import com.mafraq.presentation.features.chat.components.MessageItem
 import com.mafraq.presentation.utils.extensions.detectTapGestures
 import com.mafraq.presentation.utils.extensions.painter
@@ -43,6 +57,7 @@ private fun Content(
     listener: ChatGroupInteractionListener = ChatGroupInteractionListener.Preview
 ) {
     val focusManager = LocalFocusManager.current
+    var showConextMenu by remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -65,13 +80,18 @@ private fun Content(
             itemsIndexed(
                 items = state.messages,
                 key = { _, message -> message.id }) { index, message ->
-                MessageItem(
-                    message = message,
-                    showSender = true,
-                    onClick = {
-                        // TODO: Implement context menu
-                    }
-                )
+
+                ContextDropDown(onItemClick = {}) {
+                    MessageItem(
+                        message = message,
+                        showSender = true,
+                        onClick = {
+                            showConextMenu = true
+                        }
+                    )
+                }
+
+
             }
         }
 

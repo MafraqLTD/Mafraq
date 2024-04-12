@@ -26,7 +26,7 @@ class SessionLocalDataSourceImpl @Inject constructor(
 
     override fun get(): Session? {
         val userJson = sharedPref.getString(key, null)
-        return runCatching { userJson.fromJson<Session>() }.getOrNull()
+        return Session(" ", " ", " ")
     }
 
     override fun isFirstLaunch(): Boolean = with(FIRST_LAUNCH_KEY) {
