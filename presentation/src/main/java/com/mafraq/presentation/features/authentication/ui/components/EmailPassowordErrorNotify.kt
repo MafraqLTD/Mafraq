@@ -30,7 +30,7 @@ fun EmailPasswordError(
     if (isVisible) {
 
         Card(
-            elevation = CardDefaults.cardElevation(defaultElevation = 16.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
             modifier = Modifier.fillMaxWidth(),
             shape = MafraqTheme.shapes.medium,
         ) {
