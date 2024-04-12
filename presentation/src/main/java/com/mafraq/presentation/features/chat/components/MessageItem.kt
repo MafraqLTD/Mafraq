@@ -27,9 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.google.firebase.Timestamp
 import com.mafraq.data.entities.chat.Message
-import com.mafraq.data.utils.toFormattedDateTime
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.components.ColumnPreview
 import com.mafraq.presentation.design.components.Spacer
@@ -114,7 +112,7 @@ private fun Content(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = message.timestamp.toFormattedDateTime(),
+                    text = message.receivedAt,
                     style = typography.label,
                 )
 
@@ -162,9 +160,9 @@ private fun Preview() = ColumnPreview {
     MessageItem(
         message = Message(
             content = "Hello, World!",
-            timestamp = Timestamp.now(),
             isRead = false,
             isFromMe = true,
+            receivedAt = "11:00 AM",
             senderName = "Ahmed Mones",
             senderImageUrl = "https://picsum.photos/200/300",
         ),
@@ -174,9 +172,9 @@ private fun Preview() = ColumnPreview {
     MessageItem(
         message = Message(
             content = "Hello, World!",
-            timestamp = Timestamp.now(),
             isRead = false,
             isFromMe = false,
+            receivedAt = "12:00 AM",
             senderName = "Ahmed Mones",
             senderImageUrl = "https://picsum.photos/200/300",
         ),

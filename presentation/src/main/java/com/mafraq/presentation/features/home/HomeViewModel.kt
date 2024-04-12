@@ -2,7 +2,7 @@ package com.mafraq.presentation.features.home
 
 import com.altaie.prettycode.core.utils.extenstions.isTrue
 import com.mafraq.data.repository.crm.CRMRepository
-import com.mafraq.data.repository.user.UserRepository
+import com.mafraq.data.repository.auth.AuthRepository
 import com.mafraq.presentation.features.base.BaseViewModel
 import com.mafraq.presentation.utils.extensions.emptyString
 import com.mafraq.presentation.utils.location.LocationSettingsDelegate
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val userRepository: UserRepository,
+    private val authRepository: AuthRepository,
     private val crmRepository: CRMRepository,
     private val locationSettingsDelegate: LocationSettingsDelegateImpl
 ) : BaseViewModel<HomeUiState, HomeEvent>(HomeUiState()), HomeInteractionListener,
@@ -40,10 +40,10 @@ class HomeViewModel @Inject constructor(
     }
 
     val isEmailVerified: Boolean
-        get() = userRepository.getUserInfo()?.isEmailVerified.isTrue
+        get() = authRepository.getUserInfo()?.isEmailVerified.isTrue
 
     fun onVerificationDone() {
-        userRepository.isAuthorized()
+        authRepository.isAuthorized()
     }
 
     private fun initialization() {

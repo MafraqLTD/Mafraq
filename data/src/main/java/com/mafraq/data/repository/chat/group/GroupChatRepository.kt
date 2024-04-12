@@ -1,6 +1,11 @@
 package com.mafraq.data.repository.chat.group
 
-import com.mafraq.data.remote.dataSource.chat.FirebaseFireStoreDelegation
+import com.mafraq.data.remote.dataSource.chat.FirebaseFireStoreMessenger
+import com.mafraq.data.remote.mappers.MessageFromRemoteMapper
+import com.mafraq.data.remote.mappers.MessageToRemoteMapper
 
 
-interface GroupChatRepository : FirebaseFireStoreDelegation
+abstract class GroupChatRepository(
+    messageToRemoteMapper: MessageToRemoteMapper,
+    messageFromRemoteMapper: MessageFromRemoteMapper,
+) : FirebaseFireStoreMessenger(messageToRemoteMapper, messageFromRemoteMapper)

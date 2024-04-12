@@ -101,7 +101,7 @@ inline fun <reified R> List<String>?.mapToListOf(): List<R> = this?.map {
  * @return The formatted date and time string.
  */
 fun Timestamp.toFormattedDateTime(): String {
-    val outputFormat = SimpleDateFormat("yy-MM-dd hh:mm a", Locale.US).apply {
+    val outputFormat = SimpleDateFormat("hh:mm a", Locale.US).apply {
         timeZone = TimeZone.getTimeZone("GMT")
     }
     return outputFormat.format(toDate())

@@ -58,8 +58,8 @@ private fun Content(
             .detectTapGestures { focusManager.clearFocus() }
     ) {
         ChatSupportHeader(
-            title = state.title,
-            isUserActive = state.isUserActive,
+            title = state.memberName,
+            isMemberActive = state.isMemberActive,
             onNavigateBack = listener::onNavigateBack,
         )
 

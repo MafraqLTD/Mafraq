@@ -15,7 +15,6 @@ class ChatGroupViewModel @Inject constructor(
     ChatGroupInteractionListener {
     override fun onSendMessage() {
         val message = Message(
-            isFromMe = true,
             content = state.value.message,
         )
 

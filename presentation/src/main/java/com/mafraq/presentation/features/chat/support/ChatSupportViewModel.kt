@@ -5,6 +5,7 @@ import com.mafraq.data.repository.chat.support.SupportChatRepository
 import com.mafraq.presentation.features.base.BaseViewModel
 import com.mafraq.presentation.utils.extensions.emptyString
 import dagger.hilt.android.lifecycle.HiltViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -14,9 +15,12 @@ class ChatSupportViewModel @Inject constructor(
 ) : BaseViewModel<ChatSupportUiState, ChatSupportEvent>(ChatSupportUiState()),
     ChatSupportInteractionListener {
 
+    init {
+        initialization()
+    }
+
     override fun onSendMessage() {
         val message = Message(
-            isFromMe = true,
             content = state.value.message,
         )
 
@@ -78,5 +82,28 @@ class ChatSupportViewModel @Inject constructor(
 
     override fun onMessageChange(value: String) = updateState {
         copy(message = value)
+    }
+
+    private fun initialization() {
+        tryToCollect(
+            block = { supportChatRepository.chatMemberStateFlow },
+            onNewValue = {
+                Timber.d("ChatMemberStateFlow: $it")
+                updateState {
+                    copy(
+                        memberName = it.name,
+                        isMemberActive = it.isActive,
+                    )
+                }
+            }
+        )
+
+        tryToCollect(
+            block = { supportChatRepository.chatFlow },
+            onNewValue = {
+                Timber.d("Messages: $it")
+                updateState { copy(messages = it) }
+            }
+        )
     }
 }
