@@ -20,6 +20,7 @@ import com.mafraq.presentation.features.authentication.event.LoginEvent
 import com.mafraq.presentation.features.authentication.listener.LoginInteractionListener
 import com.mafraq.presentation.features.authentication.state.AuthUiState
 import com.mafraq.presentation.features.authentication.ui.components.AuthContainer
+import com.mafraq.presentation.features.authentication.ui.components.EmailPasswordError
 import com.mafraq.presentation.features.authentication.ui.components.HaveAnAccount
 import com.mafraq.presentation.features.authentication.viewmodel.AuthViewModel
 import com.mafraq.presentation.navigation.destinations.navigateToHome
@@ -96,6 +97,11 @@ private fun Content(
             isLoading = state.isLoading,
             onClick = listener::onNavigateToRegister,
         )
+
+        Spacer.Large()
+
+        EmailPasswordError(listener.validateLoginFields())
+
     }
 
 }

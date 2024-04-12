@@ -1,5 +1,6 @@
 package com.mafraq.presentation.features.authentication.viewmodel
 
+import com.altaie.prettycode.core.utils.extenstions.isEmail
 import com.mafraq.data.repository.auth.AuthRepository
 import com.mafraq.presentation.features.authentication.event.AuthEvent
 import com.mafraq.presentation.features.authentication.event.LoginEvent
@@ -49,8 +50,7 @@ class AuthViewModel @Inject constructor(
         listOf(
             email,
             password
-        ).all(String::isNotEmpty)
-                && password == confirmPassword
+        ).all(String::isNotEmpty) && password == confirmPassword && email.isEmail
     }
 
     // LOGIN INTERACTIONS
@@ -72,6 +72,6 @@ class AuthViewModel @Inject constructor(
     }
 
     override fun validateLoginFields(): Boolean = state.value.run {
-        email.isNotEmpty() && password.isNotEmpty() && password.length >= 6
+        email.isNotEmpty() && password.isNotEmpty() && password.length >= 6 && email.isEmail
     }
 }
