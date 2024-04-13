@@ -1,20 +1,13 @@
 package com.mafraq.presentation.features.chat.support
 
-import com.mafraq.data.entities.chat.Message
+import com.mafraq.presentation.features.chat.ChatInteractionListener
 
 
-interface ChatSupportInteractionListener {
+interface ChatSupportInteractionListener : ChatInteractionListener {
     fun onNavigateBack()
-    fun onSendMessage()
-    fun onMessageChange(value: String)
-    fun onDeleteMessage(messageId: String, index: Int)
-    fun onEditMessage(originalMessage: Message, index: Int)
 
-    object Preview : ChatSupportInteractionListener {
+    object Preview : ChatSupportInteractionListener,
+        ChatInteractionListener by ChatInteractionListener.Preview {
         override fun onNavigateBack() = Unit
-        override fun onSendMessage() = Unit
-        override fun onMessageChange(value: String) = Unit
-        override fun onDeleteMessage(messageId: String, index: Int) = Unit
-        override fun onEditMessage(originalMessage: Message, index: Int) = Unit
     }
 }

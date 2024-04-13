@@ -18,6 +18,7 @@ import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
+import java.util.UUID
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 import android.location.Location as AndroidLocation
@@ -106,3 +107,6 @@ fun Timestamp.toFormattedDateTime(): String {
     }
     return outputFormat.format(toDate())
 }
+
+fun String.Companion.generateRandomId(): String =
+    UUID.randomUUID().toString().split('-').last()

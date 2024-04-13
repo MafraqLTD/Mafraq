@@ -1,7 +1,6 @@
 package com.mafraq.data.local.session
 
 import android.content.SharedPreferences
-import com.altaie.prettycode.core.utils.extenstions.fromJson
 import com.altaie.prettycode.core.utils.extenstions.toJson
 import com.mafraq.data.entities.Session
 import com.mafraq.data.utils.delete
@@ -26,7 +25,8 @@ class SessionLocalDataSourceImpl @Inject constructor(
 
     override fun get(): Session? {
         val userJson = sharedPref.getString(key, null)
-        return runCatching { userJson.fromJson<Session>() }.getOrNull()
+//        return runCatching { userJson.fromJson<Session>() }.getOrNull()
+        return Session("test", "test", "test")
     }
 
     override fun isFirstLaunch(): Boolean = with(FIRST_LAUNCH_KEY) {

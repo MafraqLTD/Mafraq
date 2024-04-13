@@ -143,7 +143,7 @@ abstract class BaseViewModel<S, E>(initState: S) : ViewModel() {
         }.run(onError)
     }
 
-    private companion object{
+    private companion object {
         const val TOO_MANY_REQUESTS = "Too Many Attempts"
     }
 }
