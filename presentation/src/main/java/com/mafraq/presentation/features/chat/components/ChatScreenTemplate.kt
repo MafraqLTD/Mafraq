@@ -26,6 +26,7 @@ import com.mafraq.presentation.utils.extensions.emptyString
 import com.mafraq.presentation.utils.extensions.painter
 import com.mafraq.presentation.utils.extensions.string
 
+
 @Composable
 fun ChatScreenTemplate(
     messageContent: String,
@@ -97,7 +98,10 @@ fun ChatScreenTemplate(
                 enabledTrailingIcon = messageContent.isNotEmpty(),
                 onTrailingIconClick = onSendClick,
                 maxLines = 5,
-                trailingIcon = R.drawable.ic_send.painter,
+                trailingIcon = if (isEditMode)
+                    R.drawable.ic_check_square.painter
+                else
+                    R.drawable.ic_send.painter,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = MafraqTheme.sizes.medium)
