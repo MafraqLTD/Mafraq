@@ -37,6 +37,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.tooling.preview.Preview
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.theme.MafraqTheme
@@ -110,7 +111,9 @@ fun AppOutlinedTextField(
                 },
             enabled = enabled,
             readOnly = readOnly,
-            textStyle = textStyle,
+            textStyle = textStyle.copy(
+                textDirection = TextDirection.Content
+            ),
             placeholder = placeholder?.optionalComposable {
                 Placeholder(text = it, textAlign = textAlign)
             },

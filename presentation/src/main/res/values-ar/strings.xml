@@ -49,4 +49,7 @@
     <string name="done">تم</string>
     <string name="group">المجموعة</string>
     <string name="members">%d أعضاء، %d متصل الآن</string>
+    <string name="edit">تعديل</string>
+    <string name="delete">حذف</string>
+    <string name="edit_message">تعديل الرسالة</string>
 </resources>
