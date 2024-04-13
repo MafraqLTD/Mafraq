@@ -1,9 +1,6 @@
 package com.mafraq.presentation.features.chat.components
 
-import android.view.MenuItem
-import androidx.appcompat.widget.PopupMenu
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +13,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -34,7 +33,6 @@ import com.mafraq.data.entities.chat.Message
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.components.ColumnPreview
 import com.mafraq.presentation.design.components.Spacer
-import com.mafraq.presentation.design.theme.MafraqTheme
 import com.mafraq.presentation.design.theme.MafraqTheme.colors
 import com.mafraq.presentation.design.theme.MafraqTheme.sizes
 import com.mafraq.presentation.design.theme.MafraqTheme.typography
@@ -97,9 +95,9 @@ private fun Content(
     ) {
         Column(
             modifier = Modifier
-                .padding(MafraqTheme.sizes.small)
+                .padding(sizes.small)
                 .wrapContentSize(),
-            verticalArrangement = Arrangement.spacedBy(MafraqTheme.sizes.extraSmall)
+            verticalArrangement = Arrangement.spacedBy(sizes.extraSmall)
         ) {
             if (showSender)
                 Text(
@@ -108,7 +106,12 @@ private fun Content(
                     color = senderNameColor
                 )
 
-            Text(text = message.content)
+            Text(
+                text = message.content,
+                style = LocalTextStyle.current.copy(
+                    textDirection = TextDirection.Content
+                )
+            )
 
             Row(
                 modifier = Modifier.align(Alignment.End),
@@ -172,15 +175,15 @@ private fun Preview() = ColumnPreview {
         showSender = false,
     )
 
-//    MessageItem(
-//        message = Message(
-//            content = "Hello, World!",
-//            isRead = false,
-//            isFromMe = false,
-//            receivedAt = "12:00 AM",
-//            senderName = "Ahmed Mones",
-//            senderImageUrl = "https://picsum.photos/200/300",
-//        ),
-//        showSender = true,
-//    )
+    MessageItem(
+        message = Message(
+            content = "Hello, World!",
+            isRead = false,
+            isFromMe = false,
+            receivedAt = "12:00 AM",
+            senderName = "Ahmed Mones",
+            senderImageUrl = "https://picsum.photos/200/300",
+        ),
+        showSender = true,
+    )
 }

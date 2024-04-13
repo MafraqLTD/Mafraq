@@ -74,9 +74,8 @@ suspend inline fun <reified T : Any> DocumentReference.fetch(): T {
 }
 
 suspend fun <T : Any> CollectionReference.insert(entry: T, id: String): Boolean {
-    val dataRef = document(id)
     return suspendCoroutine { continuation ->
-        dataRef
+        document(id)
             .set(entry)
             .addOnSuccessListener {
                 continuation.resume(true)
@@ -89,9 +88,8 @@ suspend fun <T : Any> CollectionReference.insert(entry: T, id: String): Boolean 
 }
 
 suspend fun CollectionReference.delete(id: String): Boolean {
-    val dataRef = document(id)
     return suspendCoroutine { continuation ->
-        dataRef
+        document(id)
             .delete()
             .addOnSuccessListener {
                 continuation.resume(true)

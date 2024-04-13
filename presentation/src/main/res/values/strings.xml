@@ -48,5 +48,8 @@
     <string name="done">Done</string>
     <string name="group">Group</string>
     <string name="members">%d members, %d online now</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="edit_message">Edit Message</string>
 
 </resources>
