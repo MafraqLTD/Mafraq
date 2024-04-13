@@ -13,6 +13,9 @@ data class AuthUiState(
     val password: String = emptyString(),
     val confirmPassword: String = emptyString(),
     val isLoading: Boolean = false,
+    val isEmailInvalid: Boolean = false,
+    val isPasswordInvalid: Boolean = false,
+    val isConfirmPasswordInvalid: Boolean = false,
     val error: ErrorState? = null,
 ) {
     val isError: Boolean get() = error != null

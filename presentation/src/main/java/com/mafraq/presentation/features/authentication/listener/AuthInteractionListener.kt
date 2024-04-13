@@ -1,6 +1,7 @@
 package com.mafraq.presentation.features.authentication.listener
 
 
-interface AuthInteractionListener :
-    RegisterInteractionListener,
-    LoginInteractionListener
+interface AuthInteractionListener {
+    fun setEmail(value: String)
+    fun setPassword(value: String)
+}

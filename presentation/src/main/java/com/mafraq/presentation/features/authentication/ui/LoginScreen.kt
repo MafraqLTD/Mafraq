@@ -11,15 +11,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.mafraq.presentation.R
-import com.mafraq.presentation.design.components.buttons.AppButton
 import com.mafraq.presentation.design.components.AppOutlinedTextField
 import com.mafraq.presentation.design.components.ColumnPreview
 import com.mafraq.presentation.design.components.Spacer
+import com.mafraq.presentation.design.components.buttons.AppButton
 import com.mafraq.presentation.features.authentication.event.AuthEvent
 import com.mafraq.presentation.features.authentication.event.LoginEvent
 import com.mafraq.presentation.features.authentication.listener.LoginInteractionListener
 import com.mafraq.presentation.features.authentication.state.AuthUiState
 import com.mafraq.presentation.features.authentication.ui.components.AuthContainer
+import com.mafraq.presentation.features.authentication.ui.components.CredentialErrorState
 import com.mafraq.presentation.features.authentication.ui.components.HaveAnAccount
 import com.mafraq.presentation.features.authentication.viewmodel.AuthViewModel
 import com.mafraq.presentation.navigation.destinations.navigateToHome
@@ -58,8 +59,7 @@ private fun Content(
             label = R.string.email.string,
             value = state.email,
             onValueChange = listener::setEmail,
-            isError = state.isError,
-            errorMessage = state.error?.message,
+            isError = state.isEmailInvalid,
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -71,7 +71,7 @@ private fun Content(
             isPassword = true,
             imeAction = ImeAction.Done,
             onValueChange = listener::setPassword,
-            isError = false,
+            isError = state.isPasswordInvalid,
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -84,7 +84,7 @@ private fun Content(
                 focusManager.clearFocus()
             },
             loading = state.isLoading,
-            enabled = listener.validateLoginFields(),
+            enabled = listener.validateLoginFields().isValid,
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -96,6 +96,12 @@ private fun Content(
             isLoading = state.isLoading,
             onClick = listener::onNavigateToRegister,
         )
+
+        Spacer.Large()
+
+        CredentialErrorState(state.error?.message) {
+            listener.validateLoginFields().isInvalid || state.isError
+        }
     }
 
 }
