@@ -48,13 +48,8 @@
     <string name="please_check_your_email">يرجى التحقق من تأكيد بريدك الإلكتروني</string>
     <string name="done">تم</string>
     <string name="group">المجموعة</string>
-    <string name="members_with_arg">%1$d أعضاء، %1$d متصل الآن</string>
+    <string name="members">%d أعضاء، %d متصل الآن</string>
     <string name="edit">تعديل</string>
     <string name="delete">حذف</string>
     <string name="edit_message">تعديل الرسالة</string>
-    <string name="workdays_with_arg">أيام العمل: %1$s</string>
-    <string name="distance_with_arg">المسافة: %1$s</string>
-    <string name="unsubscribe">إلغاء الاشتراك</string>
-    <string name="location">الموقع</string>
-    <string name="phone_with_arg">الهاتف: %1$s</string>
 </resources>

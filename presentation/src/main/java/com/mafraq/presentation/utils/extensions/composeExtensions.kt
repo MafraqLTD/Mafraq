@@ -18,13 +18,20 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.autofill.AutofillNode
+import androidx.compose.ui.autofill.AutofillType
 import androidx.compose.ui.composed
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalAutofill
+import androidx.compose.ui.platform.LocalAutofillTree
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -61,10 +68,6 @@ fun Modifier.clickableNoRipple(
 val @receiver:StringRes Int.string: String
     @Composable
     get() = if (this == 0) "" else stringResource(id = this)
-
-@Composable
-fun @receiver:StringRes Int.string(vararg formatArgs: Any) =
-    stringResource(id = this, formatArgs = formatArgs)
 
 /**
  * used to create Painter instance from resources

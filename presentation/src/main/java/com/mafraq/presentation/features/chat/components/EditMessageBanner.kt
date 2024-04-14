@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -49,6 +50,7 @@ fun EditMessageBanner(
     fun ClearIcon() {
         IconButton(
             onClick = onClearClick,
+            modifier = Modifier.offset(x = -MafraqTheme.sizes.medium)
         ) {
             Icon(
                 imageVector = Icons.Default.Clear,
@@ -84,6 +86,7 @@ fun EditMessageBanner(
                         text = R.string.edit_message.string,
                         color = MafraqTheme.colors.primary,
                         style = MafraqTheme.typography.titleSmall,
+                        modifier = Modifier.offset(x = -MafraqTheme.sizes.medium)
                     )
 
                     Text(
