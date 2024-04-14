@@ -35,8 +35,7 @@ fun ChatGroupHeader(
 
                 if (connectedMembers > 0)
                     Text(
-                        text = R.string.members.string
-                            .format(members, connectedMembers),
+                        text = R.string.members_with_arg.string(members, connectedMembers),
                         style = MafraqTheme.typography.label
                     )
             }

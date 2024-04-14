@@ -48,9 +48,14 @@
     <string name="please_check_your_email">Please check your email for verification</string>
     <string name="done">Done</string>
     <string name="group">Group</string>
-    <string name="members">%d members, %d online now</string>
+    <string name="members_with_arg">%1$d members, %1$d online now</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="edit_message">Edit Message</string>
+    <string name="workdays_with_arg">WorkDays: %1$s</string>
+    <string name="distance_with_arg">Distance: %1$s</string>
+    <string name="unsubscribe">Unsubscribe</string>
+    <string name="location">Location</string>
+    <string name="phone_with_arg">Phone: %1$s</string>
 
 </resources>
