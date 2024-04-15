@@ -26,10 +26,12 @@ import com.mafraq.presentation.utils.extensions.painter
 
 @Composable
 fun SearchResultItem(
-    headerText: String,
-    bodyText: String,
+    title: String,
+    body: String,
+    onClick: () -> Unit = {}
 ) {
     Card(
+        onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
         shape = MafraqTheme.shapes.large
     ) {
@@ -51,19 +53,20 @@ fun SearchResultItem(
                     contentDescription = null,
                     tint = Color.Unspecified,
                 )
-
             }
 
             Spacer.Small(vertical = false)
 
             Column(modifier = Modifier.fillMaxWidth()) {
-                Text(text = headerText, style = MafraqTheme.typography.body)
-                Spacer.ExtraSmall()
-                Text(
-                    text = bodyText,
-                    style = MafraqTheme.typography.label,
-                    color = Color.Gray
-                )
+                Text(text = title, style = MafraqTheme.typography.body)
+                if (body.isNotEmpty()) {
+                    Spacer.ExtraSmall()
+                    Text(
+                        text = body,
+                        style = MafraqTheme.typography.label,
+                        color = Color.Gray
+                    )
+                }
             }
         }
     }
@@ -74,7 +77,7 @@ fun SearchResultItem(
 @Preview(showBackground = true)
 private fun Preview() = ColumnPreview(
     contentPadding = PaddingValues(MafraqTheme.sizes.medium)
-){
+) {
     SearchResultItem("University of Baghdad", "Iraq,street 2018/9")
     SearchResultItem("University of Baghdad", "Iraq,street 2018/9")
     SearchResultItem("University of Baghdad", "Iraq,street 2018/9")

@@ -27,15 +27,16 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.mafraq.presentation.R
-import com.mafraq.presentation.design.components.buttons.AppButtonIcon
 import com.mafraq.presentation.design.components.AppCard
 import com.mafraq.presentation.design.components.ColumnPreview
 import com.mafraq.presentation.design.components.SearchField
 import com.mafraq.presentation.design.components.TextIcon
+import com.mafraq.presentation.design.components.buttons.AppButtonIcon
 import com.mafraq.presentation.design.theme.MafraqTheme.colors
 import com.mafraq.presentation.design.theme.MafraqTheme.sizes
 import com.mafraq.presentation.design.theme.MafraqTheme.typography
 import com.mafraq.presentation.features.home.components.AdsCarouselCard
+import com.mafraq.presentation.features.home.components.SearchResultItem
 import com.mafraq.presentation.features.home.components.VerificationStatus
 import com.mafraq.presentation.navigation.destinations.navigateToChatSupport
 import com.mafraq.presentation.navigation.destinations.navigateToMap
@@ -71,8 +72,8 @@ fun HomeScreen(
     }
     event?.Listen { currentEvent ->
         when (currentEvent) {
-            HomeEvent.NavigateToMap -> locationRequester.request()
-            HomeEvent.NavigateToSupportChat -> navController.navigateToChatSupport()
+            is HomeEvent.NavigateToMap -> locationRequester.request()
+            is HomeEvent.NavigateToSupportChat -> navController.navigateToChatSupport()
         }
     }
 }
@@ -97,8 +98,15 @@ fun Content(
             placeholder = R.string.searchـforـdestination.string,
             onQueryChange = listener::onSearchQueryChange,
             onClear = listener::onClearSearch,
-            content = {}
-        )
+        ) {
+            state.placesSuggestions.forEach { place ->
+                SearchResultItem(
+                    title = place.name,
+                    body = place.formattedAddress,
+                    onClick = { listener.onSelectPlace(place) }
+                )
+            }
+        }
 
         AdsCarouselCard(ads = state.ads, onClick = {})
 

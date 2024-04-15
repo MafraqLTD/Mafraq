@@ -6,6 +6,7 @@ import com.altaie.gls.GLSManager
 import com.altaie.gls.di.GLSInitializer
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.mapbox.search.autocomplete.PlaceAutocomplete
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,6 +38,10 @@ object AppModule {
             USER_PREFERENCES,
             Context.MODE_PRIVATE
         )
+
+    @Provides
+    @Singleton
+    fun providePlaceAutocomplete(): PlaceAutocomplete = PlaceAutocomplete.create()
 
     private const val USER_PREFERENCES = "user_preferences"
 }
