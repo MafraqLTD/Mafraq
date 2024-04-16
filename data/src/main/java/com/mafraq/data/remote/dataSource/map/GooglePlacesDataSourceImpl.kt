@@ -43,8 +43,8 @@ class GooglePlacesDataSourceImpl @Inject constructor(
     ): PlaceSuggestionWithCoordinate {
         val address: Address = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
             suspendCoroutine { continuation ->
-                geocoder.getFromLocationName(placeSuggestion.name, 1) {
-                    continuation.resume(it.first())
+                geocoder.getFromLocationName(placeSuggestion.name, 1) { result ->
+                    continuation.resume(result.first())
                 }
             }
         else
