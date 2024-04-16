@@ -2,10 +2,9 @@
 
 import com.gateway.buildscr.Config
 import com.gateway.buildscr.Config.Version
-import com.gateway.buildscr.getLocalProperty
 import com.gateway.buildscr.buildConfigField
+import com.gateway.buildscr.getLocalProperty
 import com.gateway.buildscr.ignoreExperimentalWarnings
-
 import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
 
 private object LocalConfig {
@@ -43,7 +42,7 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-
+        buildConfigField<String>(key = "PLACES_API_KEY")
         buildConfigField<String>(key = "BASE_URL")
         buildConfigField<String>(key = "MAPBOX_TOKEN")
         buildConfigField<String>(key = "RETABLE_API_KEY")

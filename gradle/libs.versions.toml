@@ -34,8 +34,7 @@ material = "1.11.0"
 maps = "4.3.3"
 gms = "18.2.0"
 mapbox = "11.3.0"
-mapbox-sdk = "24.3.1"
-mapbox-search = "2.0.0-beta.2"
+map-search = "3.1.1"
 gls = "1.5.0"
 permissions = "2.0.0"
 
@@ -110,12 +109,8 @@ support-annotations = { module = "com.android.support:support-annotations", vers
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 maps = { module = "com.google.android.gms:play-services-maps", version.ref = "gms" }
-mapbox-sdk = { module = "com.mapbox.common:common", version.ref = "mapbox-sdk" }
 mapbox = { module = "com.mapbox.maps:android", version.ref = "mapbox" }
-mapbox-search = { module = "com.mapbox.search:mapbox-search-android", version.ref = "mapbox-search" }
-mapbox-search-ui = { module = "com.mapbox.search:mapbox-search-android-ui", version.ref = "mapbox-search" }
-#mapbox-autofill = { module = "com.mapbox.search:autofill", version.ref = "mapbox-search" }
-mapbox-autocomplete = { module = "com.mapbox.search:place-autocomplete", version.ref = "mapbox-search" }
+map-search = { module = "com.google.maps.android:places-ktx", version.ref = "map-search" }
 mapbox-extension = { module = "com.mapbox.extension:maps-compose", version.ref = "mapbox" }
 compose-permissions = { module = "dev.shreyaspatil.permission-flow:permission-flow-compose", version.ref = "permissions" }
 
@@ -171,12 +166,8 @@ implementation-utils = [
     'gls',
     'maps',
     'mapbox',
-    'mapbox-search',
-#    'mapbox-sdk',
-    'mapbox-search-ui',
-#    'mapbox-autofill',
+    'map-search',
     'mapbox-extension',
-#    'mapbox-autocomplete',
     'utils-timber',
 #    'google-auth',
     "firebase-auth",

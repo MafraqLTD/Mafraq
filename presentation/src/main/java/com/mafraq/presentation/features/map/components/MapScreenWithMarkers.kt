@@ -9,9 +9,11 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import com.google.android.gms.maps.model.LatLng
 import com.mafraq.data.entities.map.Driver
+import com.mafraq.data.entities.map.Location
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.theme.MafraqTheme
 import com.mafraq.presentation.utils.extensions.drawableToBitmap
+import com.mafraq.presentation.utils.extensions.toLocation
 import com.mafraq.presentation.utils.extensions.toPoint
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxExperimental
@@ -33,6 +35,7 @@ fun MapScreenWithMarkers(
     zoomLevel: Double = 15.0,
     @DrawableRes
     markerIconResId: Int = R.drawable.map_mark,
+    onMapClicked: (Location) -> Unit = {},
 ) {
     val context = LocalContext.current
     val cameraPositionState = rememberMapViewportState {
@@ -65,7 +68,19 @@ fun MapScreenWithMarkers(
         compass = {},
         scaleBar = {},
         attribution = {},
+        onMapClickListener = {
+            onMapClicked(it.toLocation())
+            true
+        }
     ) {
+        currentLocation.toPoint()?.let {
+            PointAnnotation(
+                iconImageBitmap = markerIcon,
+                iconSize = 1.3,
+                point = it,
+            )
+        }
+
         drivers.forEach { driver ->
             val point = driver.location.toPoint()
             PointAnnotation(

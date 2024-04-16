@@ -1,6 +1,7 @@
 package com.mafraq.presentation.features.home
 
 import com.altaie.prettycode.core.utils.extenstions.isTrue
+import com.mafraq.data.entities.map.Location
 import com.mafraq.data.entities.map.PlaceSuggestion
 import com.mafraq.data.repository.auth.AuthRepository
 import com.mafraq.data.repository.crm.CRMRepository
@@ -22,14 +23,15 @@ class HomeViewModel @Inject constructor(
 ) : BaseViewModel<HomeUiState, HomeEvent>(HomeUiState()), HomeInteractionListener,
     LocationSettingsDelegate by locationSettingsDelegate {
 
+    var mapDestination: Location = Location()
+
     init {
         initialization()
     }
 
-    override fun navigateToMap(
-        longitude: Double?,
-        latitude: Double?
-    ) { emitNewEvent(HomeEvent.NavigateToMap()) }
+    override fun navigateToMap() {
+        emitNewEvent(HomeEvent.NavigateToMap)
+    }
 
     override fun navigateToSupportChat() {
         emitNewEvent(HomeEvent.NavigateToSupportChat)
@@ -50,11 +52,8 @@ class HomeViewModel @Inject constructor(
         tryToExecute(
             block = { mapPlacesRepository.selectSuggestedPlace(place) },
             onSuccess = { selectedPlace ->
-                val coordinate = selectedPlace.coordinate
-                navigateToMap(
-                    longitude = coordinate.longitude(),
-                    latitude = coordinate.latitude()
-                )
+                mapDestination = selectedPlace.location
+                navigateToMap()
             },
             onError = {
                 // TODO: Handle error

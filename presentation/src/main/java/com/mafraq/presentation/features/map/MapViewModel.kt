@@ -1,9 +1,12 @@
 package com.mafraq.presentation.features.map
 
+import androidx.lifecycle.SavedStateHandle
 import com.mafraq.data.entities.map.Driver
+import com.mafraq.data.entities.map.Location
 import com.mafraq.data.repository.crm.CRMRepository
 import com.mafraq.data.repository.hardware.HardwareRepository
 import com.mafraq.presentation.features.base.BaseViewModel
+import com.mafraq.presentation.navigation.MapScreenArgs
 import com.mafraq.presentation.utils.location.LocationSettingsDelegate
 import com.mafraq.presentation.utils.location.LocationSettingsDelegateImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,11 +15,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MapViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val crmRepository: CRMRepository,
     private val hardwareRepository: HardwareRepository,
-    private val locationSettingsDelegate: LocationSettingsDelegateImpl
+    private val locationSettingsDelegate: LocationSettingsDelegateImpl,
 ) : BaseViewModel<MapUiState, MapEvent>(MapUiState()),
     MapInteractionListener, LocationSettingsDelegate by locationSettingsDelegate {
+
+    private val args by lazy { MapScreenArgs(savedStateHandle) }
 
     init {
         initialize()
@@ -36,13 +42,21 @@ class MapViewModel @Inject constructor(
         copy(selectedDriver = driver, showDriverDetails = true)
     }
 
+    override fun onMapClicked(location: Location) =
+        updateState { copy(destinationLocation = location) }
+
+    override fun onConfirmDestination() {
+        TODO(
+            "SEND THE DATA TO RETABLE" +
+                "THEN IF SUCCESSFULLY NAVIGATE BACK"
+        )
+    }
+
     override fun onDismissDriverDetails() = updateState {
         copy(showDriverDetails = false)
     }
 
     override fun updateLocation() {
-        // TODO ( REMOVE RETURN LATER )
-        return
         if (hardwareRepository.isLocationSettingSatisfied)
             tryToCollect(
                 block = hardwareRepository::requestLocationUpdates,
@@ -59,11 +73,22 @@ class MapViewModel @Inject constructor(
 
 
     private fun initialize() {
+        if (args.latitude != null && args.longitude != null) {
+            updateState {
+                copy(
+                    isDestination = true,
+                    destinationLocation = Location(
+                        args.latitude?.toDouble()!!,
+                        args.longitude?.toDouble()!!
+                    )
+                )
+            }
+        }
+
         tryToExecute(
             block = { crmRepository.getDrivers() },
             onSuccess = {
-                // TODO( REMOVE CURRENT LOCATION ASSIGNMENT LATER )
-                updateState { copy(availableDrivers = it, currentLocation = it.first().location) }
+                updateState { copy(availableDrivers = it) }
             },
         )
     }

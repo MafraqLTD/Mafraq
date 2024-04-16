@@ -2,12 +2,12 @@ package com.gateway.buildscr
 
 import com.android.build.api.dsl.LibraryDefaultConfig
 import com.android.build.api.dsl.LibraryExtension
+import com.android.build.api.dsl.VariantDimension
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStreamReader
-import java.util.*
-import com.android.build.api.dsl.VariantDimension
-import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
+import java.util.Properties
 
 
 fun getLocalProperty(key: String, file: String? = null): String {
@@ -46,7 +46,7 @@ fun KotlinJvmOptions.ignoreExperimentalWarnings() {
         "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
         "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
         "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
-        "-opt-in=com.google.accompanist.permissions.ExperimentalPermissionsApi",
+        "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
         "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
         "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
         "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",

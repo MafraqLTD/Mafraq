@@ -6,8 +6,8 @@ import com.mafraq.data.remote.dataSource.auth.FirebaseAuthDataSource
 import com.mafraq.data.remote.dataSource.auth.FirebaseAuthDataSourceImpl
 import com.mafraq.data.remote.dataSource.crm.CRMRemoteDataSource
 import com.mafraq.data.remote.dataSource.crm.CRMRemoteDataSourceImpl
-import com.mafraq.data.remote.dataSource.map.MapBoxPlacesDataSource
-import com.mafraq.data.remote.dataSource.map.MapBoxPlacesDataSourceImpl
+import com.mafraq.data.remote.dataSource.map.GooglePlacesDataSource
+import com.mafraq.data.remote.dataSource.map.GooglePlacesDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -33,6 +33,6 @@ interface DataSourceModule {
 
     @Binds
     @Singleton
-    fun bindMapBoxPlacesDataSource(source: MapBoxPlacesDataSourceImpl): MapBoxPlacesDataSource
+    fun bindMapBoxPlacesDataSource(source: GooglePlacesDataSourceImpl): GooglePlacesDataSource
 
 }

@@ -1,6 +1,7 @@
 package com.mafraq.presentation.features.map
 
 import com.mafraq.data.entities.map.Driver
+import com.mafraq.data.entities.map.Location
 import com.mafraq.presentation.utils.location.LocationSettingsDelegate
 
 
@@ -12,6 +13,8 @@ interface MapInteractionListener : LocationSettingsDelegate {
     fun onPermissionGranted()
     fun onDismissDriverDetails()
     fun onDriverMarkClick(driver: Driver)
+    fun onMapClicked(location: Location)
+    fun onConfirmDestination()
 
     object Preview : MapInteractionListener,
         LocationSettingsDelegate by LocationSettingsDelegate.DummyImpl {
@@ -21,6 +24,8 @@ interface MapInteractionListener : LocationSettingsDelegate {
         override fun onPermissionGranted() = Unit
         override fun onDismissDriverDetails() = Unit
         override fun onDriverMarkClick(driver: Driver) = Unit
+        override fun onMapClicked(location: Location) = Unit
+        override fun onConfirmDestination() = Unit
 
     }
 }

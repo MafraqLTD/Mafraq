@@ -57,7 +57,13 @@ fun HomeScreen(
     val listener: HomeInteractionListener = viewModel
 
     val locationRequester = rememberLocationRequester(
-        onLocationSatisfied = navController::navigateToMap,
+        onLocationSatisfied = {
+            val destination = viewModel.mapDestination
+            navController.navigateToMap(
+                latitude = destination.latitude.toFloat(),
+                longitude = destination.longitude.toFloat()
+            )
+        },
         locationSettingsDelegate = viewModel
     )
 
@@ -72,8 +78,8 @@ fun HomeScreen(
     }
     event?.Listen { currentEvent ->
         when (currentEvent) {
-            is HomeEvent.NavigateToMap -> locationRequester.request()
-            is HomeEvent.NavigateToSupportChat -> navController.navigateToChatSupport()
+            HomeEvent.NavigateToMap -> locationRequester.request()
+            HomeEvent.NavigateToSupportChat -> navController.navigateToChatSupport()
         }
     }
 }
