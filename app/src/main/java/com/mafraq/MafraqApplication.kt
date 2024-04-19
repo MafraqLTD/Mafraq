@@ -1,9 +1,11 @@
 package com.mafraq
 
 import android.app.Application
+import com.google.android.libraries.places.api.Places
 import com.mapbox.common.MapboxOptions
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
+import java.util.Locale
 
 
 @HiltAndroidApp
@@ -11,7 +13,11 @@ class MafraqApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         timberConfig()
-
+        Places.initialize(
+            /* applicationContext = */ applicationContext,
+            /* apiKey = */ BuildConfig.PLACES_API_KEY,
+            /* locale = */ Locale.getDefault()
+        )
         MapboxOptions.accessToken = BuildConfig.MAPBOX_TOKEN
     }
 

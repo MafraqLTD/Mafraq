@@ -3,6 +3,7 @@ package com.mafraq.presentation.utils.extensions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
@@ -73,3 +74,6 @@ fun NavController.navigate(
         }
     )
 }
+
+fun SavedStateHandle.getArg(key: String) = get<String>(key).orEmpty()
+fun<T> SavedStateHandle.getArgOrNull(key: String): T? = get(key)

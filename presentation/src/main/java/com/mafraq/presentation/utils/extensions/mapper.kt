@@ -9,3 +9,7 @@ fun Location.toLatLng() = LatLng(latitude, longitude)
 
 fun LatLng.toPoint(): Point? = Point.fromLngLat(this.longitude, this.latitude)
 fun Location.toPoint(): Point = Point.fromLngLat(this.longitude, this.latitude)
+fun Point.toLocation(): Location = Location(
+    latitude = latitude(),
+    longitude = longitude()
+)

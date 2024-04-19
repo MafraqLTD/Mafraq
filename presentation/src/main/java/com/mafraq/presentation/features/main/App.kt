@@ -46,7 +46,10 @@ fun App(isAuthorized: Boolean) {
                         snackbarData = it,
                         actionContentColor = MaterialTheme.colorScheme.inverseSurface,
                         shape = MaterialTheme.shapes.medium,
-                        modifier = Modifier,
+                        modifier = Modifier.padding(horizontal = sizes.large),
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                        contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        actionColor = colors.primary,
                     )
                 }
             },

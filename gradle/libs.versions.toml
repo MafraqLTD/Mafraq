@@ -33,7 +33,8 @@ appcompat = "1.6.1"
 material = "1.11.0"
 maps = "4.3.3"
 gms = "18.2.0"
-mapbox = "11.3.0-rc.1"
+mapbox = "11.3.0"
+map-search = "3.1.1"
 gls = "1.5.0"
 permissions = "2.0.0"
 
@@ -109,6 +110,7 @@ appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat"
 material = { module = "com.google.android.material:material", version.ref = "material" }
 maps = { module = "com.google.android.gms:play-services-maps", version.ref = "gms" }
 mapbox = { module = "com.mapbox.maps:android", version.ref = "mapbox" }
+map-search = { module = "com.google.maps.android:places-ktx", version.ref = "map-search" }
 mapbox-extension = { module = "com.mapbox.extension:maps-compose", version.ref = "mapbox" }
 compose-permissions = { module = "dev.shreyaspatil.permission-flow:permission-flow-compose", version.ref = "permissions" }
 
@@ -164,6 +166,7 @@ implementation-utils = [
     'gls',
     'maps',
     'mapbox',
+    'map-search',
     'mapbox-extension',
     'utils-timber',
 #    'google-auth',

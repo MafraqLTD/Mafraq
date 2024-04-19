@@ -11,11 +11,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.withResumed
 import androidx.navigation.NavController
 import com.mafraq.presentation.R
+import com.mafraq.presentation.design.components.snackbar.LocalSnackState
+import com.mafraq.presentation.design.components.snackbar.showSnackbar
 import com.mafraq.presentation.design.theme.MafraqTheme.sizes
 import com.mafraq.presentation.features.map.components.DriverBottomSheet
 import com.mafraq.presentation.features.map.components.MapScreenWithMarkers
@@ -58,7 +61,18 @@ private fun Content(
     state: MapUiState = MapUiState(),
     listener: MapInteractionListener = MapInteractionListener.Preview
 ) {
-    val zoomLevel = 13.0
+    val zoomLevel = state.zoomLevel
+    val snackbarHostState = LocalSnackState.current
+    val context = LocalContext.current
+
+    if (state.isDestination)
+        LaunchedEffect(key1 = Unit) {
+            snackbarHostState.showSnackbar(
+                message = context.getString(R.string.set_destination),
+                actionLabel = context.getString(R.string.confirm),
+                onAccept = listener::onConfirmDestination
+            )
+        }
 
     if (state.showDriverDetails)
         with(state.selectedDriver) {
@@ -77,9 +91,10 @@ private fun Content(
         MapScreenWithMarkers(
             drivers = state.availableDrivers,
             zoomLevel = zoomLevel,
-            currentLocation = state.currentLocation.toLatLng(),
+            currentLocation = state.cameraLocation.toLatLng(),
             onClick = listener::onDriverMarkClick,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            onMapClicked = listener::onMapClicked
         )
 
         IconButton(

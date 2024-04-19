@@ -1,5 +1,7 @@
 package com.mafraq.di
 
+import com.mafraq.data.repository.auth.AuthRepository
+import com.mafraq.data.repository.auth.AuthRepositoryImpl
 import com.mafraq.data.repository.chat.group.GroupChatRepository
 import com.mafraq.data.repository.chat.group.GroupChatRepositoryImpl
 import com.mafraq.data.repository.chat.support.SupportChatRepository
@@ -8,8 +10,8 @@ import com.mafraq.data.repository.crm.CRMRepository
 import com.mafraq.data.repository.crm.CRMRepositoryImpl
 import com.mafraq.data.repository.hardware.HardwareRepository
 import com.mafraq.data.repository.hardware.HardwareRepositoryImpl
-import com.mafraq.data.repository.auth.AuthRepository
-import com.mafraq.data.repository.auth.AuthRepositoryImpl
+import com.mafraq.data.repository.map.MapPlacesRepository
+import com.mafraq.data.repository.map.MapPlacesRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -35,10 +37,14 @@ interface RepositoryModule {
 
     @Binds
     @Singleton
-    fun bindSupportChatDataSource(source: SupportChatRepositoryImpl): SupportChatRepository
+    fun bindSupportChatRepository(repository: SupportChatRepositoryImpl): SupportChatRepository
 
     @Binds
     @Singleton
-    fun bindGroupChatDataSource(source: GroupChatRepositoryImpl): GroupChatRepository
+    fun bindGroupChatRepository(repository: GroupChatRepositoryImpl): GroupChatRepository
+    
+    @Binds
+    @Singleton
+    fun bindMapPlacesRepository(repository: MapPlacesRepositoryImpl): MapPlacesRepository
 
 }
