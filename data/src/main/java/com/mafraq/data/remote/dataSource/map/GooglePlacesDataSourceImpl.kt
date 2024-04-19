@@ -3,6 +3,7 @@ package com.mafraq.data.remote.dataSource.map
 import android.location.Address
 import android.location.Geocoder
 import android.os.Build
+import com.altaie.prettycode.core.base.BaseRemoteDataSource
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import com.google.android.libraries.places.api.net.PlacesClient
@@ -11,6 +12,10 @@ import com.mafraq.data.entities.map.Location
 import com.mafraq.data.entities.map.PlaceSuggestion
 import com.mafraq.data.entities.map.PlaceSuggestionWithCoordinate
 import com.mafraq.data.remote.mappers.PlaceSuggestionMapper
+import com.mafraq.data.remote.mappers.getLocations
+import com.mafraq.data.remote.mappers.toRouteBody
+import com.mafraq.data.remote.models.routes.request.RouteDirectionsBody
+import com.mafraq.data.remote.service.DirectionsApiService
 import com.mafraq.data.repository.hardware.HardwareRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
@@ -25,7 +30,8 @@ class GooglePlacesDataSourceImpl @Inject constructor(
     private val autocompleteSessionToken: AutocompleteSessionToken,
     private val placeSuggestionMapper: PlaceSuggestionMapper,
     private val hardwareRepository: HardwareRepository,
-) : GooglePlacesDataSource {
+    private val directionsApiService: DirectionsApiService,
+) : GooglePlacesDataSource, BaseRemoteDataSource {
 
     override suspend fun getPlaceSuggestions(query: String): List<PlaceSuggestion> {
         val lastLocation = hardwareRepository.getLastLocation()
@@ -59,6 +65,21 @@ class GooglePlacesDataSourceImpl @Inject constructor(
             )
         )
     }
+
+    override suspend fun getDirections(
+        originLocation: Location,
+        destinationLocation: Location
+    ): List<Location> = apiCall(
+        suspendFunction = {
+            directionsApiService.computeRoutes(
+                RouteDirectionsBody(
+                    origin = originLocation.toRouteBody(),
+                    destination = destinationLocation.toRouteBody(),
+                )
+            )
+        },
+        mapper = { it.routes.getLocations() }
+    ).toData ?: emptyList()
 
     companion object {
         private const val IRAQ_ISO_CODE = "IQ"
