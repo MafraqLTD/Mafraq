@@ -24,6 +24,7 @@ import com.mafraq.presentation.features.map.components.DriverBottomSheet
 import com.mafraq.presentation.features.map.components.MapScreenWithMarkers
 import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.painter
+import com.mafraq.presentation.utils.extensions.toLatLng
 import com.mafraq.presentation.utils.rememberLocationRequester
 
 
@@ -90,11 +91,9 @@ private fun Content(
         MapScreenWithMarkers(
             drivers = state.availableDrivers,
             zoomLevel = zoomLevel,
+            currentLocation = state.cameraLocation.toLatLng(),
             onClick = listener::onDriverMarkClick,
             modifier = Modifier.fillMaxSize(),
-            isDestination = state.isDestination,
-            directions = state.directions,
-            currentLocation = state.currentLocation,
             onMapClicked = listener::onMapClicked
         )
 

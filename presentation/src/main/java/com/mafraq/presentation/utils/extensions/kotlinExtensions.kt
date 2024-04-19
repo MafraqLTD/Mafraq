@@ -54,6 +54,3 @@ fun String.toTitleCase(): String {
 }
 
 operator fun<T> Pair<T, T>.get(index: Int) = if (index == 0) first else second
-
-fun<T> List<T>.middle() = this[size / 2]
-

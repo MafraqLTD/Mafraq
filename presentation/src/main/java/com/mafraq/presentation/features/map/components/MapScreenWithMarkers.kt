@@ -3,28 +3,23 @@ package com.mafraq.presentation.features.map.components
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import com.google.android.gms.maps.model.LatLng
 import com.mafraq.data.entities.map.Driver
 import com.mafraq.data.entities.map.Location
-import com.mafraq.data.remote.mappers.toLocation
-import com.mafraq.data.remote.mappers.toPoint
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.theme.MafraqTheme
 import com.mafraq.presentation.utils.extensions.drawableToBitmap
-import com.mafraq.presentation.utils.extensions.middle
-import com.mapbox.geojson.Point
+import com.mafraq.presentation.utils.extensions.toLocation
+import com.mafraq.presentation.utils.extensions.toPoint
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapboxExperimental
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotation
-import com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotation
 import com.mapbox.maps.extension.style.layers.properties.generated.TextAnchor
 import com.mapbox.maps.extension.style.layers.properties.generated.TextJustify
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
@@ -33,23 +28,20 @@ import com.mapbox.maps.plugin.animation.MapAnimationOptions
 @OptIn(MapboxExperimental::class)
 @Composable
 fun MapScreenWithMarkers(
-    currentLocation: Point,
-    modifier: Modifier = Modifier,
-    isDestination: Boolean = false,
-    drivers: List<Driver> = emptyList(),
-    directions: List<Point> = emptyList(),
+    currentLocation: LatLng,
+    drivers: List<Driver>,
     onClick: (driver: Driver) -> Unit,
+    modifier: Modifier = Modifier,
     zoomLevel: Double = 15.0,
     @DrawableRes
     markerIconResId: Int = R.drawable.map_mark,
     onMapClicked: (Location) -> Unit = {},
 ) {
     val context = LocalContext.current
-    var cameraCenter by remember { mutableStateOf(currentLocation) }
     val cameraPositionState = rememberMapViewportState {
         setCameraOptions {
             zoom(zoomLevel)
-            center(currentLocation)
+            center(currentLocation.toPoint())
             bearing(0.0)
             pitch(0.0)
         }
@@ -57,10 +49,10 @@ fun MapScreenWithMarkers(
 
     val mapAnimationOptions = remember { MapAnimationOptions.Builder().duration(1500L).build() }
 
-    LaunchedEffect(key1 = currentLocation, key2 = zoomLevel, key3 = cameraCenter) {
+    LaunchedEffect(key1 = currentLocation) {
         cameraPositionState.flyTo(
             cameraOptions = CameraOptions.Builder()
-                .center(cameraCenter)
+                .center(currentLocation.toPoint())
                 .zoom(zoomLevel)
                 .build(),
             animationOptions = mapAnimationOptions
@@ -81,27 +73,11 @@ fun MapScreenWithMarkers(
             true
         }
     ) {
-
-        PointAnnotation(
-            iconImageBitmap = markerIcon,
-            iconSize = 1.3,
-            point = currentLocation,
-        )
-
-        if (isDestination && directions.isNotEmpty()) {
-            PolylineAnnotation(
-                points = directions,
-                lineWidth = 5.0,
-                lineBorderWidth = 5.0,
-                lineBorderColorInt = MafraqTheme.colors.primary.toArgb()
-            )
-
-            cameraCenter = directions.middle()
-
+        currentLocation.toPoint()?.let {
             PointAnnotation(
                 iconImageBitmap = markerIcon,
                 iconSize = 1.3,
-                point = directions.first(),
+                point = it,
             )
         }
 
