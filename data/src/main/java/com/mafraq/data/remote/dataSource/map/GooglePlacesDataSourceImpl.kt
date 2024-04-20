@@ -21,6 +21,7 @@ import com.mafraq.data.repository.hardware.HardwareRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 
@@ -51,7 +52,8 @@ class GooglePlacesDataSourceImpl @Inject constructor(
         val address: Address = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
             suspendCoroutine { continuation ->
                 geocoder.getFromLocationName(placeSuggestion.name, 1) { result ->
-                    continuation.resume(result.first())
+                    result.firstOrNull()?.let(continuation::resume)
+                        ?: continuation.resumeWithException(Exception("No address found"))
                 }
             }
         else

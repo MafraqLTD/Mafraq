@@ -45,8 +45,10 @@ class MapViewModel @Inject constructor(
         copy(selectedDriver = driver, showDriverDetails = true)
     }
 
-    override fun onMapClicked(location: Location) =
+    override fun onMapClicked(location: Location) {
         updateState { copy(destinationLocation = location) }
+        findBestRoute()
+    }
 
     override fun onConfirmDestination() {
         TODO(
@@ -68,34 +70,38 @@ class MapViewModel @Inject constructor(
                 },
                 onCompleted = {
                     hardwareRepository.removeLocationUpdates()
-
-                    if (state.value.isDestination.not()) return@tryToCollect
-
-                    tryToExecute(
-                        block = {
-                            placesRepository.getDirections(
-                                originLocation = state.value.originLocation,
-                                destinationLocation = state.value.destinationLocation
-                            )
-                        },
-                        onSuccess = {
-                            updateState {
-                                copy(
-                                    directions = it.locationPoints.map(Location::toPoint),
-                                    directionsZoomLevel = it.zoomLevel
-                                )
-                            }
-                        },
-                        onCompleted = {
-                            updateState { copy(isLoading = false) }
-                        }
-                    )
+                    findBestRoute()
                 }
             )
     }
 
-    override fun cancelLocationUpdates() = hardwareRepository.removeLocationUpdates()
+    private fun findBestRoute() {
+        if (state.value.isDestination.not()) return
 
+        updateState { copy(isLoading = true,) }
+
+        tryToExecute(
+            block = {
+                placesRepository.getDirections(
+                    originLocation = state.value.originLocation,
+                    destinationLocation = state.value.destinationLocation
+                )
+            },
+            onSuccess = {
+                updateState {
+                    copy(
+                        directions = it.locationPoints.map(Location::toPoint),
+                        directionsZoomLevel = it.zoomLevel
+                    )
+                }
+            },
+            onCompleted = {
+                updateState { copy(isLoading = false) }
+            }
+        )
+    }
+
+    override fun cancelLocationUpdates() = hardwareRepository.removeLocationUpdates()
 
     private fun initialize() {
         if (args.latitude != null && args.longitude != null) {
