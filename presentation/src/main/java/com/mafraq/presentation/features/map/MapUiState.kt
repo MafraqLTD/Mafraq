@@ -23,7 +23,8 @@ data class MapUiState(
 ) {
     val zoomLevel: Double
         get() = if (isDestination && directions.isNotEmpty())
-            directionsZoomLevel
+            // directionsZoomLevel
+            DIRECTIONS_ZOOM_LEVEL
         else if (isDestination)
             DESTINATION_ZOOM_LEVEL
         else

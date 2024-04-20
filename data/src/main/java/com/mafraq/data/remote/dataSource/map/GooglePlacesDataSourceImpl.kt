@@ -83,7 +83,7 @@ class GooglePlacesDataSourceImpl @Inject constructor(
         },
         mapper = { it.routes.toDirections() }
     ).toData ?: Directions.empty
-
+  
     companion object {
         private const val IRAQ_ISO_CODE = "IQ"
     }
