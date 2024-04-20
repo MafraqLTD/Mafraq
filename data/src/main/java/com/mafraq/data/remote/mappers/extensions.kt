@@ -2,6 +2,7 @@ package com.mafraq.data.remote.mappers
 
 import com.google.android.gms.maps.model.LatLng
 import com.mafraq.data.entities.Subscriber
+import com.mafraq.data.entities.map.Directions
 import com.mafraq.data.entities.map.Location
 import com.mafraq.data.remote.models.DriverRemote
 import com.mafraq.data.remote.models.LocationRemote
@@ -53,11 +54,17 @@ fun StepRemote.toLocation() = startLocation?.latLng?.toLocation()
 fun List<StepRemote>?.toLocations(): List<Location> =
     this?.mapNotNull { it.toLocation() } ?: emptyList()
 
-fun List<RouteRemote>?.getLocations(): List<Location> =
-    this
-        ?.firstOrNull()
-        ?.legs
-        ?.firstOrNull()
+fun List<RouteRemote>?.firstRouteOrNull() = this?.firstOrNull()
+    ?.legs
+    ?.firstOrNull()
+
+private fun List<RouteRemote>?.getLocations(): List<Location> =
+    firstRouteOrNull()
         ?.steps
         ?.toLocations()
         ?: emptyList()
+
+fun List<RouteRemote>?.toDirections(): Directions = Directions(
+    locationPoints = getLocations(),
+    distanceMeters = firstRouteOrNull()?.distanceMeters ?: 0,
+)

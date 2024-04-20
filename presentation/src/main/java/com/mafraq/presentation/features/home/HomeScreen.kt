@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -32,6 +34,7 @@ import com.mafraq.presentation.design.components.ColumnPreview
 import com.mafraq.presentation.design.components.SearchField
 import com.mafraq.presentation.design.components.TextIcon
 import com.mafraq.presentation.design.components.buttons.AppButtonIcon
+import com.mafraq.presentation.design.components.container.Loading
 import com.mafraq.presentation.design.theme.MafraqTheme.colors
 import com.mafraq.presentation.design.theme.MafraqTheme.sizes
 import com.mafraq.presentation.design.theme.MafraqTheme.typography
@@ -105,12 +108,18 @@ fun Content(
             onQueryChange = listener::onSearchQueryChange,
             onClear = listener::onClearSearch,
         ) {
-            state.placesSuggestions.forEach { place ->
-                SearchResultItem(
-                    title = place.name,
-                    body = place.formattedAddress,
-                    onClick = { listener.onSelectPlace(place) }
-                )
+            LazyColumn(
+                modifier = Modifier.fillMaxSize().padding(sizes.small),
+                verticalArrangement = Arrangement.spacedBy(sizes.small),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                items(items = state.placesSuggestions) { place ->
+                    SearchResultItem(
+                        title = place.name,
+                        body = place.formattedAddress,
+                        onClick = { listener.onSelectPlace(place) }
+                    )
+                }
             }
         }
 
@@ -120,6 +129,8 @@ fun Content(
 
         SupportCard(onClick = listener::navigateToSupportChat)
     }
+
+    Loading(showDialog = state.isLoading, hintText = R.string.please_wait.string)
 }
 
 @Composable

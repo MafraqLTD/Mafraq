@@ -49,6 +49,7 @@ class HomeViewModel @Inject constructor(
     }
 
     override fun onSelectPlace(place: PlaceSuggestion) {
+        updateState { copy(isLoading = true) }
         tryToExecute(
             block = { mapPlacesRepository.selectSuggestedPlace(place) },
             onSuccess = { selectedPlace ->
@@ -57,6 +58,9 @@ class HomeViewModel @Inject constructor(
             },
             onError = {
                 // TODO: Handle error
+            },
+            onCompleted = {
+                updateState { copy(isLoading = false) }
             }
         )
     }

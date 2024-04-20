@@ -1,5 +1,6 @@
 package com.mafraq.data.repository.map
 
+import com.mafraq.data.entities.map.Directions
 import com.mafraq.data.entities.map.Location
 import com.mafraq.data.entities.map.PlaceSuggestion
 import com.mafraq.data.entities.map.PlaceSuggestionWithCoordinate
@@ -21,7 +22,7 @@ class MapPlacesRepositoryImpl @Inject constructor(
     override suspend fun getDirections(
         originLocation: Location,
         destinationLocation: Location
-    ): List<Location> = googlePlacesDataSource.getDirections(
+    ): Directions = googlePlacesDataSource.getDirections(
         originLocation = originLocation,
         destinationLocation = destinationLocation
     )
