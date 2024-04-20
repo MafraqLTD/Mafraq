@@ -7,7 +7,10 @@ import com.mafraq.Constants
 import com.mafraq.data.entities.SeparatedValuesListOfString
 import com.mafraq.data.remote.interceptor.HeaderInterceptor
 import com.mafraq.data.remote.models.LocationRemote
+import com.mafraq.data.remote.service.DirectionsApiService
 import com.mafraq.data.remote.service.RetableService
+import com.mafraq.data.utils.convertors.LocationDeserializer
+import com.mafraq.data.utils.convertors.SeparatedValuesListOfStringDeserializer
 import com.mafraq.presentation.utils.extensions.toStringUrl
 import dagger.Module
 import dagger.Provides
@@ -19,8 +22,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
-import com.mafraq.data.utils.convertors.LocationDeserializer
-import com.mafraq.data.utils.convertors.SeparatedValuesListOfStringDeserializer
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -74,8 +75,16 @@ object RemoteApiModule {
 
     @Singleton
     @Provides
-    fun provideCCHApiService(retrofit: Retrofit): RetableService =
+    fun provideRetableApiService(retrofit: Retrofit): RetableService =
         retrofit.create(RetableService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideDirectionsApiService(retrofit: Retrofit): DirectionsApiService =
+        retrofit.newBuilder()
+            .baseUrl(BuildConfig.ROUTES_BASE_URL)
+            .build()
+            .create(DirectionsApiService::class.java)
 
     private const val TIMEOUT_SECONDS: Long = 45
 }

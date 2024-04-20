@@ -1,5 +1,6 @@
 package com.mafraq.data.repository.map
 
+import com.mafraq.data.entities.map.Location
 import com.mafraq.data.entities.map.PlaceSuggestion
 import com.mafraq.data.entities.map.PlaceSuggestionWithCoordinate
 import com.mafraq.data.remote.dataSource.map.GooglePlacesDataSource
@@ -16,4 +17,12 @@ class MapPlacesRepositoryImpl @Inject constructor(
     override suspend fun selectSuggestedPlace(
         placeSuggestion: PlaceSuggestion
     ): PlaceSuggestionWithCoordinate = googlePlacesDataSource.selectSuggestedPlace(placeSuggestion)
+
+    override suspend fun getDirections(
+        originLocation: Location,
+        destinationLocation: Location
+    ): List<Location> = googlePlacesDataSource.getDirections(
+        originLocation = originLocation,
+        destinationLocation = destinationLocation
+    )
 }

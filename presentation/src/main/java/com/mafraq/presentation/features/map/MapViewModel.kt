@@ -3,8 +3,10 @@ package com.mafraq.presentation.features.map
 import androidx.lifecycle.SavedStateHandle
 import com.mafraq.data.entities.map.Driver
 import com.mafraq.data.entities.map.Location
+import com.mafraq.data.remote.mappers.toPoint
 import com.mafraq.data.repository.crm.CRMRepository
 import com.mafraq.data.repository.hardware.HardwareRepository
+import com.mafraq.data.repository.map.MapPlacesRepository
 import com.mafraq.presentation.features.base.BaseViewModel
 import com.mafraq.presentation.navigation.MapScreenArgs
 import com.mafraq.presentation.utils.location.LocationSettingsDelegate
@@ -19,6 +21,7 @@ class MapViewModel @Inject constructor(
     private val crmRepository: CRMRepository,
     private val hardwareRepository: HardwareRepository,
     private val locationSettingsDelegate: LocationSettingsDelegateImpl,
+    private val placesRepository: MapPlacesRepository
 ) : BaseViewModel<MapUiState, MapEvent>(MapUiState()),
     MapInteractionListener, LocationSettingsDelegate by locationSettingsDelegate {
 
@@ -48,7 +51,7 @@ class MapViewModel @Inject constructor(
     override fun onConfirmDestination() {
         TODO(
             "SEND THE DATA TO RETABLE" +
-                "THEN IF SUCCESSFULLY NAVIGATE BACK"
+                    "THEN IF SUCCESSFULLY NAVIGATE BACK"
         )
     }
 
@@ -61,10 +64,25 @@ class MapViewModel @Inject constructor(
             tryToCollect(
                 block = hardwareRepository::requestLocationUpdates,
                 onNewValue = {
-                    updateState { copy(currentLocation = it) }
+                    updateState { copy(originLocation = it) }
                 },
                 onCompleted = {
                     hardwareRepository.removeLocationUpdates()
+
+                    if (state.value.isDestination)
+                        tryToExecute(
+                            block = {
+                                placesRepository.getDirections(
+                                    originLocation = state.value.originLocation,
+                                    destinationLocation = state.value.destinationLocation
+                                )
+                            },
+                            onSuccess = {
+                                updateState {
+                                    copy(directions = it.map(Location::toPoint))
+                                }
+                            }
+                        )
                 }
             )
     }
@@ -83,13 +101,13 @@ class MapViewModel @Inject constructor(
                     )
                 )
             }
+        } else {
+            tryToExecute(
+                block = { crmRepository.getDrivers() },
+                onSuccess = {
+                    updateState { copy(availableDrivers = it) }
+                },
+            )
         }
-
-        tryToExecute(
-            block = { crmRepository.getDrivers() },
-            onSuccess = {
-                updateState { copy(availableDrivers = it) }
-            },
-        )
     }
 }
