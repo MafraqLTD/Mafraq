@@ -1,21 +1,17 @@
 package com.mafraq.presentation.features.home.components
 
 import androidx.compose.animation.core.animateIntAsState
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,14 +29,11 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
-import androidx.tv.material3.Carousel
-import androidx.tv.material3.CarouselState
-import androidx.tv.material3.rememberCarouselState
 import coil.compose.AsyncImage
 import com.mafraq.data.entities.home.Ad
+import com.mafraq.presentation.design.components.Carousel
+import com.mafraq.presentation.design.components.CarouselItem
 import com.mafraq.presentation.design.theme.MafraqTheme
-
 
 
 @Composable
@@ -50,30 +43,19 @@ fun AdsCarouselCard(ads: List<Ad>, onClick: (Int) -> Unit) {
     val cardHeight = with(LocalDensity.current) {
         (configurations.screenHeightDp / 1.65f).toDp()
     }
-    val carouselState: CarouselState = rememberCarouselState()
+
     Carousel(
-        itemCount = ads.size,
         modifier = Modifier
             .fillMaxWidth()
             .height(cardHeight)
             .clip(MafraqTheme.shapes.medium),
-        carouselState = carouselState,
-        carouselIndicator = {
-            IndicatorRow(
-                itemCount = ads.size,
-                activeItemIndex = carouselState.activeItemIndex,
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(MafraqTheme.sizes.medium),
-            )
-        }
-    ) { index ->
-        val adModel = ads[index]
-        CarouselItemBackground(adModel = adModel, modifier = Modifier.fillMaxSize())
+        value = CarouselItem(ads)
+    ) { index, item, modifier ->
+        CarouselItemBackground(adModel = item, modifier = modifier.fillMaxSize())
         CarouselItemForeground(
-            adModel = adModel,
+            adModel = item,
             showMore = showMore,
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             onClick = {
                 onClick(index)
                 showMore = !showMore
@@ -97,13 +79,13 @@ private fun CarouselItemForeground(
         )
     }
 
-    val maxLines by animateIntAsState (
+    val maxLines by animateIntAsState(
         if (showMore) 5 else 1,
         label = "maxLines"
     )
 
     Box(
-        modifier = modifier.clickable(onClick=onClick),
+        modifier = modifier.clickable(onClick = onClick),
         contentAlignment = Alignment.BottomStart
     ) {
         Column(
@@ -165,35 +147,3 @@ private fun CarouselItemBackground(
         contentScale = ContentScale.Crop
     )
 }
-
-@Composable
-internal fun IndicatorRow(
-    itemCount: Int,
-    activeItemIndex: Int,
-    modifier: Modifier = Modifier,
-    spacing: Dp = MafraqTheme.sizes.small,
-    indicator: @Composable (isActive: Boolean) -> Unit = { isActive ->
-        val activeColor = Color.White
-        val inactiveColor = activeColor.copy(alpha = 0.3f)
-        Box(
-            modifier = Modifier
-                .size(MafraqTheme.sizes.small)
-                .background(
-                    color = if (isActive) activeColor else inactiveColor,
-                    shape = MafraqTheme.shapes.extraSmall,
-                ),
-        )
-    }
-) {
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(spacing),
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier,
-    ) {
-        repeat(itemCount) {
-            val isActive = it == activeItemIndex
-            indicator(isActive)
-        }
-    }
-}
-

@@ -57,6 +57,14 @@
     <string name="unsubscribe">إلغاء الاشتراك</string>
     <string name="location">الموقع</string>
     <string name="phone_with_arg">الهاتف: %1$s</string>
+    <string name="confirm">Confirm</string>
+    <string name="work_address">عنوان العمل</string>
+    <string name="home_address">عنوان البيت</string>
+    <string name="male">ذكر</string>
+    <string name="female">أنثى</string>
+    <string name="gender">الجنس</string>
+    <string name="birthday">المواليد</string>
+    <string name="off_days">أيام الإجازة</string>
     <string name="confirm">تأكيد</string>
     <string name="finding_best_route">جارٍ العثور على أفضل طريق</string>
     <string name="please_wait">يرجى الانتظار..</string>
