@@ -76,6 +76,7 @@ jobs:
           path: artifacts/logcat.log
 
   codeql-trigger:
+    name: CodeQL analysis
     runs-on: ubuntu-latest
     needs: build
     if: always()
