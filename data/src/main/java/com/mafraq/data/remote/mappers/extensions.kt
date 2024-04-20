@@ -16,7 +16,10 @@ import com.mapbox.geojson.Point
 
 fun LocationRemote?.toDomain() = Location(
     latitude = this?.latitude ?: 0.0,
-    longitude = this?.longitude ?: 0.0
+    longitude = this?.longitude ?: 0.0,
+    city = this?.city?.replace("District", "")?.trim().orEmpty(),
+    district = this?.district?.replace("District", "")?.trim().orEmpty(),
+    governorate = this?.governorate?.replace("Governorate", "")?.trim().orEmpty(),
 )
 
 fun DriverRemote.toSubscribers(): List<Subscriber> {

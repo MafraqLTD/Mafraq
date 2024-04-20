@@ -20,6 +20,7 @@ android {
         buildConfigField<String>(key = "ROUTES_API_KEY")
         buildConfigField<String>(key = "RETABLE_ADS_TABLE_ID")
         buildConfigField<String>(key = "RETABLE_DRIVER_TABLE_ID")
+        buildConfigField<String>(key = "RETABLE_EMPLOYEE_TABLE_ID")
     }
 
     kotlinOptions {

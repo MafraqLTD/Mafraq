@@ -2,7 +2,7 @@ package com.mafraq.data.remote.mappers
 
 import com.altaie.prettycode.core.mapper.base.MapperList
 import com.mafraq.data.entities.map.Driver
-import com.mafraq.data.entities.map.SubscriptionStatus
+import com.mafraq.data.entities.map.DriverSubscriptionStatus
 import com.mafraq.data.remote.models.DriverRemote
 import javax.inject.Inject
 
@@ -24,7 +24,7 @@ class DriverFromRemoteMapper @Inject constructor()
             rating = rating?.toDoubleOrNull()?.toString().orEmpty(),
             snippet = snippet.orEmpty(),
             subscribers = toSubscribers(),
-            subscriptionStatus = SubscriptionStatus.fromString(subscriptionStatus)
+            subscriptionStatus = DriverSubscriptionStatus.fromString(subscriptionStatus)
         )
     }
 
