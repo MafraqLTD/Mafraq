@@ -34,6 +34,7 @@ fun App(isAuthorized: Boolean) {
                 Screen.Home.route,
                 Screen.ChatGroup.route,
                 Screen.Profile.route,
+                Screen.Profile.destination.route,
                 Screen.Notifications.route,
             )
         }

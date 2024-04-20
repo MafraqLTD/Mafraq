@@ -19,6 +19,8 @@ data class MapUiState(
     val selectedDriver: Driver = Driver(),
     val availableDrivers: List<Driver> = emptyList(),
     val isLoading: Boolean = false,
+    val isFromProfileForHomeAddress: Boolean = false,
+    val isFromProfileForWorkAddress: Boolean = false,
     val directionsZoomLevel: Double = DIRECTIONS_ZOOM_LEVEL
 ) {
     val zoomLevel: Double

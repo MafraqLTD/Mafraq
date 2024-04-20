@@ -3,12 +3,14 @@ package com.mafraq.presentation.features.map
 import androidx.lifecycle.SavedStateHandle
 import com.mafraq.data.entities.map.Driver
 import com.mafraq.data.entities.map.Location
+import com.mafraq.data.entities.profile.EmployeeProfile
 import com.mafraq.data.remote.mappers.toPoint
 import com.mafraq.data.repository.crm.CRMRepository
 import com.mafraq.data.repository.hardware.HardwareRepository
 import com.mafraq.data.repository.map.MapPlacesRepository
 import com.mafraq.presentation.features.base.BaseViewModel
-import com.mafraq.presentation.navigation.MapScreenArgs
+import com.mafraq.presentation.features.profile.ProfileEvent
+import com.mafraq.presentation.navigation.arguments.MapScreenArgs
 import com.mafraq.presentation.utils.location.LocationSettingsDelegate
 import com.mafraq.presentation.utils.location.LocationSettingsDelegateImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -51,10 +53,28 @@ class MapViewModel @Inject constructor(
     }
 
     override fun onConfirmDestination() {
-        TODO(
-            "SEND THE DATA TO RETABLE" +
-                    "THEN IF SUCCESSFULLY NAVIGATE BACK"
-        )
+        val destination = state.value.destinationLocation
+
+        if (args.isFromProfile)
+            emitNewEvent(
+                MapEvent.OnNavigateToProfile(
+                    latitude = destination.latitude,
+                    longitude = destination.longitude,
+                    addressId = requireNotNull(args.addressId)
+                )
+            )
+        else
+            tryToExecute(
+                block = {
+                    crmRepository.saveProfile(EmployeeProfile(workLocation = destination))
+                },
+                onSuccess = {
+                    emitNewEvent(MapEvent.OnNavigateBack)
+                },
+                onError = {
+                    // TODO( "SHOW ERROR MESSAGE" )
+                },
+            )
     }
 
     override fun onDismissDriverDetails() = updateState {
@@ -78,7 +98,7 @@ class MapViewModel @Inject constructor(
     private fun findBestRoute() {
         if (state.value.isDestination.not()) return
 
-        updateState { copy(isLoading = true,) }
+        updateState { copy(isLoading = true) }
 
         tryToExecute(
             block = {
@@ -113,6 +133,16 @@ class MapViewModel @Inject constructor(
                         args.latitude?.toDouble()!!,
                         args.longitude?.toDouble()!!
                     )
+                )
+            }
+        } else if (args.isFromProfile) {
+            val isFromProfileForHomeAddress =
+                args.addressId == ProfileEvent.OnNavigateToMapForHomeAddress().id
+
+            updateState {
+                copy(
+                    isFromProfileForHomeAddress = isFromProfileForHomeAddress,
+                    isLoading = false,
                 )
             }
         } else {

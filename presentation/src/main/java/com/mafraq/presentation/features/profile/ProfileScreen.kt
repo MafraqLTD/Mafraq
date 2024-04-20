@@ -5,6 +5,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,9 +22,11 @@ import com.mafraq.presentation.design.components.buttons.AppButton
 import com.mafraq.presentation.design.components.container.OutlinedContainer
 import com.mafraq.presentation.features.profile.components.OffDaysChipset
 import com.mafraq.presentation.features.profile.components.PickLocation
+import com.mafraq.presentation.navigation.destinations.navigateToMap
 import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.painter
 import com.mafraq.presentation.utils.extensions.string
+import com.mafraq.presentation.utils.rememberLocationRequester
 
 
 @Composable
@@ -31,6 +34,17 @@ fun ProfileScreen(viewModel: ProfileViewModel, navController: NavController) {
     val state: ProfileUiState by viewModel.state.collectAsStateWithLifecycle()
     val event: ProfileEvent? by viewModel.event.collectAsState(null)
     val listener: ProfileInteractionListener = viewModel
+
+    var addressId = remember { 0 }
+    val locationRequester = rememberLocationRequester(
+        onLocationSatisfied = {
+            navController.navigateToMap(
+                fromProfile = true,
+                addressId = addressId
+            )
+        },
+        locationSettingsDelegate = viewModel
+    )
 
     Content(
         state = state,
@@ -40,6 +54,11 @@ fun ProfileScreen(viewModel: ProfileViewModel, navController: NavController) {
     event?.Listen { currentEvent ->
         when (currentEvent) {
             ProfileEvent.OnLogout -> {}
+            is ProfileEvent.OnNavigateToMapForHomeAddress,
+            is ProfileEvent.OnNavigateToMapForWorkAddress -> {
+                addressId = currentEvent.id
+                locationRequester.request()
+            }
         }
     }
 }
@@ -54,7 +73,8 @@ private fun Content(
         PickLocation(
             label = R.string.home_address.string,
             painter = R.drawable.home_address.painter,
-            formattedAddress = state.homeLocation.formattedAddress
+            formattedAddress = state.homeLocation.formattedAddress,
+            onClick = listener::onHomeAddressClicked
         )
 
         Spacer.Medium()
@@ -62,7 +82,8 @@ private fun Content(
         PickLocation(
             label = R.string.work_address.string,
             painter = R.drawable.work_address.painter,
-            formattedAddress = state.workLocation.formattedAddress
+            formattedAddress = state.workLocation.formattedAddress,
+            onClick = listener::onWorkAddressClicked
         )
 
         Spacer.Medium()

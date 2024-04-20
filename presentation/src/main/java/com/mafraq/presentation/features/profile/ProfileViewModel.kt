@@ -2,11 +2,13 @@ package com.mafraq.presentation.features.profile
 
 
 import androidx.lifecycle.SavedStateHandle
-import com.mafraq.data.entities.map.Location
 import com.mafraq.data.entities.profile.DayOff
 import com.mafraq.data.entities.profile.Gender
 import com.mafraq.data.repository.crm.CRMRepository
 import com.mafraq.presentation.features.base.BaseViewModel
+import com.mafraq.presentation.navigation.arguments.ProfileScreenArgs
+import com.mafraq.presentation.utils.location.LocationSettingsDelegate
+import com.mafraq.presentation.utils.location.LocationSettingsDelegateImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -15,7 +17,13 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val crmRepository: CRMRepository,
-) : BaseViewModel<ProfileUiState, ProfileEvent>(ProfileUiState()), ProfileInteractionListener {
+    private val locationSettingsDelegate: LocationSettingsDelegateImpl
+) : BaseViewModel<ProfileUiState, ProfileEvent>(ProfileUiState()),
+    LocationSettingsDelegate by locationSettingsDelegate,
+    ProfileInteractionListener {
+
+    private val args by lazy { ProfileScreenArgs(savedStateHandle) }
+
     override fun onLogout() {
         emitNewEvent(ProfileEvent.OnLogout)
     }
@@ -48,11 +56,13 @@ class ProfileViewModel @Inject constructor(
 
     override fun setEmail(value: String) = updateState { copy(email = value, error = null) }
 
-    override fun setHomeAddress(value: Location) =
-        updateState { copy(homeLocation = value, error = null) }
+    override fun onHomeAddressClicked() {
+        emitNewEvent(ProfileEvent.OnNavigateToMapForHomeAddress())
+    }
 
-    override fun setWorkAddress(value: Location) =
-        updateState { copy(workLocation = value, error = null) }
+    override fun onWorkAddressClicked() {
+        emitNewEvent(ProfileEvent.OnNavigateToMapForWorkAddress())
+    }
 
     override fun setPhone(value: String) = updateState { copy(phone = value, error = null) }
 
@@ -83,6 +93,10 @@ class ProfileViewModel @Inject constructor(
 
     override fun setBirthday(value: String) = updateState {
         copy(birthday = value)
+    }
+
+    private fun initialize() {
+
     }
 }
 

@@ -2,6 +2,7 @@ package com.mafraq.data.remote.mappers
 
 import com.altaie.prettycode.core.mapper.base.Mapper
 import com.altaie.prettycode.core.utils.extenstions.toJson
+import com.mafraq.data.entities.map.Location
 import com.mafraq.data.entities.profile.Employee
 import com.mafraq.data.remote.models.InsertRowBody
 import com.mafraq.data.utils.serializedWithSeparator
@@ -21,14 +22,19 @@ class UpdateBodyFromEmployeeMapper @Inject constructor(
             "Driver ID" to driverId,
             "Full Name" to fullName,
             "Gender" to gender,
-            "Home Location" to homeLocation.toJson(),
-            "Work Location" to workLocation.toJson(),
+            "Home Location" to homeLocation.serializedOrEmpty(),
+            "Work Location" to workLocation.serializedOrEmpty(),
             "Phone" to phone,
             "Profile Picture" to profilePicture,
             "Subscription Status" to subscriptionStatus.name
-        )
+        ).filter { it.value.isNotEmpty() }
 
         InsertRowBody.updateFromMap(values = values)
     }
 
+    private fun Location.serializedOrEmpty(): String {
+        if (latitude == 0.0 || longitude == 0.0)
+            return ""
+        return toJson()
+    }
 }

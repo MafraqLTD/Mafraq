@@ -23,6 +23,7 @@ import com.mafraq.presentation.design.components.snackbar.showSnackbar
 import com.mafraq.presentation.design.theme.MafraqTheme.sizes
 import com.mafraq.presentation.features.map.components.DriverBottomSheet
 import com.mafraq.presentation.features.map.components.MapScreenWithMarkers
+import com.mafraq.presentation.navigation.destinations.navigateToProfile
 import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.painter
 import com.mafraq.presentation.utils.extensions.string
@@ -54,6 +55,11 @@ fun MapScreen(viewModel: MapViewModel, navController: NavController) {
     event?.Listen {
         when (it) {
             MapEvent.OnNavigateBack -> navController.navigateUp()
+            is MapEvent.OnNavigateToProfile -> navController.navigateToProfile(
+                latitude = it.latitude.toFloat(),
+                longitude = it.longitude.toFloat(),
+                addressId = it.addressId
+            )
         }
     }
 }
@@ -68,7 +74,7 @@ private fun Content(
     val snackbarHostState = LocalSnackState.current
     val context = LocalContext.current
 
-    if (state.isDestination)
+    if (state.isDestination || state.isFromProfileForHomeAddress)
         LaunchedEffect(key1 = Unit) {
             snackbarHostState.showSnackbar(
                 message = context.getString(R.string.set_destination),
