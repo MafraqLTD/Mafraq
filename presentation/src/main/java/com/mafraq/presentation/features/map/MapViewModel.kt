@@ -69,20 +69,27 @@ class MapViewModel @Inject constructor(
                 onCompleted = {
                     hardwareRepository.removeLocationUpdates()
 
-                    if (state.value.isDestination)
-                        tryToExecute(
-                            block = {
-                                placesRepository.getDirections(
-                                    originLocation = state.value.originLocation,
-                                    destinationLocation = state.value.destinationLocation
+                    if (state.value.isDestination.not()) return@tryToCollect
+
+                    tryToExecute(
+                        block = {
+                            placesRepository.getDirections(
+                                originLocation = state.value.originLocation,
+                                destinationLocation = state.value.destinationLocation
+                            )
+                        },
+                        onSuccess = {
+                            updateState {
+                                copy(
+                                    directions = it.locationPoints.map(Location::toPoint),
+                                    directionsZoomLevel = it.zoomLevel
                                 )
-                            },
-                            onSuccess = {
-                                updateState {
-                                    copy(directions = it.map(Location::toPoint))
-                                }
                             }
-                        )
+                        },
+                        onCompleted = {
+                            updateState { copy(isLoading = false) }
+                        }
+                    )
                 }
             )
     }
@@ -95,6 +102,7 @@ class MapViewModel @Inject constructor(
             updateState {
                 copy(
                     isDestination = true,
+                    isLoading = true,
                     destinationLocation = Location(
                         args.latitude?.toDouble()!!,
                         args.longitude?.toDouble()!!

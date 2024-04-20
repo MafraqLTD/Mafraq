@@ -18,10 +18,12 @@ data class MapUiState(
     val directions: List<Point> = emptyList(),
     val selectedDriver: Driver = Driver(),
     val availableDrivers: List<Driver> = emptyList(),
+    val isLoading: Boolean = false,
+    val directionsZoomLevel: Double = DIRECTIONS_ZOOM_LEVEL
 ) {
     val zoomLevel: Double
         get() = if (isDestination && directions.isNotEmpty())
-            DIRECTIONS_ZOOM_LEVEL
+            directionsZoomLevel
         else if (isDestination)
             DESTINATION_ZOOM_LEVEL
         else

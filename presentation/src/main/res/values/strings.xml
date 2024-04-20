@@ -58,5 +58,7 @@
     <string name="location">Location</string>
     <string name="phone_with_arg">Phone: %1$s</string>
     <string name="confirm">Confirm</string>
+    <string name="finding_best_route">Finding the best route</string>
+    <string name="please_wait">Please wait..</string>
 
 </resources>
