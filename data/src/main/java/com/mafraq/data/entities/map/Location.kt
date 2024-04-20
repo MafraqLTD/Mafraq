@@ -10,4 +10,5 @@ data class Location(
     ) {
     val formattedAddress: String
         get() = "$governorate, $city, $district"
+            .replace(", ,", "")
 }

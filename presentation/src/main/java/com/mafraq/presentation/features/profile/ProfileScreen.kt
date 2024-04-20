@@ -54,7 +54,7 @@ private fun Content(
         PickLocation(
             label = R.string.home_address.string,
             painter = R.drawable.home_address.painter,
-            formattedAddress = state.homeAddress
+            formattedAddress = state.homeLocation.formattedAddress
         )
 
         Spacer.Medium()
@@ -62,7 +62,7 @@ private fun Content(
         PickLocation(
             label = R.string.work_address.string,
             painter = R.drawable.work_address.painter,
-            formattedAddress = state.workAddress
+            formattedAddress = state.workLocation.formattedAddress
         )
 
         Spacer.Medium()
@@ -87,7 +87,7 @@ private fun Content(
 
         AppOutlinedTextField(
             label = R.string.fullname.string,
-            value = state.fullname,
+            value = state.fullName,
             onValueChange = listener::setFullname,
             isError = state.isError,
             errorMessage = state.error?.message,

@@ -23,7 +23,7 @@ class EmployeeFromRemoteMapper @Inject constructor()
             phone = phone.orEmpty(),
             gender = gender.orEmpty(),
             profilePicture = profilePicture.orEmpty(),
-            dayOff = dayOff?.value?.map(DayOff::fromString).orEmpty(),
+            offDays = offDays?.value?.map(DayOff::fromString).orEmpty(),
             subscriptionStatus = EmployeeSubscriptionStatus.fromString(subscriptionStatus)
         )
     }

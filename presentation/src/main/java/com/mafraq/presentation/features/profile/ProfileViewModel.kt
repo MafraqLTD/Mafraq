@@ -2,6 +2,7 @@ package com.mafraq.presentation.features.profile
 
 
 import androidx.lifecycle.SavedStateHandle
+import com.mafraq.data.entities.map.Location
 import com.mafraq.data.entities.profile.DayOff
 import com.mafraq.data.entities.profile.Gender
 import com.mafraq.data.repository.crm.CRMRepository
@@ -20,28 +21,50 @@ class ProfileViewModel @Inject constructor(
     }
 
     override fun onSave() {
-        // TODO("Not yet implemented")
+        tryToExecute(
+            block = {
+                updateState {
+                    copy(isLoading = true)
+                }
+                crmRepository.saveProfile(state.value.toProfile())
+            },
+            onSuccess = {
+                updateState {
+                    copy(error = null)
+                }
+            },
+            onError = {
+                updateState {
+                    copy(error = it)
+                }
+            },
+            onCompleted = {
+                updateState {
+                    copy(isLoading = false)
+                }
+            }
+        )
     }
 
     override fun setEmail(value: String) = updateState { copy(email = value, error = null) }
 
-    override fun setHomeAddress(value: String) =
-        updateState { copy(homeAddress = value, error = null) }
+    override fun setHomeAddress(value: Location) =
+        updateState { copy(homeLocation = value, error = null) }
 
-    override fun setWorkAddress(value: String) =
-        updateState { copy(workAddress = value, error = null) }
+    override fun setWorkAddress(value: Location) =
+        updateState { copy(workLocation = value, error = null) }
 
     override fun setPhone(value: String) = updateState { copy(phone = value, error = null) }
 
-    override fun setFullname(value: String) = updateState { copy(fullname = value, error = null) }
+    override fun setFullname(value: String) = updateState { copy(fullName = value, error = null) }
 
     override fun validateFields(): Boolean = state.value.run {
         listOf(
             email,
-            workAddress,
-            homeAddress,
+            workLocation.formattedAddress,
+            homeLocation.formattedAddress,
             phone,
-            fullname
+            fullName
         ).all(String::isNotEmpty)
     }
 

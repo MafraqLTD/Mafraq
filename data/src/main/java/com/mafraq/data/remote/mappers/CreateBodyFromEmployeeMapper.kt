@@ -15,7 +15,7 @@ class CreateBodyFromEmployeeMapper @Inject constructor(
     override fun map(from: Employee): InsertRowBody = from.run {
         val values: Map<String, String> = mapOf(
             "Birthday" to birthday,
-            "Day off" to dayOff.serializedWithSeparator { it.name },
+            "Day off" to offDays.serializedWithSeparator { it.name },
             "Email" to email,
             "Employee ID" to id,
             "Driver ID" to driverId,

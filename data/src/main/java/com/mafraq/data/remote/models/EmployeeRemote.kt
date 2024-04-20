@@ -8,7 +8,7 @@ data class EmployeeRemote(
     @SerializedName("Birthday")
     val birthday: String?,
     @SerializedName("Day off")
-    val dayOff: SeparatedValuesListOfString?,
+    val offDays: SeparatedValuesListOfString?,
     @SerializedName("Email")
     val email: String?,
     @SerializedName("Employee ID")
