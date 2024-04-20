@@ -73,6 +73,7 @@ private fun Content(
             snackbarHostState.showSnackbar(
                 message = context.getString(R.string.set_destination),
                 actionLabel = context.getString(R.string.confirm),
+                scope = this,
                 onAccept = listener::onConfirmDestination
             )
         }
