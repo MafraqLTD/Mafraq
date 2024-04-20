@@ -65,4 +65,7 @@
     <string name="gender">الجنس</string>
     <string name="birthday">المواليد</string>
     <string name="off_days">أيام الإجازة</string>
+    <string name="confirm">تأكيد</string>
+    <string name="finding_best_route">جارٍ العثور على أفضل طريق</string>
+    <string name="please_wait">يرجى الانتظار..</string>
 </resources>

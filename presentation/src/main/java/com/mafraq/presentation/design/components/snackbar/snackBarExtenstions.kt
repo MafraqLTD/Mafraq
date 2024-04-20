@@ -13,27 +13,26 @@ fun SnackbarHostState.showSnackbar(
     message: String,
     actionLabel: String? = null,
     withDismissAction: Boolean = false,
+    scope: CoroutineScope = CoroutineScope(Dispatchers.Main),
     duration: SnackbarDuration = actionLabel?.let { SnackbarDuration.Indefinite }
         ?: SnackbarDuration.Short,
     onAccept: () -> Unit = {},
     onDismiss: () -> Unit = {}
 ) {
-    CoroutineScope(Dispatchers.IO).let { scope ->
-        scope.launch {
-            isVisible = true
-            showSnackbar(
-                message = message,
-                actionLabel = actionLabel,
-                withDismissAction = withDismissAction,
-                duration = duration
-            ).let {
-                when (it) {
-                    SnackbarResult.Dismissed -> onDismiss()
-                    SnackbarResult.ActionPerformed -> onAccept()
-                }
+    scope.launch {
+        isVisible = true
+        showSnackbar(
+            message = message,
+            actionLabel = actionLabel,
+            withDismissAction = withDismissAction,
+            duration = duration
+        ).let {
+            when (it) {
+                SnackbarResult.Dismissed -> onDismiss()
+                SnackbarResult.ActionPerformed -> onAccept()
             }
-            isVisible = false
-            scope.cancel()
         }
+        isVisible = false
+        scope.cancel()
     }
 }

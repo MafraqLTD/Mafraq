@@ -65,5 +65,7 @@
     <string name="gender">Gender</string>
     <string name="birthday">Birthday</string>
     <string name="off_days">Off days</string>
+    <string name="finding_best_route">Finding the best route</string>
+    <string name="please_wait">Please wait..</string>
 
 </resources>

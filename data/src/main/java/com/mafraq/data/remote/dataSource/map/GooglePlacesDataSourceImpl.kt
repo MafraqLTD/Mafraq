@@ -8,11 +8,12 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.libraries.places.ktx.api.net.awaitFindAutocompletePredictions
+import com.mafraq.data.entities.map.Directions
 import com.mafraq.data.entities.map.Location
 import com.mafraq.data.entities.map.PlaceSuggestion
 import com.mafraq.data.entities.map.PlaceSuggestionWithCoordinate
 import com.mafraq.data.remote.mappers.PlaceSuggestionMapper
-import com.mafraq.data.remote.mappers.getLocations
+import com.mafraq.data.remote.mappers.toDirections
 import com.mafraq.data.remote.mappers.toRouteBody
 import com.mafraq.data.remote.models.routes.request.RouteDirectionsBody
 import com.mafraq.data.remote.service.DirectionsApiService
@@ -20,6 +21,7 @@ import com.mafraq.data.repository.hardware.HardwareRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 
@@ -50,7 +52,8 @@ class GooglePlacesDataSourceImpl @Inject constructor(
         val address: Address = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
             suspendCoroutine { continuation ->
                 geocoder.getFromLocationName(placeSuggestion.name, 1) { result ->
-                    continuation.resume(result.first())
+                    result.firstOrNull()?.let(continuation::resume)
+                        ?: continuation.resumeWithException(Exception("No address found"))
                 }
             }
         else
@@ -69,7 +72,7 @@ class GooglePlacesDataSourceImpl @Inject constructor(
     override suspend fun getDirections(
         originLocation: Location,
         destinationLocation: Location
-    ): List<Location> = apiCall(
+    ): Directions = apiCall(
         suspendFunction = {
             directionsApiService.computeRoutes(
                 RouteDirectionsBody(
@@ -78,9 +81,9 @@ class GooglePlacesDataSourceImpl @Inject constructor(
                 )
             )
         },
-        mapper = { it.routes.getLocations() }
-    ).toData ?: emptyList()
-
+        mapper = { it.routes.toDirections() }
+    ).toData ?: Directions.empty
+  
     companion object {
         private const val IRAQ_ISO_CODE = "IQ"
     }

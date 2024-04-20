@@ -17,6 +17,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.withResumed
 import androidx.navigation.NavController
 import com.mafraq.presentation.R
+import com.mafraq.presentation.design.components.container.Loading
 import com.mafraq.presentation.design.components.snackbar.LocalSnackState
 import com.mafraq.presentation.design.components.snackbar.showSnackbar
 import com.mafraq.presentation.design.theme.MafraqTheme.sizes
@@ -24,6 +25,7 @@ import com.mafraq.presentation.features.map.components.DriverBottomSheet
 import com.mafraq.presentation.features.map.components.MapScreenWithMarkers
 import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.painter
+import com.mafraq.presentation.utils.extensions.string
 import com.mafraq.presentation.utils.rememberLocationRequester
 
 
@@ -44,6 +46,8 @@ fun MapScreen(viewModel: MapViewModel, navController: NavController) {
             locationRequester.request()
         }
     }
+
+    Loading(showDialog = state.isLoading, hintText = R.string.finding_best_route.string)
 
     Content(state, listener)
 
@@ -69,6 +73,7 @@ private fun Content(
             snackbarHostState.showSnackbar(
                 message = context.getString(R.string.set_destination),
                 actionLabel = context.getString(R.string.confirm),
+                scope = this,
                 onAccept = listener::onConfirmDestination
             )
         }

@@ -96,7 +96,7 @@ fun MapScreenWithMarkers(
                 lineBorderColorInt = MafraqTheme.colors.primary.toArgb()
             )
 
-            cameraCenter = directions.middle()
+            cameraCenter = directions.middle(before = 1)
 
             PointAnnotation(
                 iconImageBitmap = markerIcon,
