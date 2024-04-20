@@ -71,6 +71,7 @@ fun String.toTitleCase(): String {
 
 operator fun<T> Pair<T, T>.get(index: Int) = if (index == 0) first else second
 
+
 fun Long.toLocalDate(): LocalDate = Instant.ofEpochMilli(this)
     .atZone(ZoneId.systemDefault())
     .toLocalDate()
@@ -80,3 +81,5 @@ fun String.toLocalDateOrNull(format: String = "yyyy-MM-dd"): LocalDate? {
         LocalDate.parse(this, DateTimeFormatter.ofPattern(format))
     }.getOrNull()
 }
+
+fun<T> List<T>.middle() = this[size / 2]
