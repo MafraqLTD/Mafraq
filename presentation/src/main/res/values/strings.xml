@@ -58,5 +58,12 @@
     <string name="location">Location</string>
     <string name="phone_with_arg">Phone: %1$s</string>
     <string name="confirm">Confirm</string>
+    <string name="work_address">Work address</string>
+    <string name="home_address">Home address</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="gender">Gender</string>
+    <string name="birthday">Birthday</string>
+    <string name="off_days">Off days</string>
 
 </resources>

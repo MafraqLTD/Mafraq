@@ -1,20 +1,28 @@
 package com.mafraq.presentation.features.profile
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.mafraq.presentation.R
-import com.mafraq.presentation.design.components.buttons.AppButton
 import com.mafraq.presentation.design.components.AppContainer
 import com.mafraq.presentation.design.components.AppOutlinedTextField
 import com.mafraq.presentation.design.components.ColumnPreview
+import com.mafraq.presentation.design.components.DateSelector
+import com.mafraq.presentation.design.components.GenderDropdownMenu
 import com.mafraq.presentation.design.components.Spacer
+import com.mafraq.presentation.design.components.buttons.AppButton
+import com.mafraq.presentation.design.components.container.OutlinedContainer
+import com.mafraq.presentation.features.profile.components.OffDaysChipset
+import com.mafraq.presentation.features.profile.components.PickLocation
 import com.mafraq.presentation.utils.extensions.Listen
+import com.mafraq.presentation.utils.extensions.painter
 import com.mafraq.presentation.utils.extensions.string
 
 
@@ -43,37 +51,38 @@ private fun Content(
     listener: ProfileInteractionListener = ProfileInteractionListener.PreviewInstance
 ) {
     AppContainer { focusManager ->
-        AppOutlinedTextField(
-            label = R.string.username.string,
-            value = state.username,
-            onValueChange = listener::setUsername,
-            isError = state.isError,
-            errorMessage = state.error?.message,
-            modifier = Modifier.fillMaxWidth()
+        PickLocation(
+            label = R.string.home_address.string,
+            painter = R.drawable.home_address.painter,
+            formattedAddress = state.homeAddress
         )
 
         Spacer.Medium()
 
-        AppOutlinedTextField(
-            label = R.string.address.string,
-            value = state.address,
-            onValueChange = listener::setAddress,
-            isError = state.isError,
-            errorMessage = state.error?.message,
-            modifier = Modifier.fillMaxWidth()
+        PickLocation(
+            label = R.string.work_address.string,
+            painter = R.drawable.work_address.painter,
+            formattedAddress = state.workAddress
         )
 
         Spacer.Medium()
 
-        AppOutlinedTextField(
-            label = R.string.email.string,
-            value = state.email,
-            onValueChange = listener::setEmail,
-            isError = state.isError,
-            errorMessage = state.error?.message,
-            modifier = Modifier.fillMaxWidth()
-        )
+        HorizontalDivider()
+        Spacer.Medium()
 
+        OutlinedContainer(
+            border = false,
+            fieldHeight = false,
+            label = R.string.off_days.string
+        ) {
+            OffDaysChipset(
+                selectedItems = state.offDays,
+                onItemChanged = listener::setOffDays
+            )
+        }
+        Spacer.Medium()
+
+        HorizontalDivider()
         Spacer.Medium()
 
         AppOutlinedTextField(
@@ -82,7 +91,8 @@ private fun Content(
             onValueChange = listener::setFullname,
             isError = state.isError,
             errorMessage = state.error?.message,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            leadingIcon = R.drawable.user_id.painter
         )
 
         Spacer.Medium()
@@ -93,7 +103,39 @@ private fun Content(
             onValueChange = listener::setPhone,
             isError = state.isError,
             errorMessage = state.error?.message,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            keyboardType = KeyboardType.Number,
+            leadingIcon = R.drawable.phone.painter
+        )
+
+        Spacer.Medium()
+
+        AppOutlinedTextField(
+            label = R.string.email.string,
+            value = state.email,
+            onValueChange = listener::setEmail,
+            isError = state.isError,
+            errorMessage = state.error?.message,
+            modifier = Modifier.fillMaxWidth(),
+            leadingIcon = R.drawable.email.painter
+        )
+
+        Spacer.Medium()
+
+        GenderDropdownMenu(
+            value = state.gender,
+            onSelected = listener::setGender
+        )
+
+        Spacer.Medium()
+
+        DateSelector(
+            label = R.string.birthday.string,
+            painter = R.drawable.calendar_date.painter,
+            initialDate = state.birthday,
+            onDateSelected = { selectedDate ->
+                listener.setBirthday(selectedDate.toString())
+            }
         )
 
         Spacer.Large()
@@ -114,6 +156,6 @@ private fun Content(
 
 @Composable
 @Preview(showBackground = true)
-private fun ProfileScreenPreview() {
+private fun Preview() {
     ColumnPreview { Content() }
 }
