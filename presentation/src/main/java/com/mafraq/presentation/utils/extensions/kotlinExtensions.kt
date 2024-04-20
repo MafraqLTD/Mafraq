@@ -4,10 +4,6 @@ import androidx.annotation.ColorInt
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.ui.graphics.Color
-import java.time.Instant
-import java.time.LocalDate
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 
 fun @receiver:ColorInt Int?.toColor() = this?.run { Color(this) }
@@ -22,18 +18,6 @@ fun <T> T.optionalComposable(
 ): @Composable (() -> Unit)? =
     takeIf { shouldExecute && this != null }
         ?.let { { content(this) } }
-
-fun <T> T.optional(
-    shouldExecute: Boolean = true,
-    block: (T) -> Unit,
-): (() -> Unit)? =
-    takeIf { shouldExecute && this != null }
-        ?.let { { block(this) } }
-
-fun optional(
-    shouldExecute: Boolean = true,
-    block: () -> Unit,
-): (() -> Unit)? = shouldExecute.takeIf { it }?.let { { block() } }
 
 fun optionalComposable(
     shouldExecute: Boolean = true,
@@ -70,13 +54,3 @@ fun String.toTitleCase(): String {
 }
 
 operator fun<T> Pair<T, T>.get(index: Int) = if (index == 0) first else second
-
-fun Long.toLocalDate(): LocalDate = Instant.ofEpochMilli(this)
-    .atZone(ZoneId.systemDefault())
-    .toLocalDate()
-
-fun String.toLocalDateOrNull(format: String = "yyyy-MM-dd"): LocalDate? {
-    return runCatching {
-        LocalDate.parse(this, DateTimeFormatter.ofPattern(format))
-    }.getOrNull()
-}
