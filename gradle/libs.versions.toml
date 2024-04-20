@@ -136,7 +136,7 @@ implementation-compose = [
     'compose-ui',
 #    'compose-maps',
 #    'compose-maps-utils',
-    'compose-tv-material',
+#    'compose-tv-material',
     'compose-ui-fonts',
     'compose-ui-util',
     'compose-ui-graphics',
