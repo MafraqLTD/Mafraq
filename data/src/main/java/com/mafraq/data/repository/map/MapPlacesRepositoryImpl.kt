@@ -26,4 +26,7 @@ class MapPlacesRepositoryImpl @Inject constructor(
         originLocation = originLocation,
         destinationLocation = destinationLocation
     )
+
+    override suspend fun getLocationInfo(latitude: Double, longitude: Double): Location =
+        googlePlacesDataSource.getLocationInfo(latitude, longitude)
 }

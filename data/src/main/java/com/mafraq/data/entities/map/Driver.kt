@@ -15,6 +15,6 @@ data class Driver(
     val fullName: String = "",
     val phone: String = "",
     val profilePicture: String = "",
-    val subscriptionStatus: SubscriptionStatus = SubscriptionStatus.Empty,
+    val subscriptionStatus: DriverSubscriptionStatus = DriverSubscriptionStatus.Empty,
     val subscribers: List<Subscriber> = emptyList()
 )
