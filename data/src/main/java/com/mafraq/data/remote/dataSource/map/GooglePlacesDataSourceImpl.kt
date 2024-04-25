@@ -13,6 +13,7 @@ import com.mafraq.data.entities.map.Location
 import com.mafraq.data.entities.map.PlaceSuggestion
 import com.mafraq.data.entities.map.PlaceSuggestionWithCoordinate
 import com.mafraq.data.remote.mappers.PlaceSuggestionMapper
+import com.mafraq.data.remote.mappers.fromMapBoxLocation
 import com.mafraq.data.remote.mappers.toDirections
 import com.mafraq.data.remote.mappers.toRouteBody
 import com.mafraq.data.remote.models.routes.request.RouteDirectionsBody
@@ -83,7 +84,34 @@ class GooglePlacesDataSourceImpl @Inject constructor(
         },
         mapper = { it.routes.toDirections() }
     ).toData ?: Directions.empty
-  
+
+    // TODO ( USE MAPBOX TO GET THE INFORMATION )
+    override suspend fun getLocationInfo(
+        latitude: Double,
+        longitude: Double
+    ): Location {
+        val location = Location(longitude = longitude, latitude = latitude).fromMapBoxLocation()
+        return apiCall(
+            suspendFunction = {
+                directionsApiService.getLocationInfo(
+                    lat = location.latitude,
+                    lng = location.longitude
+                )
+            },
+            mapper = {
+                val result = it.results?.firstOrNull()
+
+                Location(
+                    latitude = location.latitude,
+                    longitude = location.longitude,
+                    governorate = result?.state.orEmpty(),
+                    city = result?.city.orEmpty(),
+                    district = result?.suburb.orEmpty(),
+                )
+            }
+        ).toData ?: Location()
+    }
+
     companion object {
         private const val IRAQ_ISO_CODE = "IQ"
     }

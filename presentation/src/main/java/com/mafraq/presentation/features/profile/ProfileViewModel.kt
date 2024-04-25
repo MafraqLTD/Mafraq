@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.mafraq.data.entities.profile.DayOff
 import com.mafraq.data.entities.profile.Gender
 import com.mafraq.data.repository.crm.CRMRepository
+import com.mafraq.data.repository.map.MapPlacesRepository
 import com.mafraq.presentation.features.base.BaseViewModel
 import com.mafraq.presentation.navigation.arguments.ProfileScreenArgs
 import com.mafraq.presentation.utils.location.LocationSettingsDelegate
@@ -17,12 +18,18 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val crmRepository: CRMRepository,
+    private val placesRepository: MapPlacesRepository,
     private val locationSettingsDelegate: LocationSettingsDelegateImpl
 ) : BaseViewModel<ProfileUiState, ProfileEvent>(ProfileUiState()),
     LocationSettingsDelegate by locationSettingsDelegate,
     ProfileInteractionListener {
 
     private val args by lazy { ProfileScreenArgs(savedStateHandle) }
+
+
+    init {
+        initialize()
+    }
 
     override fun onLogout() {
         emitNewEvent(ProfileEvent.OnLogout)
@@ -96,7 +103,28 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun initialize() {
+        if (args.addressId == null) return
 
+        tryToExecute(
+            block = {
+                placesRepository.getLocationInfo(
+                    args.latitude!!.toDouble(),
+                    args.longitude!!.toDouble()
+                )
+            },
+            onSuccess = {
+                updateState {
+                    if (args.addressId == ProfileEvent.OnNavigateToMapForHomeAddress().id)
+                        copy(
+                            homeLocation = it
+                        )
+                    else
+                        copy(
+                            workLocation = it
+                        )
+                }
+            }
+        )
     }
 }
 

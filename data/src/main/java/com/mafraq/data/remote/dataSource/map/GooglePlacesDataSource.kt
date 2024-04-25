@@ -10,4 +10,5 @@ interface GooglePlacesDataSource {
     suspend fun getPlaceSuggestions(query: String): List<PlaceSuggestion>
     suspend fun selectSuggestedPlace(placeSuggestion: PlaceSuggestion): PlaceSuggestionWithCoordinate
     suspend fun getDirections(originLocation: Location, destinationLocation: Location): Directions
+    suspend fun getLocationInfo(latitude: Double, longitude: Double): Location
 }

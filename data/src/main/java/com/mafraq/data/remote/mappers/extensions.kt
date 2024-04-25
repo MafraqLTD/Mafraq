@@ -71,3 +71,10 @@ fun List<RouteRemote>?.toDirections(): Directions = Directions(
     locationPoints = getLocations(),
     distanceMeters = firstRouteOrNull()?.distanceMeters ?: 0,
 )
+
+fun Location.fromMapBoxLocation(): Location {
+    val latitude = 3.135536248291016
+    val longitude = -0.603173400878906
+
+    return copy(latitude = this.latitude + latitude, longitude = this.longitude + longitude)
+}
