@@ -10,7 +10,7 @@ open class Screen(val route: String) {
     data object Profile : Screen("profile_screen") {
         val destination = withArgs(LATITUDE_ARG, LONGITUDE_ARG, ADDRESS_ID_ARG, isKey = true)
     }
-
+    data object LoginProfile : Screen("login_profile_screen")
     data object Notifications : Screen("notifications_screen")
     data object ChatSupport : Screen("chat_support_screen")
     data object ChatGroup : Screen("chat_group_screen")

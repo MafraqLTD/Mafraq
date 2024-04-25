@@ -47,6 +47,7 @@ class ProfileViewModel @Inject constructor(
                 updateState {
                     copy(error = null)
                 }
+                emitNewEvent(ProfileEvent.OnNavigateToHome)
             },
             onError = {
                 updateState {
@@ -81,8 +82,11 @@ class ProfileViewModel @Inject constructor(
             workLocation.formattedAddress,
             homeLocation.formattedAddress,
             phone,
-            fullName
+            fullName,
+            birthday
         ).all(String::isNotEmpty)
+                && gender != null
+                && offDays.isNotEmpty()
     }
 
     override fun setGender(value: Gender) = updateState {

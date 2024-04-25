@@ -38,7 +38,11 @@ internal fun NavGraphBuilder.profileDestination(navController: NavController) {
         ProfileScreen(viewModel = hiltViewModel(), navController = navController)
     }
 
-    composable(route = Screen.Profile.route,) {
+    composable(route = Screen.Profile.route) {
+        ProfileScreen(viewModel = hiltViewModel(), navController = navController)
+    }
+
+    composable(route = Screen.LoginProfile.route) {
         ProfileScreen(viewModel = hiltViewModel(), navController = navController)
     }
 }

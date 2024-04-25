@@ -3,13 +3,18 @@ package com.mafraq.data.repository.auth
 import com.mafraq.data.entities.login.LoginBody
 import com.mafraq.data.entities.login.AuthUser
 import com.mafraq.data.entities.register.RegisterBody
+import com.mafraq.data.local.profile.ProfileLocalDataSource
 import com.mafraq.data.remote.dataSource.auth.FirebaseAuthDataSource
 import javax.inject.Inject
 
 
 class AuthRepositoryImpl @Inject constructor(
-    private val authDataSource: FirebaseAuthDataSource
+    private val authDataSource: FirebaseAuthDataSource,
+    private val profileLocalDataSource: ProfileLocalDataSource
 ) : AuthRepository {
+    override val isProfileFilled: Boolean
+        get() = profileLocalDataSource.isProfileFilled()
+
     override suspend fun login(body: LoginBody): Boolean = authDataSource.login(body)
 
     override suspend fun register(body: RegisterBody): Boolean = authDataSource.register(body)

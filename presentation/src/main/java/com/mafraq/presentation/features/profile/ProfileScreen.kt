@@ -22,6 +22,7 @@ import com.mafraq.presentation.design.components.buttons.AppButton
 import com.mafraq.presentation.design.components.container.OutlinedContainer
 import com.mafraq.presentation.features.profile.components.OffDaysChipset
 import com.mafraq.presentation.features.profile.components.PickLocation
+import com.mafraq.presentation.navigation.destinations.navigateToHome
 import com.mafraq.presentation.navigation.destinations.navigateToMap
 import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.painter
@@ -59,6 +60,8 @@ fun ProfileScreen(viewModel: ProfileViewModel, navController: NavController) {
                 addressId = currentEvent.id
                 locationRequester.request()
             }
+
+            ProfileEvent.OnNavigateToHome -> navController.navigateToHome()
         }
     }
 }

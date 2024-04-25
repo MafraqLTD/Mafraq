@@ -2,6 +2,7 @@ package com.mafraq.data.remote.models
 
 import com.google.gson.annotations.SerializedName
 import com.mafraq.data.entities.SeparatedValuesListOfString
+import java.util.UUID
 
 
 data class EmployeeRemote(
@@ -12,7 +13,7 @@ data class EmployeeRemote(
     @SerializedName("Email")
     val email: String?,
     @SerializedName("Employee ID")
-    val employeeID: String?,
+    val employeeID: String? = UUID.randomUUID().toString(),
     @SerializedName("Driver ID")
     val driverId: String?,
     @SerializedName("Full Name")
@@ -21,7 +22,7 @@ data class EmployeeRemote(
     val gender: String?,
     @SerializedName("Home Location")
     val homeLocation: LocationRemote?,
-    @SerializedName("Home Location")
+    @SerializedName("Work Location")
     val workLocation: LocationRemote?,
     @SerializedName("Phone")
     val phone: String?,

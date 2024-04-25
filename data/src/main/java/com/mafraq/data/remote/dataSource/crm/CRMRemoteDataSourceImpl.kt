@@ -42,13 +42,13 @@ class CRMRemoteDataSourceImpl @Inject constructor(
         mapper = { employeeFromRemoteMapper.map(it.item ?: error("Employee not found")) }
     ).getOrThrowEmpty()
 
-    override suspend fun createEmployee(value: Employee): Employee = apiCall(
+    override suspend fun createEmployee(value: Employee): Boolean = apiCall(
         suspendFunction = { apiService.createOrUpdateEmployee(createBodyFromEmployeeMapper.map(value)) },
-        mapper = { employeeFromRemoteMapper.map(it.item ?: error("Employee not found")) }
+        mapper = { it != null }
     ).getOrThrowEmpty()
 
-    override suspend fun updateEmployee(value: Employee): Employee = apiCall(
+    override suspend fun updateEmployee(value: Employee): Boolean = apiCall(
         suspendFunction = { apiService.createOrUpdateEmployee(updateBodyFromEmployeeMapper.map(value)) },
-        mapper = { employeeFromRemoteMapper.map(it.item ?: error("Employee not found")) }
+        mapper = { it != null }
     ).getOrThrowEmpty()
 }

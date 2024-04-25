@@ -12,4 +12,6 @@ sealed class ProfileEvent(val id: Int) {
     data class OnNavigateToMapForWorkAddress(
         private val uuid: UUID = UUID.randomUUID()
     ) : ProfileEvent(id = 2)
+
+    data object OnNavigateToHome : ProfileEvent(id = 3)
 }

@@ -6,6 +6,7 @@ import com.mafraq.data.entities.profile.EmployeeProfile
 import com.mafraq.data.entities.profile.Gender
 import com.mafraq.presentation.features.base.ErrorState
 import com.mafraq.presentation.utils.extensions.emptyString
+import java.time.LocalDate
 
 data class ProfileUiState(
     val email: String = emptyString(),
@@ -27,7 +28,7 @@ data class ProfileUiState(
         homeLocation = homeLocation,
         phone = phone,
         fullName = fullName,
-        birthday = birthday,
+        birthday = LocalDate.parse(birthday),
         offDays = offDays,
         gender = gender?.name.orEmpty(),
     )
