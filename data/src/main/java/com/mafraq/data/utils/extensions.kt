@@ -16,6 +16,8 @@ import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import timber.log.Timber
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 import java.util.TimeZone
 import java.util.UUID
@@ -113,3 +115,17 @@ fun String.Companion.generateRandomId(): String =
 
 fun<T> List<T>.serializedWithSeparator(transform: (T) -> String): String =
     joinToString(";", transform = transform)
+
+fun String.toStringUrl(path: String = "") = StringBuilder(this).apply {
+    if (!endsWith('/')) append('/')
+
+    if (path.isNotEmpty()) {
+        append(path.trimStart('/'))
+
+        if (!endsWith('/')) append('/')
+    }
+}.toString()
+
+fun LocalDate.toFormattedString(format: String = "dd/MM/yyyy"): String {
+    return format(DateTimeFormatter.ofPattern(format))
+}

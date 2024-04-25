@@ -5,6 +5,7 @@ import com.mafraq.data.entities.profile.Employee
 import com.mafraq.data.entities.profile.EmployeeProfile
 import com.mafraq.data.entities.profile.EmployeeSubscriptionStatus
 import com.mafraq.data.local.profile.ProfileLocalDataSource
+import com.mafraq.data.utils.toFormattedString
 import javax.inject.Inject
 
 
@@ -19,7 +20,7 @@ class EmployeeFromEmployeeProfileMapper @Inject constructor(
             homeLocation = homeLocation,
             phone = phone,
             fullName = fullName,
-            birthday = birthday,
+            birthday = birthday.toFormattedString(),
             offDays = offDays.toList(),
             gender = gender,
             subscriptionStatus = if (employee.driverId.isEmpty())

@@ -11,7 +11,7 @@ import com.mafraq.data.remote.service.DirectionsApiService
 import com.mafraq.data.remote.service.RetableService
 import com.mafraq.data.utils.convertors.LocationDeserializer
 import com.mafraq.data.utils.convertors.SeparatedValuesListOfStringDeserializer
-import com.mafraq.presentation.utils.extensions.toStringUrl
+import com.mafraq.data.utils.toStringUrl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

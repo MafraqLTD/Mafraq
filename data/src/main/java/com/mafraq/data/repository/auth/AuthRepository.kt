@@ -6,6 +6,7 @@ import com.mafraq.data.entities.register.RegisterBody
 
 
 interface AuthRepository {
+    val isProfileFilled: Boolean
 
     suspend fun login(body: LoginBody): Boolean
 
