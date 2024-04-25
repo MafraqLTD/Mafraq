@@ -21,13 +21,14 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val isAuthorized = authRepository.isAuthorized()
+        val isProfileFilled = authRepository.isProfileFilled
 
         installSplashScreen()
 
         setContent {
             CompositionLocalProvider(
                 LocalNavigationProvider provides rememberNavController()
-            ) { App(isAuthorized = isAuthorized) }
+            ) { App(isAuthorized = isAuthorized, isProfileFilled = isProfileFilled) }
         }
     }
 }

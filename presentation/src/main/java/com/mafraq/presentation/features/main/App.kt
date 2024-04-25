@@ -24,7 +24,7 @@ import com.mafraq.presentation.utils.extensions.currentRoute
 
 
 @Composable
-fun App(isAuthorized: Boolean) {
+fun App(isAuthorized: Boolean, isProfileFilled: Boolean) {
 
     MafraqTheme {
         val navController = LocalNavigationProvider.current
@@ -37,6 +37,12 @@ fun App(isAuthorized: Boolean) {
                 Screen.Profile.destination.route,
                 Screen.Notifications.route,
             )
+        }
+
+        fun getStartDestination() = when {
+            !isAuthorized -> Screen.Login
+            isProfileFilled -> Screen.Home
+            else -> Screen.LoginProfile
         }
 
         Scaffold(
@@ -64,7 +70,7 @@ fun App(isAuthorized: Boolean) {
         ) { paddingValues ->
             NavigationHostGraph(
                 navController = navController,
-                startDestination = if (isAuthorized) Screen.Home else Screen.Login,
+                startDestination = getStartDestination(),
                 modifier = Modifier.padding(paddingValues)
             )
         }

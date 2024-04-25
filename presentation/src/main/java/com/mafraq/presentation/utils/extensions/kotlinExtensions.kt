@@ -43,16 +43,6 @@ fun optionalComposable(
 private const val EMPTY_STRING = ""
 fun emptyString() = EMPTY_STRING
 
-fun String.toStringUrl(path: String = "") = StringBuilder(this).apply {
-    if (!endsWith('/')) append('/')
-
-    if (path.isNotEmpty()) {
-        append(path.trimStart('/'))
-
-        if (!endsWith('/')) append('/')
-    }
-}.toString()
-
 fun String.firstOrEmpty(): String = (this.firstOrNull() ?: EMPTY_STRING).toString()
 
 fun MutableIntState.isGreaterThanZero() = intValue > 0
@@ -77,10 +67,5 @@ fun Long.toLocalDate(): LocalDate = Instant.ofEpochMilli(this)
     .atZone(ZoneId.systemDefault())
     .toLocalDate()
 
-fun String.toLocalDateOrNull(format: String = "yyyy-MM-dd"): LocalDate? {
-    return runCatching {
-        LocalDate.parse(this, DateTimeFormatter.ofPattern(format))
-    }.getOrNull()
-}
 
 fun<T> List<T>.middle() = this[size / 2]

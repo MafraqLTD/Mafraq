@@ -2,7 +2,8 @@ package com.mafraq.data.entities
 
 
 data class Session(
-    val userId: String?,
-    val driverId: String?,
-    val subscriptionId: String?,
+    val userId: String? = null,
+    val driverId: String? = null,
+    val subscriptionId: String? = null,
+    val email: String? = null,
 )

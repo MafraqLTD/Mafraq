@@ -11,5 +11,5 @@ interface CRMRepository {
     suspend fun getDrivers() : List<Driver>
     suspend fun getDriver() : Driver
     suspend fun getEmployee() : Employee
-    suspend fun saveProfile(value: EmployeeProfile) : Employee
+    suspend fun saveProfile(value: EmployeeProfile) : Boolean
 }

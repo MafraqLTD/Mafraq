@@ -34,19 +34,19 @@ class CRMRepositoryImpl @Inject constructor(
             ?: crmRemoteDataSource.getEmployee(requireNotNull(sessionLocalDataSource.get()?.userId))
                 .also(profileLocalDataSource::save)
 
-    override suspend fun saveProfile(value: EmployeeProfile): Employee {
+    override suspend fun saveProfile(value: EmployeeProfile): Boolean {
         val employee = employeeFromEmployeeProfileMapper.map(value)
         if (profileLocalDataSource.isProfileFilled())
             return updateEmployee(employee)
         return createEmployee(employee)
     }
 
-    private suspend fun createEmployee(value: Employee): Employee =
+    private suspend fun createEmployee(value: Employee): Boolean =
         crmRemoteDataSource.createEmployee(value)
-            .also(profileLocalDataSource::save)
+            .also { profileLocalDataSource.save(value) }
 
-    private suspend fun updateEmployee(value: Employee): Employee =
+    private suspend fun updateEmployee(value: Employee): Boolean =
         crmRemoteDataSource.updateEmployee(value)
-            .also(profileLocalDataSource::save)
+            .also { profileLocalDataSource.save(value) }
 
 }
