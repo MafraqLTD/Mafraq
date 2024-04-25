@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import com.mafraq.presentation.R
@@ -31,6 +32,7 @@ fun rememberLocationRequester(
 ): LocationRequesterState {
     val context = LocalContext.current
     val snackState = LocalSnackState.current
+    val scope = rememberCoroutineScope()
     val permissionState = rememberPermissionState(
         autoRequest = false,
         permission = Permissions.location,
@@ -39,6 +41,7 @@ fun rememberLocationRequester(
             snackState.showSnackbar(
                 message = context.getString(R.string.app_permission_denied),
                 actionLabel = context.getString(R.string.settings),
+                scope = scope,
                 duration = SnackbarDuration.Long,
                 onAccept = context::openAppSettings,
             )

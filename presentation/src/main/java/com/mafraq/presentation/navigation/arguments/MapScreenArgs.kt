@@ -1,6 +1,8 @@
-package com.mafraq.presentation.navigation
+package com.mafraq.presentation.navigation.arguments
 
 import androidx.lifecycle.SavedStateHandle
+import com.altaie.prettycode.core.utils.extenstions.isTrue
+import com.mafraq.presentation.navigation.Screen
 import com.mafraq.presentation.utils.extensions.getArgOrNull
 
 
@@ -17,4 +19,9 @@ class MapScreenArgs(savedStateHandle: SavedStateHandle) {
             null
         else
             field
+
+    var addressId: Int? = savedStateHandle.getArgOrNull(Screen.Map.ADDRESS_ID_ARG)
+
+    var isFromProfile: Boolean = savedStateHandle
+        .getArgOrNull<Boolean?>(Screen.Map.IS_FROM_PROFILE_ARG).isTrue
 }

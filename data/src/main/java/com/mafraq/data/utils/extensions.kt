@@ -110,3 +110,6 @@ fun Timestamp.toFormattedDateTime(): String {
 
 fun String.Companion.generateRandomId(): String =
     UUID.randomUUID().toString().split('-').last()
+
+fun<T> List<T>.serializedWithSeparator(transform: (T) -> String): String =
+    joinToString(";", transform = transform)

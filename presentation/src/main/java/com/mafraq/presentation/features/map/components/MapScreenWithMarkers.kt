@@ -45,7 +45,7 @@ fun MapScreenWithMarkers(
     onMapClicked: (Location) -> Unit = {},
 ) {
     val context = LocalContext.current
-    var cameraCenter by remember { mutableStateOf(currentLocation) }
+    var cameraCenter by remember(currentLocation) { mutableStateOf(currentLocation) }
     val cameraPositionState = rememberMapViewportState {
         setCameraOptions {
             zoom(zoomLevel)

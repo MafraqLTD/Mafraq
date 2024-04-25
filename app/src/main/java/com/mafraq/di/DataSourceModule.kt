@@ -1,5 +1,8 @@
 package com.mafraq.di
 
+
+import com.mafraq.data.local.profile.ProfileLocalDataSource
+import com.mafraq.data.local.profile.ProfileLocalDataSourceImpl
 import com.mafraq.data.local.session.SessionLocalDataSource
 import com.mafraq.data.local.session.SessionLocalDataSourceImpl
 import com.mafraq.data.remote.dataSource.auth.FirebaseAuthDataSource
@@ -30,6 +33,11 @@ interface DataSourceModule {
     @Binds
     @Singleton
     fun bindSessionLocalDataSource(source: SessionLocalDataSourceImpl): SessionLocalDataSource
+
+    @Binds
+    @Singleton
+    fun bindProfileLocalDataSource(source: ProfileLocalDataSourceImpl): ProfileLocalDataSource
+
 
     @Binds
     @Singleton

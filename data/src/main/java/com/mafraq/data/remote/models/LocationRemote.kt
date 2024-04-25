@@ -8,8 +8,6 @@ data class LocationRemote(
     val country: String?,
     @SerializedName("country_code")
     val countryCode: String?,
-    @SerializedName("county")
-    val county: String?,
     @SerializedName("house_number")
     val houseNumber: Int?,
     @SerializedName("ISO3")
@@ -23,9 +21,11 @@ data class LocationRemote(
     @SerializedName("road")
     val road: String?,
     @SerializedName("state")
-    val state: String?,
-    @SerializedName("town")
-    val town: String?,
+    val governorate: String?,
+    @SerializedName("district")
+    val city: String?,
+    @SerializedName("suburb")
+    val district: String?,
     @SerializedName("zoomLevel")
     val zoomLevel: Int?
 )

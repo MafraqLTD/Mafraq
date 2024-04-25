@@ -2,10 +2,14 @@ package com.mafraq.data.remote.dataSource.crm
 
 import com.mafraq.data.entities.home.Ad
 import com.mafraq.data.entities.map.Driver
+import com.mafraq.data.entities.profile.Employee
 
 
 interface CRMRemoteDataSource {
     suspend fun getAds() : List<Ad>
     suspend fun getDrivers() : List<Driver>
     suspend fun getDriver(id: String) : Driver
+    suspend fun getEmployee(id: String) : Employee
+    suspend fun createEmployee(value: Employee) : Employee
+    suspend fun updateEmployee(value: Employee) : Employee
 }
