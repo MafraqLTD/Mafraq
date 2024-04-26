@@ -44,8 +44,11 @@ class MapViewModel @Inject constructor(
         }
     }
 
-    override fun onDriverMarkClick(driver: Driver) = updateState {
-        copy(selectedDriver = driver, showDriverDetails = true)
+    override fun onDriverMarkClick(driver: Driver) {
+        Timber.e("CLICKED")
+        updateState {
+            copy(selectedDriver = driver, showDriverDetails = true)
+        }
     }
 
     override fun onMapClicked(location: Location) {

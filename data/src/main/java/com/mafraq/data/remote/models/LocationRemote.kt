@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 data class LocationRemote(
     @SerializedName("lat")
     val latitude: Double? = null,
-    @SerializedName("lng")
+    @SerializedName("long")
     val longitude: Double? = null,
     @SerializedName("road")
     val road: String? = null,
