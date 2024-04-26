@@ -38,8 +38,12 @@ class CRMRemoteDataSourceImpl @Inject constructor(
     ).getOrThrowEmpty()
 
     override suspend fun getEmployee(id: String): Employee = apiCall(
-        suspendFunction = { apiService.getEmployee(id) },
-        mapper = { employeeFromRemoteMapper.map(it.item ?: error("Employee not found")) }
+        suspendFunction = { apiService.getEmployees() },
+        mapper = { responseRemote ->
+            employeeFromRemoteMapper.mapList(responseRemote.items).firstOrNull {
+                it.id == id
+            } ?: error("Employee not found")
+        }
     ).getOrThrowEmpty()
 
     override suspend fun createEmployee(value: Employee): Boolean = apiCall(

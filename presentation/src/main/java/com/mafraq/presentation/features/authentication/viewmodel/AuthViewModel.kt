@@ -2,6 +2,7 @@ package com.mafraq.presentation.features.authentication.viewmodel
 
 import com.altaie.prettycode.core.utils.extenstions.isEmail
 import com.mafraq.data.repository.auth.AuthRepository
+import com.mafraq.data.repository.crm.CRMRepository
 import com.mafraq.presentation.features.authentication.event.AuthEvent
 import com.mafraq.presentation.features.authentication.event.LoginEvent
 import com.mafraq.presentation.features.authentication.event.RegisterEvent
@@ -17,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val authRepository: AuthRepository,
+    private val crmRepository: CRMRepository
 ) : BaseViewModel<AuthUiState, AuthEvent>(AuthUiState()),
     RegisterInteractionListener, LoginInteractionListener {
 
@@ -79,10 +81,19 @@ class AuthViewModel @Inject constructor(
     override fun onRegister() {
         updateState { copy(isLoading = true, error = null) }
 
-        tryToExecute(block = { authRepository.register(body = state.value.toRegisterBody()) },
+        tryToExecute(
+            block = {
+                authRepository.register(body = state.value.toRegisterBody()).also {
+                    runCatching { crmRepository.getEmployee() }
+                }
+            },
             checkSuccess = { it },
             onSuccess = {
-                updateState(notifyEvent = RegisterEvent.OnRegister) {
+                val event = if (authRepository.isProfileFilled)
+                    RegisterEvent.OnRegister
+                    else
+                        RegisterEvent.OnNavigateToLoginProfile
+                updateState(notifyEvent = event) {
                     copy(
                         error = null,
                         isLoading = false
@@ -108,10 +119,23 @@ class AuthViewModel @Inject constructor(
         updateState { copy(isLoading = true, error = null) }
 
         tryToExecute(
-            block = { authRepository.login(body = state.value.toLoginBody()) },
+            block = {
+                authRepository.login(body = state.value.toLoginBody()).also {
+                    runCatching { crmRepository.getEmployee() }
+                }
+            },
             checkSuccess = { it },
             onSuccess = {
-                emitNewEvent(LoginEvent.OnLogin)
+                val event = if (authRepository.isProfileFilled)
+                    LoginEvent.OnLogin
+                else
+                    LoginEvent.OnNavigateToLoginProfile
+                updateState(notifyEvent = event) {
+                    copy(
+                        error = null,
+                        isLoading = false
+                    )
+                }
             },
             onError = { updateState { copy(error = it, isLoading = false) } }
         )

@@ -24,6 +24,7 @@ import com.mafraq.presentation.features.authentication.ui.components.CredentialE
 import com.mafraq.presentation.features.authentication.ui.components.HaveAnAccount
 import com.mafraq.presentation.features.authentication.viewmodel.AuthViewModel
 import com.mafraq.presentation.navigation.destinations.navigateToHome
+import com.mafraq.presentation.navigation.destinations.navigateToLoginProfile
 import com.mafraq.presentation.navigation.destinations.navigateToRegister
 import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.string
@@ -41,6 +42,7 @@ fun LoginScreen(viewModel: AuthViewModel, navController: NavController) {
         when (currentEvent) {
             LoginEvent.OnLogin -> navController.navigateToHome()
             LoginEvent.OnNavigateToRegister -> navController.navigateToRegister()
+            LoginEvent.OnNavigateToLoginProfile -> navController.navigateToLoginProfile()
         }
     }
 }
