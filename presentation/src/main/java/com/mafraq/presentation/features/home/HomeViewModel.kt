@@ -8,6 +8,7 @@ import com.mafraq.presentation.features.base.BaseViewModel
 import com.mafraq.presentation.utils.location.LocationSettingsDelegate
 import com.mafraq.presentation.utils.location.LocationSettingsDelegateImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -52,7 +53,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun initialization() {
-        val isSubscribed = sessionLocalDataSource.get()?.subscriptionId != null
+        val isSubscribed = sessionLocalDataSource.get()?.subscriptionId.isNullOrEmpty().not()
         updateState { copy(isSubscribed = isSubscribed) }
 
         tryToExecute(

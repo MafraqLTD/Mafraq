@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val isAuthorized = authRepository.isAuthorized()
         val isProfileFilled = authRepository.isProfileFilled
-        val isSubscribed = sessionLocalDataSource.get()?.subscriptionId != null
+        val isSubscribed = sessionLocalDataSource.get()?.subscriptionId.isNullOrEmpty().not()
 
         installSplashScreen()
 
