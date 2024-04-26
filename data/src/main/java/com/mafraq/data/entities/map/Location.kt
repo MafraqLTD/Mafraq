@@ -12,6 +12,7 @@ data class Location(
         get() = "$governorate, $city, $district"
             .replace(", ,", "")
             .removeSuffix(", ")
+            .trim()
 
     val latLng: String
         get() {
