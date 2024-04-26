@@ -24,7 +24,11 @@ import com.mafraq.presentation.utils.extensions.currentRoute
 
 
 @Composable
-fun App(isAuthorized: Boolean, isProfileFilled: Boolean) {
+fun App(
+    isAuthorized: Boolean,
+    isSubscribed: Boolean,
+    isProfileFilled: Boolean,
+) {
 
     MafraqTheme {
         val navController = LocalNavigationProvider.current
@@ -65,7 +69,12 @@ fun App(isAuthorized: Boolean, isProfileFilled: Boolean) {
                     visible = showNavigationBar,
                     enter = EnterTransition.None,
                     exit = ExitTransition.None
-                ) { BottomNavigationBar(navController = navController) }
+                ) {
+                    BottomNavigationBar(
+                        navController = navController,
+                        isSubscribed = isSubscribed
+                    )
+                }
             }
         ) { paddingValues ->
             NavigationHostGraph(

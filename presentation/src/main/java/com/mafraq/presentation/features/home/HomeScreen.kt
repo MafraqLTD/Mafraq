@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -34,13 +32,12 @@ import com.mafraq.presentation.design.components.ColumnPreview
 import com.mafraq.presentation.design.components.SearchField
 import com.mafraq.presentation.design.components.TextIcon
 import com.mafraq.presentation.design.components.buttons.AppButtonIcon
-import com.mafraq.presentation.design.components.container.Loading
 import com.mafraq.presentation.design.theme.MafraqTheme.colors
 import com.mafraq.presentation.design.theme.MafraqTheme.sizes
 import com.mafraq.presentation.design.theme.MafraqTheme.typography
 import com.mafraq.presentation.features.home.components.AdsCarouselCard
-import com.mafraq.presentation.features.search.components.SearchResultItem
 import com.mafraq.presentation.features.home.components.VerificationStatus
+import com.mafraq.presentation.navigation.destinations.navigateToChatGroup
 import com.mafraq.presentation.navigation.destinations.navigateToChatSupport
 import com.mafraq.presentation.navigation.destinations.navigateToMap
 import com.mafraq.presentation.navigation.destinations.navigateToSearch
@@ -81,6 +78,7 @@ fun HomeScreen(
         when (currentEvent) {
             HomeEvent.NavigateToMap -> locationRequester.request()
             HomeEvent.NavigateToSearch -> navController.navigateToSearch()
+            HomeEvent.NavigateToChatGroup -> navController.navigateToChatGroup()
             HomeEvent.NavigateToSupportChat -> navController.navigateToChatSupport()
         }
     }
@@ -114,14 +112,30 @@ fun Content(
 
         AdsCarouselCard(ads = state.ads, onClick = {})
 
-        FindDriverCard(onClick = listener::onFindDriver)
+        CarCard(
+            isSubscribed = state.isSubscribed,
+            onFindDriverClick = listener::onFindDriver,
+            onGroupChatClick = listener::navigateToGroupChat,
+        )
 
         SupportCard(onClick = listener::navigateToSupportChat)
     }
 }
 
 @Composable
-private fun FindDriverCard(onClick: () -> Unit) {
+private fun CarCard(
+    isSubscribed: Boolean,
+    onGroupChatClick: () -> Unit,
+    onFindDriverClick: () -> Unit,
+) {
+    if (isSubscribed)
+        CarCard(text = R.string.group_chat.string, onClick = onGroupChatClick)
+    else
+        CarCard(text = R.string.find_driver.string, onClick = onFindDriverClick)
+}
+
+@Composable
+private fun CarCard(text: String, onClick: () -> Unit) {
     val configurations = LocalConfiguration.current
     val cardHeight = with(LocalDensity.current) {
         (configurations.screenHeightDp / 1.75f).toDp()
@@ -148,7 +162,7 @@ private fun FindDriverCard(onClick: () -> Unit) {
             contentAlignment = Alignment.BottomEnd
         ) {
             AppButtonIcon(
-                text = R.string.find_driver.string,
+                text = text,
                 onClick = onClick
             )
         }

@@ -19,7 +19,10 @@ import com.mafraq.presentation.utils.extensions.string
 
 
 @Composable
-fun BottomNavigationBar(navController: NavController) {
+fun BottomNavigationBar(
+    isSubscribed: Boolean,
+    navController: NavController
+) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry.currentRoute
 
@@ -33,14 +36,17 @@ fun BottomNavigationBar(navController: NavController) {
             onClick = navController::navigateToHome
         )
 
-        val isGroupChatSelected = remember(currentRoute) { Screen.ChatGroup.route == currentRoute }
-        NavigationBarItem(
-            label = R.string.group.string,
-            icon = R.drawable.users_group_outlined.painter,
-            iconSelected = R.drawable.users_group_filled.painter,
-            selected = isGroupChatSelected,
-            onClick = navController::navigateToChatGroup
-        )
+        if (isSubscribed) {
+            val isGroupChatSelected =
+                remember(currentRoute) { Screen.ChatGroup.route == currentRoute }
+            NavigationBarItem(
+                label = R.string.group.string,
+                icon = R.drawable.users_group_outlined.painter,
+                iconSelected = R.drawable.users_group_filled.painter,
+                selected = isGroupChatSelected,
+                onClick = navController::navigateToChatGroup
+            )
+        }
 
         val isProfileSelected = remember(currentRoute) { Screen.Profile.route == currentRoute }
         NavigationBarItem(
@@ -51,7 +57,8 @@ fun BottomNavigationBar(navController: NavController) {
             onClick = navController::navigateToProfile
         )
 
-        val isNotificationsSelected = remember(currentRoute) { Screen.Notifications.route == currentRoute }
+        val isNotificationsSelected =
+            remember(currentRoute) { Screen.Notifications.route == currentRoute }
         NavigationBarItem(
             label = R.string.notifications.string,
             icon = R.drawable.notification_outlined.painter,
