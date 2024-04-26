@@ -91,6 +91,6 @@ class FirebaseAuthDataSourceImpl @Inject constructor(
 
     override fun isAuthorized(): Boolean {
         auth.currentUser?.reload()
-        return auth.currentUser != null
+        return sessionLocalDataSource.get() != null
     }
 }

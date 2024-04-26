@@ -28,6 +28,7 @@ import com.mafraq.presentation.design.theme.MafraqTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
+import kotlin.math.max
 
 
 data class CarouselItem<T>(
@@ -60,7 +61,7 @@ fun <T> Carousel(
             LaunchedEffect(key1 = currentPageKey) {
                 launch {
                     delay(timeMillis = autoScrollDuration)
-                    val nextPage = (currentPage + 1).mod(pageCount)
+                    val nextPage = (currentPage + 1).mod(max(1, pageCount))
                     animateScrollToPage(page = nextPage)
                     currentPageKey = nextPage
                 }
