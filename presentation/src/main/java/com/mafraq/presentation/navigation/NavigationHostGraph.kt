@@ -12,6 +12,7 @@ import com.mafraq.presentation.navigation.destinations.mapDestination
 import com.mafraq.presentation.navigation.destinations.notificationsDestination
 import com.mafraq.presentation.navigation.destinations.profileDestination
 import com.mafraq.presentation.navigation.destinations.registerDestination
+import com.mafraq.presentation.navigation.destinations.searchDestination
 
 
 @Composable
@@ -25,6 +26,7 @@ fun NavigationHostGraph(
     startDestination = startDestination.route
 ) {
     homeDestination(navController)
+    searchDestination(navController)
     profileDestination(navController)
     loginDestination(navController)
     registerDestination(navController)

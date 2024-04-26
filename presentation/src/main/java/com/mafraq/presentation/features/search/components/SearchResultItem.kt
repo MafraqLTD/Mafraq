@@ -1,4 +1,4 @@
-package com.mafraq.presentation.features.home.components
+package com.mafraq.presentation.features.search.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

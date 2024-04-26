@@ -7,6 +7,7 @@ import com.mafraq.presentation.navigation.Screen.Map.LONGITUDE_ARG
 
 open class Screen(val route: String) {
     data object Home : Screen("home_screen")
+    data object Search : Screen("search_screen")
     data object Profile : Screen("profile_screen") {
         val destination = withArgs(LATITUDE_ARG, LONGITUDE_ARG, ADDRESS_ID_ARG, isKey = true)
     }

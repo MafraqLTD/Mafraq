@@ -39,11 +39,13 @@ import com.mafraq.presentation.design.theme.MafraqTheme.colors
 import com.mafraq.presentation.design.theme.MafraqTheme.sizes
 import com.mafraq.presentation.design.theme.MafraqTheme.typography
 import com.mafraq.presentation.features.home.components.AdsCarouselCard
-import com.mafraq.presentation.features.home.components.SearchResultItem
+import com.mafraq.presentation.features.search.components.SearchResultItem
 import com.mafraq.presentation.features.home.components.VerificationStatus
 import com.mafraq.presentation.navigation.destinations.navigateToChatSupport
 import com.mafraq.presentation.navigation.destinations.navigateToMap
+import com.mafraq.presentation.navigation.destinations.navigateToSearch
 import com.mafraq.presentation.utils.extensions.Listen
+import com.mafraq.presentation.utils.extensions.clickableNoRipple
 import com.mafraq.presentation.utils.extensions.detectTapGestures
 import com.mafraq.presentation.utils.extensions.painter
 import com.mafraq.presentation.utils.extensions.string
@@ -61,11 +63,7 @@ fun HomeScreen(
 
     val locationRequester = rememberLocationRequester(
         onLocationSatisfied = {
-            val destination = viewModel.mapDestination
-            navController.navigateToMap(
-                latitude = destination.latitude.toFloat(),
-                longitude = destination.longitude.toFloat()
-            )
+            navController.navigateToMap()
         },
         locationSettingsDelegate = viewModel
     )
@@ -82,6 +80,7 @@ fun HomeScreen(
     event?.Listen { currentEvent ->
         when (currentEvent) {
             HomeEvent.NavigateToMap -> locationRequester.request()
+            HomeEvent.NavigateToSearch -> navController.navigateToSearch()
             HomeEvent.NavigateToSupportChat -> navController.navigateToChatSupport()
         }
     }
@@ -103,25 +102,15 @@ fun Content(
         verticalArrangement = Arrangement.spacedBy(sizes.medium)
     ) {
         SearchField(
-            query = state.searchQuery,
+            query = "",
+            active = false,
+            enabled = false,
             placeholder = R.string.searchـforـdestination.string,
-            onQueryChange = listener::onSearchQueryChange,
-            onClear = listener::onClearSearch,
-        ) {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize().padding(sizes.small),
-                verticalArrangement = Arrangement.spacedBy(sizes.small),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                items(items = state.placesSuggestions) { place ->
-                    SearchResultItem(
-                        title = place.name,
-                        body = place.formattedAddress,
-                        onClick = { listener.onSelectPlace(place) }
-                    )
-                }
-            }
-        }
+            onQueryChange = {},
+            onClear = {},
+            onActiveChange = {},
+            modifier = Modifier.clickableNoRipple(onClick = listener::navigateToSearch)
+        ) {}
 
         AdsCarouselCard(ads = state.ads, onClick = {})
 
@@ -129,8 +118,6 @@ fun Content(
 
         SupportCard(onClick = listener::navigateToSupportChat)
     }
-
-    Loading(showDialog = state.isLoading, hintText = R.string.please_wait.string)
 }
 
 @Composable

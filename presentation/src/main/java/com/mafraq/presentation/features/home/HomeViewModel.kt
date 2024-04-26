@@ -7,6 +7,7 @@ import com.mafraq.data.repository.auth.AuthRepository
 import com.mafraq.data.repository.crm.CRMRepository
 import com.mafraq.data.repository.map.MapPlacesRepository
 import com.mafraq.presentation.features.base.BaseViewModel
+import com.mafraq.presentation.features.search.SearchInteractionListener.Preview.onClearSearch
 import com.mafraq.presentation.utils.extensions.emptyString
 import com.mafraq.presentation.utils.location.LocationSettingsDelegate
 import com.mafraq.presentation.utils.location.LocationSettingsDelegateImpl
@@ -18,12 +19,9 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val crmRepository: CRMRepository,
-    private val mapPlacesRepository: MapPlacesRepository,
     private val locationSettingsDelegate: LocationSettingsDelegateImpl
 ) : BaseViewModel<HomeUiState, HomeEvent>(HomeUiState()), HomeInteractionListener,
     LocationSettingsDelegate by locationSettingsDelegate {
-
-    var mapDestination: Location = Location()
 
     init {
         initialization()
@@ -34,44 +32,15 @@ class HomeViewModel @Inject constructor(
     }
 
     override fun onFindDriver() {
-        mapDestination = Location()
         navigateToMap()
+    }
+
+    override fun navigateToSearch() {
+        emitNewEvent(HomeEvent.NavigateToSearch)
     }
 
     override fun navigateToSupportChat() {
         emitNewEvent(HomeEvent.NavigateToSupportChat)
-    }
-
-    override fun onSearchQueryChange(value: String) {
-        updateState { copy(searchQuery = value) }
-
-        tryToExecute(
-            block = { mapPlacesRepository.getPlaceSuggestions(query = value) },
-            onSuccess = {
-                updateState { copy(placesSuggestions = it) }
-            }
-        )
-    }
-
-    override fun onSelectPlace(place: PlaceSuggestion) {
-        updateState { copy(isLoading = true) }
-        tryToExecute(
-            block = { mapPlacesRepository.selectSuggestedPlace(place) },
-            onSuccess = { selectedPlace ->
-                mapDestination = selectedPlace.location
-                navigateToMap()
-            },
-            onError = {
-                // TODO: Handle error
-            },
-            onCompleted = {
-                updateState { copy(isLoading = false) }
-            }
-        )
-    }
-
-    override fun onClearSearch() = updateState {
-        copy(searchQuery = emptyString())
     }
 
     val isEmailVerified: Boolean
@@ -82,7 +51,6 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun initialization() {
-        onClearSearch()
         tryToExecute(
             block = crmRepository::getAds,
             onSuccess = {
