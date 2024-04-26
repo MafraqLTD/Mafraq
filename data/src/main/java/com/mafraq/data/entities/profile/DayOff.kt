@@ -17,9 +17,9 @@ enum class DayOff {
             when (value?.titlecase()) {
                 Sunday.name -> Sunday
                 Monday.name -> Monday
-                Tuesday.name -> Thursday
-                Wednesday.name -> Wednesday
                 Tuesday.name -> Tuesday
+                Wednesday.name -> Wednesday
+                Thursday.name -> Thursday
                 Friday.name -> Friday
                 Saturday.name -> Saturday
                 else -> throw IllegalArgumentException("Unknown value: $value")

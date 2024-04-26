@@ -129,3 +129,7 @@ fun String.toStringUrl(path: String = "") = StringBuilder(this).apply {
 fun LocalDate.toFormattedString(format: String = "dd/MM/yyyy"): String {
     return format(DateTimeFormatter.ofPattern(format))
 }
+
+fun String.toLocalDate(format: String = "dd/MM/yyyy"): LocalDate {
+    return LocalDate.parse(this, DateTimeFormatter.ofPattern(format))
+}

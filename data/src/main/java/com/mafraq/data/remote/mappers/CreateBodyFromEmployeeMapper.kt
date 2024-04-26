@@ -19,7 +19,7 @@ class CreateBodyFromEmployeeMapper @Inject constructor(
             "itOGYf6QL92zUsCR" to birthday,
             "cm6TKIRbdzcwUOLt" to offDays.serializedWithSeparator { it.name },
             "3NugnVDLDBCDst4x" to email,
-            "uwsRtDxOv83FsWPL" to String.generateRandomId(),
+            "uwsRtDxOv83FsWPL" to email, // ID
             "MFSzAjyB5cKPffWC" to driverId,
             "geU4o1VQrUH0gJLO" to fullName,
             "HKT8vh8KsERfeWvN" to gender,

@@ -26,6 +26,10 @@ internal fun NavController.navigateToProfile() {
     navigate(screen = Screen.Profile, popBackstack = true)
 }
 
+internal fun NavController.navigateToLoginProfile() {
+    navigate(screen = Screen.LoginProfile, popBackstack = true)
+}
+
 internal fun NavGraphBuilder.profileDestination(navController: NavController) {
     composable(
         route = Screen.Profile.destination.route,

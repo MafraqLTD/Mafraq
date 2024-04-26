@@ -16,6 +16,7 @@ class EmployeeFromEmployeeProfileMapper @Inject constructor(
         val employee = profileLocalDataSource.get() ?: Employee()
         employee.copy(
             email = email,
+            rowId = rowId,
             workLocation = workLocation,
             homeLocation = homeLocation,
             phone = phone,

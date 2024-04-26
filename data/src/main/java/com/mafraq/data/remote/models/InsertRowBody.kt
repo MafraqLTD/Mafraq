@@ -9,6 +9,8 @@ data class InsertRowBody(
     val value: List<Data>,
 ) {
     data class Data(
+        @SerializedName("row_id")
+        val rowId: Int? = null,
         @SerializedName("columns")
         val row: List<Column>
     )
@@ -36,9 +38,9 @@ data class InsertRowBody(
         fun create(vararg column: Column): InsertRowBody =
             InsertRowBody(value = listOf(Data(row = column.toList())))
 
-        fun updateFromMap(values: Map<String, String>): InsertRowBody {
+        fun updateFromMap(values: Map<String, String>, rowId: Int): InsertRowBody {
             val columns = values.map { (key, value) -> updateColumn(id = key, value = value) }
-            return InsertRowBody(value = listOf(Data(row = columns)))
+            return InsertRowBody(value = listOf(Data(row = columns, rowId = rowId)))
         }
 
         fun createFromMap(values: Map<String, String>): InsertRowBody {
