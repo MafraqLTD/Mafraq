@@ -11,6 +11,10 @@ import com.mafraq.data.remote.dataSource.crm.CRMRemoteDataSource
 import com.mafraq.data.remote.dataSource.crm.CRMRemoteDataSourceImpl
 import com.mafraq.data.remote.dataSource.map.GooglePlacesDataSource
 import com.mafraq.data.remote.dataSource.map.GooglePlacesDataSourceImpl
+import com.mafraq.data.remote.dataSource.subscription.driver.DriverSubscriptionDataSource
+import com.mafraq.data.remote.dataSource.subscription.driver.DriverSubscriptionDataSourceImpl
+import com.mafraq.data.remote.dataSource.subscription.employee.EmployeeSubscriptionDataSource
+import com.mafraq.data.remote.dataSource.subscription.employee.EmployeeSubscriptionDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -42,5 +46,13 @@ interface DataSourceModule {
     @Binds
     @Singleton
     fun bindMapBoxPlacesDataSource(source: GooglePlacesDataSourceImpl): GooglePlacesDataSource
+
+    @Binds
+    @Singleton
+    fun bindDriverSubscriptionDataSource(source: DriverSubscriptionDataSourceImpl): DriverSubscriptionDataSource
+
+    @Binds
+    @Singleton
+    fun bindEmployeeSubscriptionDataSource(source: EmployeeSubscriptionDataSourceImpl): EmployeeSubscriptionDataSource
 
 }

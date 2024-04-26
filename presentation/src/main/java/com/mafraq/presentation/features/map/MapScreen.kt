@@ -93,6 +93,7 @@ private fun Content(
                 carNumber = carNumber,
                 profilePic = profilePicture,
                 snippet = snippet,
+                onAccept = listener::onSubscriptionRequest,
                 onDismissRequest = listener::onDismissDriverDetails,
             )
         }

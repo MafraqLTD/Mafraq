@@ -12,6 +12,10 @@ import com.mafraq.data.repository.hardware.HardwareRepository
 import com.mafraq.data.repository.hardware.HardwareRepositoryImpl
 import com.mafraq.data.repository.map.MapPlacesRepository
 import com.mafraq.data.repository.map.MapPlacesRepositoryImpl
+import com.mafraq.data.repository.subscription.driver.DriverSubscriptionRepository
+import com.mafraq.data.repository.subscription.driver.DriverSubscriptionRepositoryImpl
+import com.mafraq.data.repository.subscription.employee.EmployeeSubscriptionRepository
+import com.mafraq.data.repository.subscription.employee.EmployeeSubscriptionRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -46,5 +50,13 @@ interface RepositoryModule {
     @Binds
     @Singleton
     fun bindMapPlacesRepository(repository: MapPlacesRepositoryImpl): MapPlacesRepository
+
+    @Binds
+    @Singleton
+    fun bindEmployeeSubscriptionRepository(repository: EmployeeSubscriptionRepositoryImpl): EmployeeSubscriptionRepository
+
+    @Binds
+    @Singleton
+    fun bindDriverSubscriptionRepository(repository: DriverSubscriptionRepositoryImpl): DriverSubscriptionRepository
 
 }
