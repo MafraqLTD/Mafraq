@@ -4,6 +4,7 @@ import com.mafraq.data.entities.map.Location
 
 
 data class Employee(
+    val rowId: Int = -1,
     val birthday: String = "",
     val offDays: List<DayOff> = emptyList(),
     val email: String = "",

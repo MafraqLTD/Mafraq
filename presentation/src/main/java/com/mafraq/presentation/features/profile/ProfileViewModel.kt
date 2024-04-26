@@ -11,6 +11,7 @@ import com.mafraq.presentation.navigation.arguments.ProfileScreenArgs
 import com.mafraq.presentation.utils.location.LocationSettingsDelegate
 import com.mafraq.presentation.utils.location.LocationSettingsDelegateImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -107,6 +108,26 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun initialize() {
+
+        tryToExecute(
+            block = { crmRepository.getEmployee() },
+            onSuccess = {
+                updateState {
+                    copy(
+                        email = it.email,
+                        fullName = it.fullName,
+                        birthday = it.birthday,
+                        gender = Gender.fromString(it.gender),
+                        workLocation = it.workLocation,
+                        homeLocation = it.homeLocation,
+                        offDays = it.offDays.toSet(),
+                        phone = it.phone,
+                        error = null
+                    )
+                }
+            },
+        )
+
         if (args.addressId == null) return
 
         tryToExecute(

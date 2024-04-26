@@ -24,11 +24,8 @@ interface RetableService {
         driverId: String
     ): Response<ApiResponseRemote<DriverRemote>>
 
-    @GET(DRIVER_PATH)
-    suspend fun getEmployee(
-        @Query("row_id")
-        userId: String
-    ): Response<ApiResponseRemote<EmployeeRemote>>
+    @GET(EMPLOYEES_PATH)
+    suspend fun getEmployees(): Response<ApiResponseRemote<EmployeeRemote>>
 
     @GET(ADS_PATH)
     suspend fun getAds(): Response<ApiResponseRemote<AdRemote>>
@@ -44,6 +41,7 @@ interface RetableService {
         private const val SUFFIX = "/data"
         private const val BASE_URL_V1 = BuildConfig.BASE_URL + "v1/"
         const val DRIVER_PATH = "${PREFIX}${BuildConfig.RETABLE_DRIVER_TABLE_ID}${SUFFIX}"
+        const val EMPLOYEES_PATH = "${PREFIX}${BuildConfig.RETABLE_EMPLOYEE_TABLE_ID}${SUFFIX}"
         const val ADS_PATH = "${PREFIX}${BuildConfig.RETABLE_ADS_TABLE_ID}${SUFFIX}"
         const val CREATE_OR_UPDATE_EMPLOYEE_PATH = "${BASE_URL_V1}${PREFIX}${BuildConfig.RETABLE_EMPLOYEE_TABLE_ID}${SUFFIX}"
     }

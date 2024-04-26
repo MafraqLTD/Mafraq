@@ -4,6 +4,7 @@ import com.mafraq.data.entities.map.Location
 import com.mafraq.data.entities.profile.DayOff
 import com.mafraq.data.entities.profile.EmployeeProfile
 import com.mafraq.data.entities.profile.Gender
+import com.mafraq.data.utils.toLocalDate
 import com.mafraq.presentation.features.base.ErrorState
 import com.mafraq.presentation.utils.extensions.emptyString
 import java.time.LocalDate
@@ -28,7 +29,7 @@ data class ProfileUiState(
         homeLocation = homeLocation,
         phone = phone,
         fullName = fullName,
-        birthday = LocalDate.parse(birthday),
+        birthday = birthday.toLocalDate("yyyy-MM-dd"),
         offDays = offDays,
         gender = gender?.name.orEmpty(),
     )

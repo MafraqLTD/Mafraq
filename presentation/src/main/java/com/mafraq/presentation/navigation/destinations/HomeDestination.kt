@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -21,7 +22,6 @@ internal fun NavController.navigateToHome() {
 
 internal fun NavGraphBuilder.homeDestination(navController: NavController) {
     composable(Screen.Home.route) {
-        val viewModel = it.sharedViewModel<HomeViewModel>(navController = navController)
-        HomeScreen(viewModel = viewModel, navController = navController)
+        HomeScreen(viewModel = hiltViewModel(), navController = navController)
     }
 }
