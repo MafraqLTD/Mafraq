@@ -11,5 +11,10 @@ class LocationDeserializer : JsonDeserializer<LocationRemote> {
         json: JsonElement?,
         typeOfT: Type?,
         context: JsonDeserializationContext?
-    ): LocationRemote  = json?.asString.fromJson<LocationRemote>()
+    ): LocationRemote  = runCatching {
+        json?.asString.fromJson<LocationRemote>()
+    }.getOrNull() ?: run {
+        val latLang = json?.asString?.split(",") ?: error("Fail to convert Remote Location")
+        LocationRemote(latitude = latLang.first().toDouble(), longitude = latLang.last().toDouble())
+    }
 }

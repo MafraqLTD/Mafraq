@@ -29,10 +29,18 @@ class CRMRepositoryImpl @Inject constructor(
         return crmRemoteDataSource.getDriver(id = requireNotNull(session?.driverId))
     }
 
-    override suspend fun getEmployee(): Employee =
-        profileLocalDataSource.get()
+    override suspend fun getEmployee(): Employee {
+        return profileLocalDataSource.get()
             ?: crmRemoteDataSource.getEmployee(requireNotNull(sessionLocalDataSource.get()?.userId))
                 .also(profileLocalDataSource::save)
+                .also {
+                    sessionLocalDataSource.save(
+                        driverId = it.driverId,
+                        subscriptionId = it.driverId, // FIXME (NOW THE APP WORKING ON SINGLE SUBSCRIPTION)
+                        userId = it.email
+                    )
+                }
+    }
 
     override suspend fun saveProfile(value: EmployeeProfile): Boolean {
         val employee = employeeFromEmployeeProfileMapper.map(value)
@@ -47,6 +55,9 @@ class CRMRepositoryImpl @Inject constructor(
 
     private suspend fun updateEmployee(value: Employee): Boolean =
         crmRemoteDataSource.updateEmployee(value)
-            .also { profileLocalDataSource.save(value) }
+            .also {
+                val updated = getEmployee()
+                profileLocalDataSource.save(updated)
+            }
 
 }

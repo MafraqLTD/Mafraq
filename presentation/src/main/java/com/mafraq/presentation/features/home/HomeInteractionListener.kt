@@ -6,11 +6,13 @@ import com.mafraq.data.entities.map.PlaceSuggestion
 interface HomeInteractionListener {
     fun onClearSearch()
     fun navigateToMap()
+    fun onFindDriver()
     fun navigateToSupportChat()
     fun onSearchQueryChange(value: String)
     fun onSelectPlace(place: PlaceSuggestion)
 
     object Preview : HomeInteractionListener{
+        override fun onFindDriver() {}
         override fun onClearSearch() {}
         override fun navigateToMap() {}
         override fun navigateToSupportChat() {}

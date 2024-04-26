@@ -8,13 +8,15 @@ data class ApiResponseRemote<T>(
     private val rows: List<RowRemote<T>>?
 ) {
     data class RowRemote<T>(
+        @SerializedName("row_id")
+        val rowId: Int,
         @SerializedName("fields")
         val item: T,
     )
 
-    val items: List<T>
-        get() = rows?.map { it.item } ?: emptyList()
+    val items: List<RowRemote<T>>
+        get() = rows ?: emptyList()
 
-    val item: T?
+    val item: RowRemote<T>?
         get() = items.firstOrNull()
 }
