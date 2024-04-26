@@ -45,7 +45,8 @@ fun SearchScreen(
             val destination = viewModel.mapDestination
             navController.navigateToMap(
                 latitude = destination.latitude.toFloat(),
-                longitude = destination.longitude.toFloat()
+                longitude = destination.longitude.toFloat(),
+                fromProfile = viewModel.isFromProfile
             )
         },
         locationSettingsDelegate = viewModel

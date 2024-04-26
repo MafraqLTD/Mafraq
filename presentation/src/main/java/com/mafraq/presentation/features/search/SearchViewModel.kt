@@ -1,9 +1,13 @@
 package com.mafraq.presentation.features.search
 
+import androidx.lifecycle.SavedStateHandle
+import com.google.android.play.integrity.internal.f
 import com.mafraq.data.entities.map.Location
 import com.mafraq.data.entities.map.PlaceSuggestion
 import com.mafraq.data.repository.map.MapPlacesRepository
 import com.mafraq.presentation.features.base.BaseViewModel
+import com.mafraq.presentation.navigation.arguments.MapScreenArgs
+import com.mafraq.presentation.navigation.arguments.SearchScreenArgs
 import com.mafraq.presentation.utils.extensions.emptyString
 import com.mafraq.presentation.utils.location.LocationSettingsDelegate
 import com.mafraq.presentation.utils.location.LocationSettingsDelegateImpl
@@ -13,12 +17,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val mapPlacesRepository: MapPlacesRepository,
     private val locationSettingsDelegate: LocationSettingsDelegateImpl
 ) : BaseViewModel<SearchUiState, SearchEvent>(SearchUiState()), SearchInteractionListener,
     LocationSettingsDelegate by locationSettingsDelegate {
 
+    private val args by lazy { SearchScreenArgs(savedStateHandle) }
+
     var mapDestination: Location = Location()
+    val isFromProfile: Boolean
+        get() = args.isFromProfile
 
     override fun navigateToMap() {
         emitNewEvent(SearchEvent.NavigateToMap)
