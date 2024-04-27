@@ -1,9 +1,9 @@
 package com.mafraq.data.remote.dataSource.crm
 
-import com.altaie.prettycode.core.base.BaseRemoteDataSource
 import com.mafraq.data.entities.home.Ad
 import com.mafraq.data.entities.map.Driver
 import com.mafraq.data.entities.profile.Employee
+import com.mafraq.data.remote.dataSource.BaseRemoteDataSource
 import com.mafraq.data.remote.mappers.AdFromRemoteMapper
 import com.mafraq.data.remote.mappers.CreateBodyFromEmployeeMapper
 import com.mafraq.data.remote.mappers.DriverFromRemoteMapper
@@ -40,19 +40,19 @@ class CRMRemoteDataSourceImpl @Inject constructor(
     override suspend fun getEmployee(id: String): Employee = apiCall(
         suspendFunction = { apiService.getEmployees() },
         mapper = { responseRemote ->
-            employeeFromRemoteMapper.mapList(responseRemote.items).firstOrNull {
+            employeeFromRemoteMapper.suspendMapList(responseRemote.items).firstOrNull {
                 it.id == id
             } ?: error("Employee not found")
         }
     ).getOrThrowEmpty()
 
     override suspend fun createEmployee(value: Employee): Boolean = apiCall(
-        suspendFunction = { apiService.createOrUpdateEmployee(createBodyFromEmployeeMapper.map(value)) },
+        suspendFunction = { apiService.createEmployee(createBodyFromEmployeeMapper.map(value)) },
         mapper = { it != null }
     ).getOrThrowEmpty()
 
     override suspend fun updateEmployee(value: Employee): Boolean = apiCall(
-        suspendFunction = { apiService.createOrUpdateEmployee(updateBodyFromEmployeeMapper.map(value)) },
+        suspendFunction = { apiService.updateEmployee(updateBodyFromEmployeeMapper.map(value)) },
         mapper = { it != null }
     ).getOrThrowEmpty()
 }

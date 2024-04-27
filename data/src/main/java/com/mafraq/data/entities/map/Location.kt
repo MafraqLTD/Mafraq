@@ -12,4 +12,12 @@ data class Location(
         get() = "$governorate, $city, $district"
             .replace(", ,", "")
             .removeSuffix(", ")
+            .trim()
+
+    val latLng: String
+        get() {
+            if (latitude == 0.0 || longitude == 0.0)
+                return ""
+            return "$latitude,$longitude"
+        }
 }

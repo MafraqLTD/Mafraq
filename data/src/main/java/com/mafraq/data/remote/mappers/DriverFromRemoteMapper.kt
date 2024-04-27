@@ -3,15 +3,17 @@ package com.mafraq.data.remote.mappers
 import com.altaie.prettycode.core.mapper.base.MapperList
 import com.mafraq.data.entities.map.Driver
 import com.mafraq.data.entities.map.DriverSubscriptionStatus
+import com.mafraq.data.remote.models.ApiResponseRemote
 import com.mafraq.data.remote.models.DriverRemote
 import javax.inject.Inject
 
 
 class DriverFromRemoteMapper @Inject constructor()
-    : MapperList<DriverRemote, Driver> {
+    : MapperList<ApiResponseRemote.RowRemote<DriverRemote>, Driver> {
 
-    override fun map(from: DriverRemote) = from.run {
+    override fun map(from: ApiResponseRemote.RowRemote<DriverRemote>) = from.item.run {
         Driver(
+            rowId = from.rowId,
             birthday = birthday.orEmpty(),
             email = email.orEmpty(),
             fullName = fullName.orEmpty(),
@@ -28,5 +30,5 @@ class DriverFromRemoteMapper @Inject constructor()
         )
     }
 
-    override fun mapList(from: List<DriverRemote>): List<Driver> = from.map(::map)
+    override fun mapList(from: List<ApiResponseRemote.RowRemote<DriverRemote>>): List<Driver> = from.map(::map)
 }

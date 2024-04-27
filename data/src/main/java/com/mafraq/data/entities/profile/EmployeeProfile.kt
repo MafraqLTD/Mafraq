@@ -6,7 +6,7 @@ import java.time.LocalDate
 
 data class EmployeeProfile(
     val rowId: Int = -1,
-    val birthday: LocalDate = LocalDate.now(),
+    val birthday: LocalDate? = null,
     val offDays: Set<DayOff> = setOf(),
     val email: String = "",
     val fullName: String = "",

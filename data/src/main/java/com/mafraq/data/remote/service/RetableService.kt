@@ -6,10 +6,12 @@ import com.mafraq.data.remote.models.ApiResponseRemote
 import com.mafraq.data.remote.models.DriverRemote
 import com.mafraq.data.remote.models.EmployeeRemote
 import com.mafraq.data.remote.models.InsertRowBody
+import com.mafraq.data.remote.models.UpdateRowBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Query
 
 
@@ -31,9 +33,15 @@ interface RetableService {
     suspend fun getAds(): Response<ApiResponseRemote<AdRemote>>
 
     @POST(CREATE_OR_UPDATE_EMPLOYEE_PATH)
-    suspend fun createOrUpdateEmployee(
+    suspend fun createEmployee(
         @Body
         body: InsertRowBody
+    ): Response<Any?>
+
+    @PUT(CREATE_OR_UPDATE_EMPLOYEE_PATH)
+    suspend fun updateEmployee(
+        @Body
+        body: UpdateRowBody
     ): Response<Any?>
 
     companion object {

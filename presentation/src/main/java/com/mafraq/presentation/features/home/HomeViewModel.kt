@@ -33,6 +33,11 @@ class HomeViewModel @Inject constructor(
         emitNewEvent(HomeEvent.NavigateToMap)
     }
 
+    override fun onFindDriver() {
+        mapDestination = Location()
+        navigateToMap()
+    }
+
     override fun navigateToSupportChat() {
         emitNewEvent(HomeEvent.NavigateToSupportChat)
     }
@@ -77,6 +82,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun initialization() {
+        onClearSearch()
         tryToExecute(
             block = crmRepository::getAds,
             onSuccess = {

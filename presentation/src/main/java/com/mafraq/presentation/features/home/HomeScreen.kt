@@ -125,7 +125,7 @@ fun Content(
 
         AdsCarouselCard(ads = state.ads, onClick = {})
 
-        FindDriverCard(onClick = listener::navigateToMap)
+        FindDriverCard(onClick = listener::onFindDriver)
 
         SupportCard(onClick = listener::navigateToSupportChat)
     }

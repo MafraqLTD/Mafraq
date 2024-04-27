@@ -112,18 +112,22 @@ class ProfileViewModel @Inject constructor(
         tryToExecute(
             block = { crmRepository.getEmployee() },
             onSuccess = {
-                updateState {
-                    copy(
-                        email = it.email,
-                        fullName = it.fullName,
-                        birthday = it.birthday,
-                        gender = Gender.fromString(it.gender),
-                        workLocation = it.workLocation,
-                        homeLocation = it.homeLocation,
-                        offDays = it.offDays.toSet(),
-                        phone = it.phone,
-                        error = null
-                    )
+                runCatching {
+                    updateState {
+                        copy(
+                            email = it.email,
+                            fullName = it.fullName,
+                            birthday = it.birthday,
+                            gender = Gender.fromString(it.gender),
+                            workLocation = it.workLocation,
+                            homeLocation = it.homeLocation,
+                            offDays = it.offDays.toSet(),
+                            phone = it.phone,
+                            error = null
+                        )
+                    }
+                }.onFailure {
+                    Timber.e(it)
                 }
             },
         )

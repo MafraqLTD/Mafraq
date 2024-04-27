@@ -21,7 +21,7 @@ class EmployeeFromEmployeeProfileMapper @Inject constructor(
             homeLocation = homeLocation,
             phone = phone,
             fullName = fullName,
-            birthday = birthday.toFormattedString(),
+            birthday = birthday?.toFormattedString().orEmpty(),
             offDays = offDays.toList(),
             gender = gender,
             subscriptionStatus = if (employee.driverId.isEmpty())

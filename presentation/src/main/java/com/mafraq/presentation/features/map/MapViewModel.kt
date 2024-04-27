@@ -14,6 +14,7 @@ import com.mafraq.presentation.navigation.arguments.MapScreenArgs
 import com.mafraq.presentation.utils.location.LocationSettingsDelegate
 import com.mafraq.presentation.utils.location.LocationSettingsDelegateImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
 

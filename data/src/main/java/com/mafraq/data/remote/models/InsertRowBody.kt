@@ -30,18 +30,8 @@ data class InsertRowBody(
             value: String,
         ): Column  = Column(id = id, newValue = value)
 
-        private fun updateColumn(
-            id: String,
-            value: String,
-        ): Column = Column(id = id, updatedValue = value)
-
         fun create(vararg column: Column): InsertRowBody =
             InsertRowBody(value = listOf(Data(row = column.toList())))
-
-        fun updateFromMap(values: Map<String, String>, rowId: Int): InsertRowBody {
-            val columns = values.map { (key, value) -> updateColumn(id = key, value = value) }
-            return InsertRowBody(value = listOf(Data(row = columns, rowId = rowId)))
-        }
 
         fun createFromMap(values: Map<String, String>): InsertRowBody {
             val columns = values.map { (key, value) -> createColumn(id = key, value = value) }

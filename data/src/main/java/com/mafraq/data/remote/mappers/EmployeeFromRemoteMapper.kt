@@ -4,17 +4,22 @@ import com.altaie.prettycode.core.mapper.base.MapperList
 import com.mafraq.data.entities.profile.DayOff
 import com.mafraq.data.entities.profile.Employee
 import com.mafraq.data.entities.profile.EmployeeSubscriptionStatus
+import com.mafraq.data.remote.models.ApiResponseRemote
 import com.mafraq.data.remote.models.EmployeeRemote
+import com.mafraq.data.repository.map.MapPlacesRepositoryImpl
 import com.mafraq.data.utils.toFormattedString
 import com.mafraq.data.utils.toLocalDate
 import javax.inject.Inject
 
 
-class EmployeeFromRemoteMapper @Inject constructor()
-    : MapperList<EmployeeRemote, Employee> {
+class EmployeeFromRemoteMapper @Inject constructor(
+    private val placesRepository: MapPlacesRepositoryImpl
+) :
+    MapperList<ApiResponseRemote.RowRemote<EmployeeRemote>, Employee> {
 
-    override fun map(from: EmployeeRemote) = from.run {
+    override fun map(from: ApiResponseRemote.RowRemote<EmployeeRemote>) = from.item.run {
         Employee(
+            rowId = from.rowId,
             birthday = birthday?.toLocalDate()?.toFormattedString("yyyy-MM-dd").orEmpty(),
             email = email.orEmpty(),
             fullName = fullName.orEmpty(),
@@ -30,8 +35,36 @@ class EmployeeFromRemoteMapper @Inject constructor()
         )
     }
 
-    override fun mapList(from: List<EmployeeRemote>): List<Employee> = from
-        .mapIndexed { index, employeeRemote ->
-            map(employeeRemote).copy(rowId = index)
+    override fun mapList(from: List<ApiResponseRemote.RowRemote<EmployeeRemote>>): List<Employee> =
+        from.map(::map)
+
+    suspend fun suspendMap(from: ApiResponseRemote.RowRemote<EmployeeRemote>): Employee {
+        val employee = map(from)
+        var homeLocation = employee.homeLocation
+        var workLocation = employee.workLocation
+
+        with(homeLocation) {
+            if (formattedAddress.isEmpty())
+                homeLocation = placesRepository.getLocationInfo(
+                    latitude = latitude,
+                    longitude = longitude
+                )
         }
+
+        with(workLocation) {
+            if (formattedAddress.isEmpty())
+                workLocation = placesRepository.getLocationInfo(
+                    latitude = latitude,
+                    longitude = longitude
+                )
+        }
+
+        return employee.copy(
+            homeLocation = homeLocation,
+            workLocation = workLocation
+        )
+    }
+
+    suspend fun suspendMapList(from: List<ApiResponseRemote.RowRemote<EmployeeRemote>>): List<Employee> =
+        from.map { suspendMap(it) }
 }

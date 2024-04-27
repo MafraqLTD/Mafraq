@@ -4,28 +4,16 @@ package com.mafraq.data.remote.models
 import com.google.gson.annotations.SerializedName
 
 data class LocationRemote(
-    @SerializedName("country")
-    val country: String?,
-    @SerializedName("country_code")
-    val countryCode: String?,
-    @SerializedName("house_number")
-    val houseNumber: Int?,
-    @SerializedName("ISO3")
-    val iso3: String?,
     @SerializedName("lat")
-    val latitude: Double?,
+    val latitude: Double? = null,
     @SerializedName("lng")
-    val longitude: Double?,
-    @SerializedName("postcode")
-    val postcode: String?,
+    val longitude: Double? = null,
     @SerializedName("road")
-    val road: String?,
+    val road: String? = null,
     @SerializedName("state")
-    val governorate: String?,
+    val governorate: String? = null,
     @SerializedName("district")
-    val city: String?,
+    val city: String? = null,
     @SerializedName("suburb")
-    val district: String?,
-    @SerializedName("zoomLevel")
-    val zoomLevel: Int?
+    val district: String? = null
 )

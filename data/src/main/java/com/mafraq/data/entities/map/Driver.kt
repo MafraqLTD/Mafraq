@@ -4,6 +4,7 @@ import com.mafraq.data.entities.Subscriber
 
 
 data class Driver(
+    val rowId: Int = -1,
     val birthday: String = "",
     val car: String = "",
     val carNumber: String = "",
