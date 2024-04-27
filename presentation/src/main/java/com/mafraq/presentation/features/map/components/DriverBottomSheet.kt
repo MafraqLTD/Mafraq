@@ -41,6 +41,7 @@ fun DriverBottomSheet(
     rating: String,
     car: String,
     carNumber: String,
+    onAccept: () -> Unit,
     onDismissRequest: () -> Unit
 ) {
 
@@ -66,7 +67,7 @@ fun DriverBottomSheet(
 
             TextButton(
                 text = R.string.accept.string,
-                onClick = hideSheet
+                onClick = onAccept
             )
         }
 
@@ -179,6 +180,7 @@ private fun Preview() = ColumnPreview {
         car = "Toyota Rav4 2021",
         carNumber = "1234",
         snippet = "Ahmed Mones",
+        onAccept = {},
         onDismissRequest = {}
     )
 }

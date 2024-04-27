@@ -8,6 +8,8 @@ import com.mafraq.data.remote.mappers.toPoint
 import com.mafraq.data.repository.crm.CRMRepository
 import com.mafraq.data.repository.hardware.HardwareRepository
 import com.mafraq.data.repository.map.MapPlacesRepository
+import com.mafraq.data.repository.subscription.driver.DriverSubscriptionRepository
+import com.mafraq.data.repository.subscription.employee.EmployeeSubscriptionRepository
 import com.mafraq.presentation.features.base.BaseViewModel
 import com.mafraq.presentation.features.profile.ProfileEvent
 import com.mafraq.presentation.navigation.arguments.MapScreenArgs
@@ -22,9 +24,10 @@ import javax.inject.Inject
 class MapViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val crmRepository: CRMRepository,
+    private val placesRepository: MapPlacesRepository,
     private val hardwareRepository: HardwareRepository,
     private val locationSettingsDelegate: LocationSettingsDelegateImpl,
-    private val placesRepository: MapPlacesRepository
+    private val employeeSubscriptionRepository: EmployeeSubscriptionRepository,
 ) : BaseViewModel<MapUiState, MapEvent>(MapUiState()),
     MapInteractionListener, LocationSettingsDelegate by locationSettingsDelegate {
 
@@ -79,6 +82,17 @@ class MapViewModel @Inject constructor(
                     // TODO( "SHOW ERROR MESSAGE" )
                 },
             )
+    }
+
+    override fun onSubscriptionRequest() {
+        val driverId = state.value.selectedDriver.id
+        tryToExecute(
+            block = { employeeSubscriptionRepository.request(driverId) },
+            onSuccess = { emitNewEvent(MapEvent.OnNavigateBack) },
+            onError = {
+                // TODO( "SHOW ERROR MESSAGE" )
+            }
+        )
     }
 
     override fun onDismissDriverDetails() = updateState {

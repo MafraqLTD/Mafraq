@@ -20,14 +20,16 @@ class GroupChatRepositoryImpl @Inject constructor(
         firestore
             .collection(DRIVERS_COLLECTION)
             .document(requireNotNull(session?.driverId))
-            .collection(SUBSCRIPTIONS_COLLECTION)
-            .document(requireNotNull(session?.subscriptionId))
+//            .collection(SUBSCRIPTIONS_COLLECTION)
+//            .document(requireNotNull(session?.subscriptionId))
             .collection(MESSAGES_COLLECTION)
     }
 
     companion object {
         const val DRIVERS_COLLECTION = "Drivers"
         const val MESSAGES_COLLECTION = "Messages"
-        const val SUBSCRIPTIONS_COLLECTION = "Subscriptions"
+        const val MEMBERS_COLLECTION = "Members"
+        const val PENDING_COLLECTION = "Pending"
+//        const val SUBSCRIPTIONS_COLLECTION = "Subscriptions"
     }
 }

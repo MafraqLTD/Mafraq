@@ -33,7 +33,7 @@ fun DriverRemote.toSubscribers(): List<Subscriber> {
             id = id,
             name = names[index],
             imageUrl = imageUrls[index],
-            location = locations[index].toDomain(),
+            homeLocation = locations[index].toDomain(),
         )
     }
 }

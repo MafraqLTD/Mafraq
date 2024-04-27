@@ -7,5 +7,6 @@ data class Subscriber(
     val id: String = "",
     val name: String = "",
     val imageUrl: String = "",
-    val location: Location = Location()
+    val homeLocation: Location = Location(),
+    val workLocation: Location = Location()
 )
