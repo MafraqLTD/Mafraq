@@ -68,6 +68,7 @@ fun MapScreenWithMarkers(
     }
 
     val markerIcon = remember { context.drawableToBitmap(markerIconResId) }
+    val homeMarkerIcon = remember { context.drawableToBitmap(R.drawable.home_location) }
 
     MapboxMap(
         modifier = modifier,
@@ -77,14 +78,15 @@ fun MapScreenWithMarkers(
         scaleBar = {},
         attribution = {},
         onMapClickListener = {
-            onMapClicked(it.toLocation())
-            true
+            if (isDestination)
+                onMapClicked(it.toLocation())
+            isDestination
         }
     ) {
 
         PointAnnotation(
-            iconImageBitmap = markerIcon,
-            iconSize = 1.3,
+            iconImageBitmap = homeMarkerIcon,
+            iconSize = 1.75,
             point = currentLocation,
         )
 

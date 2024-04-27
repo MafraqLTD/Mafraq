@@ -7,4 +7,6 @@ interface HomeEvent {
     object NavigateToSearch : HomeEvent
 
     object NavigateToSupportChat : HomeEvent
+
+    object NavigateToChatGroup : HomeEvent
 }

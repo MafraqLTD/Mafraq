@@ -67,5 +67,6 @@
     <string name="off_days">Off days</string>
     <string name="finding_best_route">Finding the best route</string>
     <string name="please_wait">Please wait..</string>
+    <string name="group_chat">Group chat</string>
 
 </resources>
