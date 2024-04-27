@@ -7,7 +7,4 @@ import com.mafraq.presentation.utils.extensions.emptyString
 
 data class HomeUiState(
     val ads: List<Ad> = emptyList(),
-    val placesSuggestions: List<PlaceSuggestion> = emptyList(),
-    val searchQuery: String = emptyString(),
-    val isLoading: Boolean = false
 )
