@@ -1,7 +1,10 @@
 package com.mafraq.data.repository.subscription.employee
 
+import com.mafraq.data.entities.map.Driver
+
 
 interface EmployeeSubscriptionRepository {
-    suspend fun request(driverId: String)
-    suspend fun cancel(driverId: String)
+    val pendingDriver: Driver?
+    suspend fun request(driver: Driver)
+    suspend fun cancel()
 }

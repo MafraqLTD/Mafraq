@@ -1,6 +1,13 @@
 package com.mafraq.presentation.features.home.components
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateIntAsState
+import androidx.compose.animation.expandIn
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,23 +52,41 @@ fun AdsCarouselCard(ads: List<Ad>, onClick: (Int) -> Unit) {
         (configurations.screenHeightDp / 1.65f).toDp()
     }
 
-    Carousel(
+    Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(cardHeight)
             .clip(MafraqTheme.shapes.medium),
-        value = CarouselItem(ads)
-    ) { index, item, modifier ->
-        CarouselItemBackground(adModel = item, modifier = modifier.fillMaxSize())
-        CarouselItemForeground(
-            adModel = item,
-            showMore = showMore,
-            modifier = modifier.fillMaxSize(),
-            onClick = {
-                onClick(index)
-                showMore = !showMore
-            }
-        )
+        contentAlignment = Alignment.Center
+    ) {
+
+        AnimatedContent(
+            targetState = ads.isEmpty(),
+            label = "Ads Card",
+            transitionSpec = { (fadeIn() + expandIn()) togetherWith (shrinkOut() + fadeOut()) }
+        ) { isAdsListEmpty ->
+            if (isAdsListEmpty)
+                CircularProgressIndicator()
+            else
+                Carousel(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(cardHeight)
+                        .clip(MafraqTheme.shapes.medium),
+                    value = CarouselItem(ads)
+                ) { index, item, modifier ->
+                    CarouselItemBackground(adModel = item, modifier = modifier.fillMaxSize())
+                    CarouselItemForeground(
+                        adModel = item,
+                        showMore = showMore,
+                        modifier = modifier.fillMaxSize(),
+                        onClick = {
+                            onClick(index)
+                            showMore = !showMore
+                        }
+                    )
+                }
+        }
     }
 }
 

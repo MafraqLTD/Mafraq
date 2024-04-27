@@ -128,27 +128,7 @@ private fun RowScope.DriverDetails(
             style = typography.titleMedium
         )
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = rating,
-                textAlign = TextAlign.Center,
-                color = MafraqTheme.colors.primary,
-                style = MaterialTheme.typography.labelLarge,
-            )
-
-            Spacer.ExtraSmall(vertical = false)
-
-            repeat(rating.toDouble().toInt()) {
-                Icon(
-                    painter = R.drawable.ic_star.painter,
-                    contentDescription = null,
-                    tint = Color.Unspecified,
-                    modifier = Modifier.size(sizes.medium)
-                )
-            }
-        }
+        Rating(rate = rating)
     }
 
     Column(
@@ -166,6 +146,32 @@ private fun RowScope.DriverDetails(
             text = carNumber,
             style = typography.label
         )
+    }
+}
+
+
+@Composable
+fun Rating(rate: String, color: Color = MafraqTheme.colors.primary) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = rate,
+            textAlign = TextAlign.Center,
+            color = color,
+            style = MaterialTheme.typography.labelLarge,
+        )
+
+        Spacer.ExtraSmall(vertical = false)
+
+        repeat(rate.toDouble().toInt()) {
+            Icon(
+                painter = R.drawable.ic_star.painter,
+                contentDescription = null,
+                tint = Color.Unspecified,
+                modifier = Modifier.size(sizes.medium)
+            )
+        }
     }
 }
 

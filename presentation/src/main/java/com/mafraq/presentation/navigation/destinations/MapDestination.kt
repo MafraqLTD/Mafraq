@@ -19,14 +19,14 @@ internal fun NavController.navigateToMap(
     latitude: Float = 0f,
     longitude: Float = 0f,
     addressId: Int = 0,
-    fromProfile: Boolean = false
+    fromProfile: Boolean = false,
 ) {
     navigate(screen = Screen.Map.withArgs(
         latitude,
         longitude,
         addressId,
         fromProfile
-    ), popBackstack = false)
+    ))
 }
 
 internal fun NavGraphBuilder.mapDestination(navController: NavController) {

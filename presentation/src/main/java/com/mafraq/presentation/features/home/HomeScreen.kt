@@ -5,9 +5,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,28 +19,39 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.components.AppCard
 import com.mafraq.presentation.design.components.ColumnPreview
 import com.mafraq.presentation.design.components.SearchField
+import com.mafraq.presentation.design.components.Spacer
 import com.mafraq.presentation.design.components.TextIcon
 import com.mafraq.presentation.design.components.buttons.AppButtonIcon
+import com.mafraq.presentation.design.theme.MafraqTheme
 import com.mafraq.presentation.design.theme.MafraqTheme.colors
 import com.mafraq.presentation.design.theme.MafraqTheme.sizes
 import com.mafraq.presentation.design.theme.MafraqTheme.typography
 import com.mafraq.presentation.features.home.components.AdsCarouselCard
+import com.mafraq.presentation.features.home.components.TwoLineText
 import com.mafraq.presentation.features.home.components.VerificationStatus
+import com.mafraq.presentation.features.map.components.Rating
 import com.mafraq.presentation.navigation.destinations.navigateToChatGroup
 import com.mafraq.presentation.navigation.destinations.navigateToChatSupport
 import com.mafraq.presentation.navigation.destinations.navigateToMap
@@ -64,6 +79,8 @@ fun HomeScreen(
         },
         locationSettingsDelegate = viewModel
     )
+
+    SideEffect (listener::reload)
 
     VerificationStatus(
         verified = viewModel.isEmailVerified,
@@ -112,13 +129,76 @@ fun Content(
 
         AdsCarouselCard(ads = state.ads, onClick = {})
 
-        CarCard(
-            isSubscribed = state.isSubscribed,
-            onFindDriverClick = listener::onFindDriver,
-            onGroupChatClick = listener::navigateToGroupChat,
-        )
+        if (state.pendingDriver == null)
+            CarCard(
+                isSubscribed = state.isSubscribed,
+                onFindDriverClick = listener::onFindDriver,
+                onGroupChatClick = listener::navigateToGroupChat,
+            )
+        else
+            PendingSubscribeRequest(state = state, onCancelClick=listener::cancelSubscribeRequest)
 
         SupportCard(onClick = listener::navigateToSupportChat)
+    }
+}
+
+
+@Composable
+fun PendingSubscribeRequest(state: HomeUiState, onCancelClick: () -> Unit) {
+    CarCard(
+        text = R.string.cancel.string,
+        onClick = onCancelClick,
+        containerColor = colors.secondary,
+        rowContent = {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(sizes.medium)
+            ) {
+                Row {
+                    AsyncImage(
+                        model = state.pendingDriver?.profilePicture.orEmpty(),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(48.dp)
+                            .clip(MafraqTheme.shapes.medium),
+                        contentScale = ContentScale.Crop
+                    )
+
+                    Spacer.Small(vertical = false)
+
+                    TwoLineText(
+                        title = state.pendingDriver?.fullName.orEmpty(),
+                        description = state.pendingDriver?.car.orEmpty(),
+                        titleColor = colors.background,
+                        descriptionColor = colors.background
+                    )
+
+                    TwoLineText(
+                        title = R.string.pending.string,
+                        description = state.pendingDriver?.carNumber.orEmpty(),
+                        horizontalAlignment = Alignment.End,
+                        modifier = Modifier.fillMaxWidth(),
+                        titleColor = colors.warning,
+                        descriptionColor = colors.background
+                    )
+                }
+
+                Spacer.Small()
+
+                Rating(rate = state.pendingDriver?.rating.orEmpty(), color = colors.background)
+
+                Spacer.Small()
+
+                Text(
+                    text = R.string.phone_with_arg.string(state.pendingDriver?.phone.orEmpty()),
+                    color = colors.background,
+                    style = typography.label
+                )
+            }
+        },
+    ) {
+
     }
 }
 
@@ -135,7 +215,13 @@ private fun CarCard(
 }
 
 @Composable
-private fun CarCard(text: String, onClick: () -> Unit) {
+private fun CarCard(
+    text: String,
+    onClick: () -> Unit,
+    containerColor: Color = colors.primary,
+    rowContent: @Composable (RowScope.() -> Unit)? = null,
+    content: @Composable (ColumnScope.() -> Unit)? = null
+) {
     val configurations = LocalConfiguration.current
     val cardHeight = with(LocalDensity.current) {
         (configurations.screenHeightDp / 1.75f).toDp()
@@ -143,9 +229,11 @@ private fun CarCard(text: String, onClick: () -> Unit) {
 
     AppCard(
         modifier = Modifier.height(cardHeight),
+        rowModifier = { Modifier.weight(1f) },
         verticalAlignment = Alignment.Top,
+        containerColor = containerColor,
         rowContent = {
-            Image(
+            rowContent?.invoke(this) ?: Image(
                 painter = R.drawable.car.painter,
                 modifier = Modifier
                     .height(cardHeight / 1.35f)
@@ -166,6 +254,8 @@ private fun CarCard(text: String, onClick: () -> Unit) {
                 onClick = onClick
             )
         }
+
+        content?.invoke(this)
     }
 }
 
