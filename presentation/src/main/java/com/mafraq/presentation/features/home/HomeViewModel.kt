@@ -51,6 +51,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun initialization() {
+        onClearSearch()
         tryToExecute(
             block = crmRepository::getAds,
             onSuccess = {
