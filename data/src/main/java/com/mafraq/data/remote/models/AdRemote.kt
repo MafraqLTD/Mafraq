@@ -12,4 +12,6 @@ data class AdRemote(
     val description: String?,
     @SerializedName("Image")
     val imageUrl: String?,
+    @SerializedName("Is Driver Ad")
+    val isDriverAd: String
 )

@@ -1,5 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
+import com.gateway.buildscr.Config
 import com.gateway.buildscr.Config.Version
 import com.gateway.buildscr.applyConfiguration
 import com.gateway.buildscr.buildConfigField

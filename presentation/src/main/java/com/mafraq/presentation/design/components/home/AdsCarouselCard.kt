@@ -1,7 +1,6 @@
-package com.mafraq.employee.features.home.components
+package com.mafraq.presentation.design.components.home
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.expandIn
 import androidx.compose.animation.fadeIn

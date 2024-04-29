@@ -1,4 +1,4 @@
-package com.mafraq.employee.features.home.components
+package com.mafraq.presentation.design.components.home
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize

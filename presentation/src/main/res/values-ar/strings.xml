@@ -69,4 +69,5 @@
     <string name="please_wait">يرجى الانتظار..</string>
     <string name="group_chat">دردشة المجموعة</string>
     <string name="pending">قيد الانتظار</string>
+    <string name="subscribe_requests">طلبات الاشترك</string>
 </resources>

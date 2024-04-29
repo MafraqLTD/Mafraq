@@ -28,6 +28,8 @@ data class Colors(
     val successContainer: Color,
     val warning: Color,
     val warningContainer: Color,
+    val error: Color,
+    val errorContainer: Color,
     val surfaceTint: Color,
 ) {
 
@@ -77,6 +79,8 @@ data class Colors(
             warning = Color(0xFFF2BD00),
             warningContainer = Color(0xFFFFFCEB),
             surfaceTint = Color(0x081F0000),
+            error = Color(0xFFDC362E),
+            errorContainer = Color(0xFFFF8A8A),
         )
 
         val DarkColors = Colors(
@@ -96,6 +100,8 @@ data class Colors(
             warning = Color(0xFFCBB567),
             warningContainer = Color(0x14FFFCEB),
             surfaceTint = Color(0x081F0000),
+            error = Color(0xFFDC362E),
+            errorContainer = Color(0xFFFF8A8A),
         )
     }
 

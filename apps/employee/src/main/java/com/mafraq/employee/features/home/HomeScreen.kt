@@ -45,14 +45,14 @@ import com.mafraq.presentation.design.theme.MafraqTheme
 import com.mafraq.presentation.design.theme.MafraqTheme.colors
 import com.mafraq.presentation.design.theme.MafraqTheme.sizes
 import com.mafraq.presentation.design.theme.MafraqTheme.typography
-import com.mafraq.employee.features.home.components.AdsCarouselCard
-import com.mafraq.employee.features.home.components.TwoLineText
-import com.mafraq.employee.features.home.components.VerificationStatus
+import com.mafraq.presentation.design.components.home.AdsCarouselCard
+import com.mafraq.presentation.design.components.home.VerificationStatus
 import com.mafraq.presentation.features.map.components.Rating
 import com.mafraq.presentation.navigation.destinations.navigateToChatGroup
 import com.mafraq.presentation.navigation.destinations.navigateToChatSupport
 import com.mafraq.presentation.navigation.destinations.navigateToMap
 import com.mafraq.employee.navigation.destinations.navigateToSearch
+import com.mafraq.presentation.design.components.home.TwoLineText
 import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.clickableNoRipple
 import com.mafraq.presentation.utils.extensions.detectTapGestures

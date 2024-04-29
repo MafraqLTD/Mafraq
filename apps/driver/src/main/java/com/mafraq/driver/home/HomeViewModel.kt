@@ -1,11 +1,10 @@
-package com.mafraq.employee.features.home
+package com.mafraq.driver.home
 
 import com.altaie.prettycode.core.utils.extenstions.isTrue
 import com.mafraq.data.local.session.SessionLocalDataSource
 import com.mafraq.data.repository.auth.AuthRepository
 import com.mafraq.data.repository.crm.CRMRepository
 import com.mafraq.data.repository.subscription.employee.EmployeeSubscriptionRepository
-import com.mafraq.driver.home.HomeEvent
 import com.mafraq.presentation.features.base.BaseViewModel
 import com.mafraq.presentation.utils.location.LocationSettingsDelegate
 import com.mafraq.presentation.utils.location.LocationSettingsDelegateImpl
@@ -77,7 +76,7 @@ class HomeViewModel @Inject constructor(
     private fun initialization() {
         reload()
         tryToExecute(
-            block = crmRepository::getAds,
+            block = crmRepository::getDriverAds,
             onSuccess = {
                 updateState { copy(ads = it) }
             },

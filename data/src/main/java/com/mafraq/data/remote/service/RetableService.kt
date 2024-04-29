@@ -48,9 +48,9 @@ interface RetableService {
         private const val PREFIX = "public/retable/"
         private const val SUFFIX = "/data"
         private const val BASE_URL_V1 = BuildConfig.BASE_URL + "v1/"
+        const val ADS_PATH = "${PREFIX}${BuildConfig.RETABLE_ADS_TABLE_ID}${SUFFIX}"
         const val DRIVER_PATH = "${PREFIX}${BuildConfig.RETABLE_DRIVER_TABLE_ID}${SUFFIX}"
         const val EMPLOYEES_PATH = "${PREFIX}${BuildConfig.RETABLE_EMPLOYEE_TABLE_ID}${SUFFIX}"
-        const val ADS_PATH = "${PREFIX}${BuildConfig.RETABLE_ADS_TABLE_ID}${SUFFIX}"
         const val CREATE_OR_UPDATE_EMPLOYEE_PATH = "${BASE_URL_V1}${PREFIX}${BuildConfig.RETABLE_EMPLOYEE_TABLE_ID}${SUFFIX}"
     }
 }

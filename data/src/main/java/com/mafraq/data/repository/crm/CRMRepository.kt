@@ -7,7 +7,8 @@ import com.mafraq.data.entities.profile.EmployeeProfile
 
 
 interface CRMRepository {
-    suspend fun getAds() : List<Ad>
+    suspend fun getDriverAds() : List<Ad>
+    suspend fun getEmployeeAds() : List<Ad>
     suspend fun getDrivers() : List<Driver>
     suspend fun getDriver() : Driver
     suspend fun getEmployee() : Employee

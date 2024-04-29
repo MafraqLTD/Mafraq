@@ -18,8 +18,9 @@ class CRMRepositoryImpl @Inject constructor(
     private val profileLocalDataSource: ProfileLocalDataSource,
     private val employeeFromEmployeeProfileMapper: EmployeeFromEmployeeProfileMapper
 ) : CRMRepository {
-    override suspend fun getAds(): List<Ad> =
-        crmRemoteDataSource.getAds()
+    override suspend fun getDriverAds(): List<Ad> = crmRemoteDataSource.getDriverAds()
+
+    override suspend fun getEmployeeAds(): List<Ad> = crmRemoteDataSource.getEmployeeAds()
 
     override suspend fun getDrivers(): List<Driver> =
         crmRemoteDataSource.getDrivers()

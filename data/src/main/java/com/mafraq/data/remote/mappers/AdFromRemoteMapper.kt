@@ -16,7 +16,8 @@ class AdFromRemoteMapper @Inject constructor(
             id = id.orEmpty(),
             title = title.orEmpty(),
             description = description.orEmpty(),
-            imageUrl = imageUrl.orEmpty()
+            imageUrl = imageUrl.orEmpty(),
+            isDriverAd = isDriverAd.toBoolean()
         )
     }
 

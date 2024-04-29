@@ -6,7 +6,8 @@ import com.mafraq.data.entities.profile.Employee
 
 
 interface CRMRemoteDataSource {
-    suspend fun getAds() : List<Ad>
+    suspend fun getDriverAds() : List<Ad>
+    suspend fun getEmployeeAds() : List<Ad>
     suspend fun getDrivers() : List<Driver>
     suspend fun getDriver(id: String) : Driver
     suspend fun getEmployee(id: String) : Employee

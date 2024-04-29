@@ -1,5 +1,6 @@
-package com.mafraq.employee.features.home.components
+package com.mafraq.driver.home.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -11,6 +12,7 @@ import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,16 +24,18 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.google.android.play.integrity.internal.c
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.components.AppCard
 import com.mafraq.presentation.design.components.ColumnPreview
 import com.mafraq.presentation.design.components.Spacer
+import com.mafraq.presentation.design.components.home.TwoLineText
 import com.mafraq.presentation.design.theme.MafraqTheme
 import com.mafraq.presentation.utils.extensions.string
 
 
 @Composable
-fun InfoCard(
+fun SubscriberCard(
     profilePic: String,
     name: String,
     collageName: String,
@@ -40,8 +44,9 @@ fun InfoCard(
     phone: String,
     distance: String,
     workDays: String,
+    cancelButtonTitle: String,
     onLocationClick: () -> Unit = {},
-    onUnsubscribeClick: () -> Unit = {},
+    onCancelClick: () -> Unit = {},
 ) {
     AppCard(
         containerColor = MafraqTheme.colors.onPrimary,
@@ -94,16 +99,24 @@ fun InfoCard(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 OutlinedButton(
-                    onClick = onUnsubscribeClick,
+                    onClick = onCancelClick,
                     shape = MafraqTheme.shapes.medium,
-                    content = { Text(text = R.string.unsubscribe.string) },
+                    content = { Text(text = cancelButtonTitle) },
+                    border = BorderStroke(
+                        width = 1.dp,
+                        color = MafraqTheme.colors.error
+                    ),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = MafraqTheme.colors.error
+                    )
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
 
                 Button(
                     onClick = onLocationClick,
-                    contentPadding = ButtonDefaults.ButtonWithIconContentPadding
+                    contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+                    shape = MafraqTheme.shapes.medium
                 ) {
                     Icon(
                         Icons.Filled.LocationOn,
@@ -120,37 +133,9 @@ fun InfoCard(
 }
 
 @Composable
-fun TwoLineText(
-    title: String,
-    description: String,
-    modifier: Modifier = Modifier,
-    titleColor: Color = MafraqTheme.colors.primary,
-    descriptionColor: Color = titleColor,
-    horizontalAlignment: Alignment.Horizontal = Alignment.Start
-) {
-    Column(
-        horizontalAlignment = horizontalAlignment,
-        modifier = modifier
-    ) {
-        Text(
-            text = title,
-            style = MafraqTheme.typography.titleMedium,
-            color = titleColor
-        )
-        Spacer.Small()
-        Text(
-            text = description,
-            style = MafraqTheme.typography.label,
-            color = descriptionColor
-        )
-    }
-}
-
-
-@Composable
 @Preview(showBackground = true)
 private fun Preview() = ColumnPreview {
-    InfoCard(
+    SubscriberCard(
         profilePic = "",
         name = "Mostafa mohamed",
         collageName = "collageName",
@@ -159,5 +144,6 @@ private fun Preview() = ColumnPreview {
         area = "Zhoor",
         distance = "1.4 km",
         workDays = "Mon, Sun, Tus",
+        cancelButtonTitle = "Cancel"
     )
 }

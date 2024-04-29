@@ -22,9 +22,15 @@ class CRMRemoteDataSourceImpl @Inject constructor(
     private val createBodyFromEmployeeMapper: CreateBodyFromEmployeeMapper,
     private val updateBodyFromEmployeeMapper: UpdateBodyFromEmployeeMapper
 ) : CRMRemoteDataSource, BaseRemoteDataSource {
-    override suspend fun getAds(): List<Ad> = apiCall(
+
+    override suspend fun getDriverAds(): List<Ad> = apiCall(
         suspendFunction = apiService::getAds,
-        mapper = { adFromRemoteMapper.mapList(it.items) }
+        mapper = { adFromRemoteMapper.mapList(it.items).filter(Ad::isDriverAd) }
+    ).getOrThrowEmpty()
+
+    override suspend fun getEmployeeAds(): List<Ad> = apiCall(
+        suspendFunction = apiService::getAds,
+        mapper = { adFromRemoteMapper.mapList(it.items).filterNot(Ad::isDriverAd) }
     ).getOrThrowEmpty()
 
     override suspend fun getDrivers(): List<Driver> = apiCall(

@@ -6,6 +6,7 @@ import com.gateway.buildscr.buildConfigField
 import com.gateway.buildscr.getLocalProperty
 import com.gateway.buildscr.ignoreExperimentalWarnings
 import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
+import org.jetbrains.kotlin.fir.declarations.builder.buildAnonymousInitializer
 
 private object LocalConfig {
     const val CODE = 1
