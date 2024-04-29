@@ -182,8 +182,8 @@ internal fun TrailingIcon(
     onClick: () -> Unit
 ) {
     val icon by animateIntAsState(
-        targetValue = if (state) R.drawable.hide_password
-        else R.drawable.show_password, label = "show_password"
+        targetValue = if (state) R.drawable.ic_hide_password
+        else R.drawable.ic_show_password, label = "show_password"
     )
 
     IconButton(onClick = onClick, modifier = Modifier) {
