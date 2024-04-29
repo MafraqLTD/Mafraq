@@ -1,6 +1,8 @@
 package com.mafraq.di
 
 
+import com.mafraq.data.local.driver.DriverLocalDataSource
+import com.mafraq.data.local.driver.DriverLocalDataSourceImpl
 import com.mafraq.data.local.profile.ProfileLocalDataSource
 import com.mafraq.data.local.profile.ProfileLocalDataSourceImpl
 import com.mafraq.data.local.session.SessionLocalDataSource
@@ -54,5 +56,9 @@ interface DataSourceModule {
     @Binds
     @Singleton
     fun bindEmployeeSubscriptionDataSource(source: EmployeeSubscriptionDataSourceImpl): EmployeeSubscriptionDataSource
+
+    @Binds
+    @Singleton
+    fun bindDriverLocalDataSource(source: DriverLocalDataSourceImpl): DriverLocalDataSource
 
 }

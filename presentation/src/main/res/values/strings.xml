@@ -68,5 +68,6 @@
     <string name="finding_best_route">Finding the best route</string>
     <string name="please_wait">Please wait..</string>
     <string name="group_chat">Group chat</string>
+    <string name="pending">Pending</string>
 
 </resources>

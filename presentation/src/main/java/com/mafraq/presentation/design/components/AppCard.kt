@@ -23,6 +23,7 @@ import com.mafraq.presentation.design.theme.MafraqTheme.shapes
 @Composable
 fun AppCard(
     modifier: Modifier = Modifier,
+    rowModifier: ColumnScope.()->Modifier = { Modifier },
     containerColor: Color = colors.primary,
     contentColor: Color = colors.onPrimary,
     shape: Shape = shapes.medium,
@@ -42,7 +43,7 @@ fun AppCard(
     ) {
         Column(modifier = Modifier.padding(contentPadding)) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = rowModifier(this).fillMaxWidth(),
                 content = rowContent,
                 horizontalArrangement = horizontalArrangement,
                 verticalAlignment = verticalAlignment

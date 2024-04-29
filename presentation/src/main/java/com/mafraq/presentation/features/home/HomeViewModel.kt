@@ -4,6 +4,7 @@ import com.altaie.prettycode.core.utils.extenstions.isTrue
 import com.mafraq.data.local.session.SessionLocalDataSource
 import com.mafraq.data.repository.auth.AuthRepository
 import com.mafraq.data.repository.crm.CRMRepository
+import com.mafraq.data.repository.subscription.employee.EmployeeSubscriptionRepository
 import com.mafraq.presentation.features.base.BaseViewModel
 import com.mafraq.presentation.utils.location.LocationSettingsDelegate
 import com.mafraq.presentation.utils.location.LocationSettingsDelegateImpl
@@ -17,7 +18,8 @@ class HomeViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val crmRepository: CRMRepository,
     private val sessionLocalDataSource: SessionLocalDataSource,
-    private val locationSettingsDelegate: LocationSettingsDelegateImpl
+    private val locationSettingsDelegate: LocationSettingsDelegateImpl,
+    private val employeeSubscriptionRepository: EmployeeSubscriptionRepository
 ) : BaseViewModel<HomeUiState, HomeEvent>(HomeUiState()), HomeInteractionListener,
     LocationSettingsDelegate by locationSettingsDelegate {
 
@@ -52,10 +54,32 @@ class HomeViewModel @Inject constructor(
         authRepository.isAuthorized()
     }
 
-    private fun initialization() {
-        val isSubscribed = sessionLocalDataSource.get()?.subscriptionId.isNullOrEmpty().not()
-        updateState { copy(isSubscribed = isSubscribed) }
+    override fun cancelSubscribeRequest() {
+        tryToExecute(
+            block = { employeeSubscriptionRepository.cancel() },
+            onSuccess = {
+                updateState {
+                    copy(pendingDriver = null)
+                }
+            },
+            onError = {
+                // TODO ( HANDLE ERROR STATE )
+            }
+        )
+    }
 
+    override fun reload() {
+        val isSubscribed = sessionLocalDataSource.get()?.subscriptionId.isNullOrEmpty().not()
+        updateState {
+            copy(
+                isSubscribed = isSubscribed,
+                pendingDriver = employeeSubscriptionRepository.pendingDriver
+            )
+        }
+    }
+
+    private fun initialization() {
+        reload()
         tryToExecute(
             block = crmRepository::getAds,
             onSuccess = {

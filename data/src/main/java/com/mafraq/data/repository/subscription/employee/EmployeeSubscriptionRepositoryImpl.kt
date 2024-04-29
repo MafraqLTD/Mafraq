@@ -1,5 +1,6 @@
 package com.mafraq.data.repository.subscription.employee
 
+import com.mafraq.data.entities.map.Driver
 import com.mafraq.data.remote.dataSource.subscription.employee.EmployeeSubscriptionDataSource
 import javax.inject.Inject
 
@@ -7,9 +8,12 @@ import javax.inject.Inject
 class EmployeeSubscriptionRepositoryImpl @Inject constructor(
     private val employeeSubscriptionDataSource: EmployeeSubscriptionDataSource
 ): EmployeeSubscriptionRepository {
-    override suspend fun request(driverId: String) =
-        employeeSubscriptionDataSource.request(driverId)
+    override val pendingDriver: Driver?
+        get() = employeeSubscriptionDataSource.driver
 
-    override suspend fun cancel(driverId: String) =
-        employeeSubscriptionDataSource.cancel(driverId)
+    override suspend fun request(driver: Driver) =
+        employeeSubscriptionDataSource.request(driver)
+
+    override suspend fun cancel() =
+        employeeSubscriptionDataSource.cancel()
 }
