@@ -9,7 +9,7 @@ import com.mafraq.presentation.navigation.Screen.Map.LONGITUDE_ARG
 open class Screen(val route: String) {
     data object Home : Screen("home_screen")
 
-    data object Search : Screen("search_screen"){
+    data object Search : Screen("search_screen") {
         val destination = withArgs(IS_FROM_PROFILE_ARG, isKey = true)
     }
 
@@ -26,13 +26,14 @@ open class Screen(val route: String) {
         const val LATITUDE_ARG = "latitude"
         const val LONGITUDE_ARG = "longitude"
         const val ADDRESS_ID_ARG = "address_id"
-        val destination = withArgs(LATITUDE_ARG, LONGITUDE_ARG, ADDRESS_ID_ARG, IS_FROM_PROFILE_ARG, isKey = true)
+        val destination =
+            withArgs(LATITUDE_ARG, LONGITUDE_ARG, ADDRESS_ID_ARG, IS_FROM_PROFILE_ARG, isKey = true)
     }
 
     data object Login : Screen("login_screen")
     data object Register : Screen("register_screen")
 
-    internal fun withArgs(vararg args: Any, isKey: Boolean = false): Screen = Screen(
+    fun withArgs(vararg args: Any, isKey: Boolean = false): Screen = Screen(
         buildString {
             append(route)
             args.forEach {

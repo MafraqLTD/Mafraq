@@ -1,15 +1,15 @@
-package com.mafraq.presentation.features.home
+package com.mafraq.employee.features.home
 
 import com.altaie.prettycode.core.utils.extenstions.isTrue
 import com.mafraq.data.local.session.SessionLocalDataSource
 import com.mafraq.data.repository.auth.AuthRepository
 import com.mafraq.data.repository.crm.CRMRepository
 import com.mafraq.data.repository.subscription.employee.EmployeeSubscriptionRepository
+import com.mafraq.driver.home.HomeEvent
 import com.mafraq.presentation.features.base.BaseViewModel
 import com.mafraq.presentation.utils.location.LocationSettingsDelegate
 import com.mafraq.presentation.utils.location.LocationSettingsDelegateImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
-import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -33,10 +33,6 @@ class HomeViewModel @Inject constructor(
 
     override fun onFindDriver() {
         navigateToMap()
-    }
-
-    override fun navigateToSearch() {
-        emitNewEvent(HomeEvent.NavigateToSearch)
     }
 
     override fun navigateToGroupChat() {

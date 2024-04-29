@@ -30,7 +30,11 @@ fun NavController.navigateToLoginProfile() {
     navigate(screen = Screen.LoginProfile, popBackstack = true)
 }
 
-fun NavGraphBuilder.profileDestination(navController: NavController) {
+fun NavGraphBuilder.profileDestination(
+    navController: NavController,
+    navigateToHome: () -> Unit,
+    navigateToSearch: (fromProfile: Boolean) -> Unit = {}
+) {
     composable(
         route = Screen.Profile.destination.route,
         arguments = listOf(
@@ -39,14 +43,27 @@ fun NavGraphBuilder.profileDestination(navController: NavController) {
             navArgument(ADDRESS_ID_ARG) { type = NavType.IntType },
         ),
     ) {
-        ProfileScreen(viewModel = hiltViewModel(), navController = navController)
+        ProfileScreen(
+            viewModel = hiltViewModel(),
+            navController = navController,
+            navigateToHome = navigateToHome,
+            navigateToSearch = navigateToSearch
+        )
     }
 
     composable(route = Screen.Profile.route) {
-        ProfileScreen(viewModel = hiltViewModel(), navController = navController)
-    }
+        ProfileScreen(
+            viewModel = hiltViewModel(),
+            navController = navController,
+            navigateToHome = navigateToHome,
+            navigateToSearch = navigateToSearch
+        )    }
 
     composable(route = Screen.LoginProfile.route) {
-        ProfileScreen(viewModel = hiltViewModel(), navController = navController)
-    }
+        ProfileScreen(
+            viewModel = hiltViewModel(),
+            navController = navController,
+            navigateToHome = navigateToHome,
+            navigateToSearch = navigateToSearch
+        )    }
 }

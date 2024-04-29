@@ -1,4 +1,4 @@
-package com.mafraq.presentation.features.search
+package com.mafraq.employee.features.search
 
 import com.mafraq.data.entities.map.PlaceSuggestion
 
@@ -10,7 +10,7 @@ interface SearchInteractionListener {
     fun onSearchQueryChange(value: String)
     fun onSelectPlace(place: PlaceSuggestion)
 
-    object Preview : SearchInteractionListener{
+    object Preview : SearchInteractionListener {
         override fun navigateBack() {}
         override fun onClearSearch() {}
         override fun navigateToMap() {}

@@ -22,9 +22,7 @@ import com.mafraq.presentation.design.components.buttons.AppButton
 import com.mafraq.presentation.design.components.container.OutlinedContainer
 import com.mafraq.presentation.features.profile.components.OffDaysChipset
 import com.mafraq.presentation.features.profile.components.PickLocation
-import com.mafraq.presentation.navigation.destinations.navigateToHome
 import com.mafraq.presentation.navigation.destinations.navigateToMap
-import com.mafraq.presentation.navigation.destinations.navigateToSearch
 import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.painter
 import com.mafraq.presentation.utils.extensions.string
@@ -32,7 +30,12 @@ import com.mafraq.presentation.utils.rememberLocationRequester
 
 
 @Composable
-fun ProfileScreen(viewModel: ProfileViewModel, navController: NavController) {
+fun ProfileScreen(
+    viewModel: ProfileViewModel,
+    navController: NavController,
+    navigateToHome: () -> Unit,
+    navigateToSearch: (fromProfile: Boolean) -> Unit
+) {
     val state: ProfileUiState by viewModel.state.collectAsStateWithLifecycle()
     val event: ProfileEvent? by viewModel.event.collectAsState(null)
     val listener: ProfileInteractionListener = viewModel
@@ -56,16 +59,14 @@ fun ProfileScreen(viewModel: ProfileViewModel, navController: NavController) {
     event?.Listen { currentEvent ->
         when (currentEvent) {
             ProfileEvent.OnLogout -> {}
-            is ProfileEvent.OnNavigateToMapForWorkAddress -> navController.navigateToSearch(
-                fromProfile = true
-            )
+            is ProfileEvent.OnNavigateToMapForWorkAddress -> navigateToSearch(true)
 
             is ProfileEvent.OnNavigateToMapForHomeAddress -> {
                 addressId = currentEvent.id
                 locationRequester.request()
             }
 
-            ProfileEvent.OnNavigateToHome -> navController.navigateToHome()
+            ProfileEvent.OnNavigateToHome -> navigateToHome()
         }
     }
 }

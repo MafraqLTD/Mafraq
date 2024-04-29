@@ -1,4 +1,4 @@
-package com.mafraq.presentation.features.search
+package com.mafraq.employee.features.search
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,7 +23,7 @@ import com.mafraq.presentation.design.components.ColumnPreview
 import com.mafraq.presentation.design.components.SearchField
 import com.mafraq.presentation.design.components.container.Loading
 import com.mafraq.presentation.design.theme.MafraqTheme.sizes
-import com.mafraq.presentation.features.search.components.SearchResultItem
+import com.mafraq.employee.features.search.components.SearchResultItem
 import com.mafraq.presentation.navigation.destinations.navigateToMap
 import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.painter

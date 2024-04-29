@@ -8,7 +8,6 @@ import com.mafraq.data.remote.mappers.toPoint
 import com.mafraq.data.repository.crm.CRMRepository
 import com.mafraq.data.repository.hardware.HardwareRepository
 import com.mafraq.data.repository.map.MapPlacesRepository
-import com.mafraq.data.repository.subscription.driver.DriverSubscriptionRepository
 import com.mafraq.data.repository.subscription.employee.EmployeeSubscriptionRepository
 import com.mafraq.presentation.features.base.BaseViewModel
 import com.mafraq.presentation.features.profile.ProfileEvent
@@ -16,7 +15,6 @@ import com.mafraq.presentation.navigation.arguments.MapScreenArgs
 import com.mafraq.presentation.utils.location.LocationSettingsDelegate
 import com.mafraq.presentation.utils.location.LocationSettingsDelegateImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
-import timber.log.Timber
 import javax.inject.Inject
 
 

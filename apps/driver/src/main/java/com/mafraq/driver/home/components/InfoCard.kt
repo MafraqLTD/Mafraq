@@ -1,4 +1,4 @@
-package com.mafraq.presentation.features.home.components
+package com.mafraq.employee.features.home.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues

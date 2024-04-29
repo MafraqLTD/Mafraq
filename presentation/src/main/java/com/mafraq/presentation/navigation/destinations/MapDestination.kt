@@ -39,6 +39,9 @@ fun NavGraphBuilder.mapDestination(navController: NavController) {
             navArgument(IS_FROM_PROFILE_ARG) { type = NavType.BoolType },
         ),
     ) {
-        MapScreen(viewModel = hiltViewModel(), navController = navController)
+        MapScreen(
+            viewModel = hiltViewModel(),
+            navController = navController
+        )
     }
 }

@@ -1,4 +1,4 @@
-package com.mafraq.presentation.features.home
+package com.mafraq.employee.features.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,7 +18,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -31,7 +29,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -48,14 +45,14 @@ import com.mafraq.presentation.design.theme.MafraqTheme
 import com.mafraq.presentation.design.theme.MafraqTheme.colors
 import com.mafraq.presentation.design.theme.MafraqTheme.sizes
 import com.mafraq.presentation.design.theme.MafraqTheme.typography
-import com.mafraq.presentation.features.home.components.AdsCarouselCard
-import com.mafraq.presentation.features.home.components.TwoLineText
-import com.mafraq.presentation.features.home.components.VerificationStatus
+import com.mafraq.employee.features.home.components.AdsCarouselCard
+import com.mafraq.employee.features.home.components.TwoLineText
+import com.mafraq.employee.features.home.components.VerificationStatus
 import com.mafraq.presentation.features.map.components.Rating
 import com.mafraq.presentation.navigation.destinations.navigateToChatGroup
 import com.mafraq.presentation.navigation.destinations.navigateToChatSupport
 import com.mafraq.presentation.navigation.destinations.navigateToMap
-import com.mafraq.presentation.navigation.destinations.navigateToSearch
+import com.mafraq.employee.navigation.destinations.navigateToSearch
 import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.clickableNoRipple
 import com.mafraq.presentation.utils.extensions.detectTapGestures

@@ -1,13 +1,11 @@
-package com.mafraq.presentation.features.search
+package com.mafraq.employee.features.search
 
 import androidx.lifecycle.SavedStateHandle
-import com.google.android.play.integrity.internal.f
 import com.mafraq.data.entities.map.Location
 import com.mafraq.data.entities.map.PlaceSuggestion
 import com.mafraq.data.repository.map.MapPlacesRepository
 import com.mafraq.presentation.features.base.BaseViewModel
-import com.mafraq.presentation.navigation.arguments.MapScreenArgs
-import com.mafraq.presentation.navigation.arguments.SearchScreenArgs
+import com.mafraq.employee.navigation.arguments.SearchScreenArgs
 import com.mafraq.presentation.utils.extensions.emptyString
 import com.mafraq.presentation.utils.location.LocationSettingsDelegate
 import com.mafraq.presentation.utils.location.LocationSettingsDelegateImpl

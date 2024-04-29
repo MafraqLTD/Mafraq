@@ -14,9 +14,13 @@ fun NavController.navigateToLogin() {
     navigate(screen = Screen.Login, popBackstack = true)
 }
 
-fun NavGraphBuilder.loginDestination(navController: NavController) {
+fun NavGraphBuilder.loginDestination(navController: NavController, navigateToHome: () -> Unit) {
     composable(Screen.Login.route) {
         val viewModel = it.sharedViewModel<AuthViewModel>(navController = navController)
-        LoginScreen(viewModel = viewModel, navController = navController)
+        LoginScreen(
+            viewModel = viewModel,
+            navController = navController,
+            navigateToHome = navigateToHome
+        )
     }
 }

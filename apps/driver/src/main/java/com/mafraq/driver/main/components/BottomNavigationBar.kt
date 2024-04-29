@@ -6,11 +6,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.mafraq.driver.navigation.destinations.navigateToHome
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.components.navigation.NavigationBarItem
 import com.mafraq.presentation.navigation.Screen
 import com.mafraq.presentation.navigation.destinations.navigateToChatGroup
-import com.mafraq.presentation.navigation.destinations.navigateToHome
 import com.mafraq.presentation.navigation.destinations.navigateToNotifications
 import com.mafraq.presentation.navigation.destinations.navigateToProfile
 import com.mafraq.presentation.utils.extensions.currentRoute

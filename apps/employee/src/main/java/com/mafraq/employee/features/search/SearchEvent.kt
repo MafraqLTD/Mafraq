@@ -1,4 +1,4 @@
-package com.mafraq.presentation.features.search
+package com.mafraq.employee.features.search
 
 
 interface SearchEvent {

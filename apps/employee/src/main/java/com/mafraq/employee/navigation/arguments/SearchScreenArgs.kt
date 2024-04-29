@@ -1,4 +1,4 @@
-package com.mafraq.presentation.navigation.arguments
+package com.mafraq.employee.navigation.arguments
 
 import androidx.lifecycle.SavedStateHandle
 import com.altaie.prettycode.core.utils.extenstions.isTrue

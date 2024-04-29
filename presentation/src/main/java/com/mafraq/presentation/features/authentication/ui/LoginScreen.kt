@@ -23,7 +23,6 @@ import com.mafraq.presentation.features.authentication.ui.components.AuthContain
 import com.mafraq.presentation.features.authentication.ui.components.CredentialErrorState
 import com.mafraq.presentation.features.authentication.ui.components.HaveAnAccount
 import com.mafraq.presentation.features.authentication.viewmodel.AuthViewModel
-import com.mafraq.presentation.navigation.destinations.navigateToHome
 import com.mafraq.presentation.navigation.destinations.navigateToLoginProfile
 import com.mafraq.presentation.navigation.destinations.navigateToRegister
 import com.mafraq.presentation.utils.extensions.Listen
@@ -31,7 +30,11 @@ import com.mafraq.presentation.utils.extensions.string
 
 
 @Composable
-fun LoginScreen(viewModel: AuthViewModel, navController: NavController) {
+fun LoginScreen(
+    viewModel: AuthViewModel,
+    navController: NavController,
+    navigateToHome: () -> Unit
+) {
     val state: AuthUiState by viewModel.state.collectAsStateWithLifecycle()
     val event: AuthEvent? by viewModel.event.collectAsState(null)
     val listener: LoginInteractionListener = viewModel
@@ -40,7 +43,7 @@ fun LoginScreen(viewModel: AuthViewModel, navController: NavController) {
 
     (event as? LoginEvent)?.Listen { currentEvent ->
         when (currentEvent) {
-            LoginEvent.OnLogin -> navController.navigateToHome()
+            LoginEvent.OnLogin -> navigateToHome()
             LoginEvent.OnNavigateToRegister -> navController.navigateToRegister()
             LoginEvent.OnNavigateToLoginProfile -> navController.navigateToLoginProfile()
         }

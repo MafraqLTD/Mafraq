@@ -1,4 +1,4 @@
-package com.mafraq.presentation.features.search
+package com.mafraq.employee.features.search
 
 import com.mafraq.data.entities.map.PlaceSuggestion
 import com.mafraq.presentation.utils.extensions.emptyString
