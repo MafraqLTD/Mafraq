@@ -10,11 +10,11 @@ import com.mafraq.presentation.utils.extensions.navigate
 import com.mafraq.presentation.utils.extensions.sharedViewModel
 
 
-internal fun NavController.navigateToLogin() {
+fun NavController.navigateToLogin() {
     navigate(screen = Screen.Login, popBackstack = true)
 }
 
-internal fun NavGraphBuilder.loginDestination(navController: NavController) {
+fun NavGraphBuilder.loginDestination(navController: NavController) {
     composable(Screen.Login.route) {
         val viewModel = it.sharedViewModel<AuthViewModel>(navController = navController)
         LoginScreen(viewModel = viewModel, navController = navController)

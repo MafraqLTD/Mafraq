@@ -14,7 +14,7 @@ import com.mafraq.presentation.navigation.Screen.Map.LONGITUDE_ARG
 import com.mafraq.presentation.utils.extensions.navigate
 
 
-internal fun NavController.navigateToProfile(
+fun NavController.navigateToProfile(
     latitude: Float,
     longitude: Float,
     addressId: Int,
@@ -22,15 +22,15 @@ internal fun NavController.navigateToProfile(
     navigate(screen = Screen.Profile.withArgs(latitude, longitude, addressId), popBackstack = true)
 }
 
-internal fun NavController.navigateToProfile() {
+fun NavController.navigateToProfile() {
     navigate(screen = Screen.Profile, popBackstack = true)
 }
 
-internal fun NavController.navigateToLoginProfile() {
+fun NavController.navigateToLoginProfile() {
     navigate(screen = Screen.LoginProfile, popBackstack = true)
 }
 
-internal fun NavGraphBuilder.profileDestination(navController: NavController) {
+fun NavGraphBuilder.profileDestination(navController: NavController) {
     composable(
         route = Screen.Profile.destination.route,
         arguments = listOf(

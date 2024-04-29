@@ -1,5 +1,11 @@
 import java.util.Properties
 
+include(":apps:employee")
+
+
+include(":apps:driver")
+
+
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 val propertiesFiles = listOf("local.properties", "defaults.properties")
@@ -50,6 +56,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Mafraq"
-include(":app")
+include("apps:employee")
 include(":data")
 include(":presentation")

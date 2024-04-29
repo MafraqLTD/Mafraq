@@ -9,11 +9,11 @@ import com.mafraq.presentation.navigation.Screen
 import com.mafraq.presentation.utils.extensions.navigate
 
 
-internal fun NavController.navigateToNotifications() {
+fun NavController.navigateToNotifications() {
     navigate(screen = Screen.Notifications, popBackstack = true)
 }
 
-internal fun NavGraphBuilder.notificationsDestination(navController: NavController) {
+fun NavGraphBuilder.notificationsDestination(navController: NavController) {
     composable(Screen.Notifications.route) {
         NotificationsScreen(viewModel = hiltViewModel(), navController = navController)
     }

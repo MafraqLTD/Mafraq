@@ -16,11 +16,11 @@ import com.mafraq.presentation.navigation.Screen.Map.LONGITUDE_ARG
 import com.mafraq.presentation.utils.extensions.navigate
 
 
-internal fun NavController.navigateToSearch(fromProfile: Boolean = false) {
+fun NavController.navigateToSearch(fromProfile: Boolean = false) {
     navigate(screen = Screen.Search.withArgs(fromProfile), popBackstack = false)
 }
 
-internal fun NavGraphBuilder.searchDestination(navController: NavController) {
+fun NavGraphBuilder.searchDestination(navController: NavController) {
     composable(
         route = Screen.Search.destination.route,
         arguments = listOf(

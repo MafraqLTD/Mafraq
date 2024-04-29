@@ -9,11 +9,11 @@ import com.mafraq.presentation.navigation.Screen
 import com.mafraq.presentation.utils.extensions.navigate
 
 
-internal fun NavController.navigateToChatGroup() {
+fun NavController.navigateToChatGroup() {
     navigate(screen = Screen.ChatGroup, popBackstack = true)
 }
 
-internal fun NavGraphBuilder.chatGroupDestination(navController: NavController) {
+fun NavGraphBuilder.chatGroupDestination(navController: NavController) {
     composable(Screen.ChatGroup.route) {
         ChatGroupScreen(viewModel = hiltViewModel(), navController = navController)
     }

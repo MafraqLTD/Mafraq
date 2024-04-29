@@ -15,7 +15,7 @@ import com.mafraq.presentation.navigation.Screen.Map.LONGITUDE_ARG
 import com.mafraq.presentation.utils.extensions.navigate
 
 
-internal fun NavController.navigateToMap(
+fun NavController.navigateToMap(
     latitude: Float = 0f,
     longitude: Float = 0f,
     addressId: Int = 0,
@@ -29,7 +29,7 @@ internal fun NavController.navigateToMap(
     ))
 }
 
-internal fun NavGraphBuilder.mapDestination(navController: NavController) {
+fun NavGraphBuilder.mapDestination(navController: NavController) {
     composable(
         route = Screen.Map.destination.route,
         arguments = listOf(

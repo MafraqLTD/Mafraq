@@ -10,11 +10,11 @@ import com.mafraq.presentation.utils.extensions.navigate
 import com.mafraq.presentation.utils.extensions.sharedViewModel
 
 
-internal fun NavController.navigateToRegister() {
+fun NavController.navigateToRegister() {
     navigate(screen = Screen.Register, popBackstack = true)
 }
 
-internal fun NavGraphBuilder.registerDestination(navController: NavController) {
+fun NavGraphBuilder.registerDestination(navController: NavController) {
     composable(Screen.Register.route) {
         val viewModel = it.sharedViewModel<AuthViewModel>(navController = navController)
         RegisterScreen(viewModel = viewModel, navController = navController)
