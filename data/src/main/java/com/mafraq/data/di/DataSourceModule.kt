@@ -1,4 +1,4 @@
-package com.mafraq.driver.di
+package com.mafraq.data.di
 
 
 import com.mafraq.data.local.driver.DriverLocalDataSource
@@ -11,8 +11,8 @@ import com.mafraq.data.remote.dataSource.auth.FirebaseAuthDataSource
 import com.mafraq.data.remote.dataSource.auth.FirebaseAuthDataSourceImpl
 import com.mafraq.data.remote.dataSource.crm.CRMRemoteDataSource
 import com.mafraq.data.remote.dataSource.crm.CRMRemoteDataSourceImpl
-import com.mafraq.data.remote.dataSource.map.GooglePlacesDataSource
-import com.mafraq.data.remote.dataSource.map.GooglePlacesDataSourceImpl
+import com.mafraq.data.remote.dataSource.map.PlacesDataSource
+import com.mafraq.data.remote.dataSource.map.PlacesDataSourceImpl
 import com.mafraq.data.remote.dataSource.subscription.driver.DriverSubscriptionDataSource
 import com.mafraq.data.remote.dataSource.subscription.driver.DriverSubscriptionDataSourceImpl
 import com.mafraq.data.remote.dataSource.subscription.employee.EmployeeSubscriptionDataSource
@@ -47,7 +47,7 @@ interface DataSourceModule {
 
     @Binds
     @Singleton
-    fun bindMapBoxPlacesDataSource(source: GooglePlacesDataSourceImpl): GooglePlacesDataSource
+    fun bindMapBoxPlacesDataSource(source: PlacesDataSourceImpl): PlacesDataSource
 
     @Binds
     @Singleton

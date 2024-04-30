@@ -1,14 +1,14 @@
-package com.mafraq.employee.di
+package com.mafraq.driver.di
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.mafraq.employee.BuildConfig
-import com.mafraq.employee.Constants
+import com.mafraq.data.BuildConfig
 import com.mafraq.data.entities.SeparatedValuesListOfString
 import com.mafraq.data.remote.interceptor.HeaderInterceptor
 import com.mafraq.data.remote.models.LocationRemote
 import com.mafraq.data.remote.service.DirectionsApiService
 import com.mafraq.data.remote.service.RetableService
+import com.mafraq.data.utils.Constants
 import com.mafraq.data.utils.convertors.LocationDeserializer
 import com.mafraq.data.utils.convertors.SeparatedValuesListOfStringDeserializer
 import com.mafraq.data.utils.toStringUrl

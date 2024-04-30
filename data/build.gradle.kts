@@ -17,6 +17,7 @@ android {
     namespace = "com.mafraq.data"
 
     applyConfiguration {
+        buildConfigField<String>(key = "BASE_URL")
         buildConfigField<String>(key = "MAPBOX_TOKEN")
         buildConfigField<String>(key = "ROUTES_API_KEY")
         buildConfigField<String>(key = "GEOCODING_API_KEY")

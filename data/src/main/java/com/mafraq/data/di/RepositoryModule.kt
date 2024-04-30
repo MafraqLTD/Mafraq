@@ -1,4 +1,4 @@
-package com.mafraq.driver.di
+package com.mafraq.data.di
 
 import com.mafraq.data.repository.auth.AuthRepository
 import com.mafraq.data.repository.auth.AuthRepositoryImpl

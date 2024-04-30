@@ -1,4 +1,4 @@
-package com.mafraq.driver.di
+package com.mafraq.data.di
 
 import android.content.Context
 import android.content.SharedPreferences

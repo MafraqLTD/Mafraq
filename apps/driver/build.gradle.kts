@@ -43,12 +43,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-        buildConfigField<String>(key = "BASE_URL")
+
         buildConfigField<String>(key = "MAPBOX_TOKEN")
         buildConfigField<String>(key = "PLACES_API_KEY")
-        buildConfigField<String>(key = "ROUTES_BASE_URL")
-        buildConfigField<String>(key = "RETABLE_API_KEY")
-
     }
 
     signingConfigs {

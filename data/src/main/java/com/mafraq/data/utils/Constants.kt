@@ -1,4 +1,4 @@
-package com.mafraq.employee
+package com.mafraq.data.utils
 
 object Constants {
     private const val API_VERSION_CODE = 2
