@@ -1,20 +1,27 @@
 package com.mafraq.driver.home
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
@@ -85,45 +92,60 @@ fun Content(
     listener: HomeInteractionListener = HomeInteractionListener.Preview
 ) {
     val focusManager = LocalFocusManager.current
+    val scrollState: LazyListState = rememberLazyListState()
+    val showTitleSpacer by remember { derivedStateOf { scrollState.firstVisibleItemIndex > 2 } }
 
-    Column(
+    LazyColumn(
+        state = scrollState,
         modifier = Modifier
             .fillMaxSize()
             .detectTapGestures(onTap = { focusManager.clearFocus() })
-            .padding(horizontal = sizes.medium)
-            .padding(top = sizes.medium),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(sizes.medium)
+            .padding(top = sizes.medium)
+            .padding(horizontal = sizes.medium),
+        verticalArrangement = Arrangement.spacedBy(space = sizes.medium),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        item {
+            AdsCarouselCard(ads = state.ads, onClick = {})
+        }
 
-        AdsCarouselCard(ads = state.ads, onClick = {})
+        item {
+            SupportCard(onClick = listener::navigateToSupportChat)
+        }
 
-        SupportCard(onClick = listener::navigateToSupportChat)
-
-
-        Column {
-            Text(
-                text = R.string.subscribe_requests.string,
-                style = typography.titleMedium
-            )
-            Spacer.Small()
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(space = sizes.medium)
+        stickyHeader {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(colors.background)
             ) {
-                items(items = state.ads) {
-                    SubscriberCard(
-                        profilePic = it.imageUrl,
-                        name = "Mostafa mohamed",
-                        collageName = "collageName",
-                        phone = "05532415",
-                        title = "Subscribed",
-                        area = "Zhoor",
-                        distance = "1.4 km",
-                        workDays = "Mon, Sun, Tus",
-                        cancelButtonTitle = R.string.cancel.string
-                    )
+                Text(
+                    text = R.string.subscribe_requests.string,
+                    style = typography.titleMedium
+                )
+
+                AnimatedVisibility(showTitleSpacer) {
+                    Spacer.Small()
                 }
             }
+        }
+
+        itemsIndexed(items = state.ads + state.ads) { index, item ->
+            SubscriberCard(
+                profilePic = item.imageUrl,
+                name = "Mostafa mohamed",
+                collageName = "collageName",
+                phone = "05532415",
+                title = "Subscribed",
+                area = "Zhoor",
+                distance = "1.4 km",
+                workDays = "Mon, Sun, Tus",
+                cancelButtonTitle = R.string.cancel.string
+            )
+        }
+
+        item {
+            Spacer.Small()
         }
     }
 }
