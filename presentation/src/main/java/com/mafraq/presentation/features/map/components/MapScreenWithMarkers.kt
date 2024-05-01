@@ -10,6 +10,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import com.google.android.play.integrity.internal.o
 import com.mafraq.data.entities.map.Driver
 import com.mafraq.data.entities.map.Location
 import com.mafraq.data.remote.mappers.toLocation
@@ -34,6 +35,7 @@ import com.mapbox.maps.plugin.animation.MapAnimationOptions
 @Composable
 fun MapScreenWithMarkers(
     currentLocation: Point,
+    originLocation: Point,
     modifier: Modifier = Modifier,
     isDestination: Boolean = false,
     drivers: List<Driver> = emptyList(),
@@ -87,7 +89,7 @@ fun MapScreenWithMarkers(
         PointAnnotation(
             iconImageBitmap = homeMarkerIcon,
             iconSize = 1.75,
-            point = currentLocation,
+            point = originLocation,
         )
 
         if (isDestination && directions.isNotEmpty()) {
@@ -103,7 +105,7 @@ fun MapScreenWithMarkers(
             PointAnnotation(
                 iconImageBitmap = markerIcon,
                 iconSize = 1.3,
-                point = directions.first(),
+                point = directions.last(),
             )
         }
 

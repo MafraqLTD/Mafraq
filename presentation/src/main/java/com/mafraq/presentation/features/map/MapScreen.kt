@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.withResumed
 import androidx.navigation.NavController
+import com.mafraq.data.remote.mappers.toPoint
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.components.container.Loading
 import com.mafraq.presentation.design.components.snackbar.LocalSnackState
@@ -107,6 +108,7 @@ private fun Content(
             isDestination = state.isDestination,
             directions = state.directions,
             currentLocation = state.currentLocation,
+            originLocation = state.originLocation.toPoint(),
             onMapClicked = listener::onMapClicked
         )
 
