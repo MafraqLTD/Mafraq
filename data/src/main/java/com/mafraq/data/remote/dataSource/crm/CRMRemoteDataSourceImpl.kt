@@ -38,17 +38,17 @@ class CRMRemoteDataSourceImpl @Inject constructor(
         mapper = { driverFromRemoteMapper.mapList(it.items) }
     ).getOrThrowEmpty()
 
-    override suspend fun getDriver(id: String): Driver = apiCall(
+    override suspend fun getDriver(email: String): Driver = apiCall(
         suspendFunction = { apiService.getDriver() },
         mapper = { response ->
-            driverFromRemoteMapper.find(response.items) { id in listOf(it.id, it.email) }
+            driverFromRemoteMapper.find(response.items) { email in listOf(it.id, it.email) }
         }
     ).getOrThrowEmpty()
 
-    override suspend fun getEmployee(id: String): Employee = apiCall(
+    override suspend fun getEmployee(email: String): Employee = apiCall(
         suspendFunction = { apiService.getEmployees() },
         mapper = { response ->
-            employeeFromRemoteMapper.find(response.items) { id in listOf(it.id, it.email) }
+            employeeFromRemoteMapper.find(response.items) { email in listOf(it.id, it.email) }
         }
     ).getOrThrowEmpty()
 

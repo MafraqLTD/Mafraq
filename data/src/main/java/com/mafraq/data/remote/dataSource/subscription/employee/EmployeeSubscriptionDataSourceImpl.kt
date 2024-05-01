@@ -26,16 +26,16 @@ class EmployeeSubscriptionDataSourceImpl @Inject constructor(
         this.driver = driver
         val subscriber = getSubscriber()
         driverLocalDataSource.save(driver)
-        root.document(driver.id)
+        root.document(driver.email)
             .collection(PENDING_COLLECTION)
-            .insert(id = subscriber.id, entry = subscriber)
+            .insert(id = subscriber.email, entry = subscriber)
     }
 
     override suspend fun cancel() {
         val subscriber = getSubscriber()
-        root.document(requireNotNull(driver?.id))
+        root.document(requireNotNull(driver?.email))
             .collection(PENDING_COLLECTION)
-            .delete(id = subscriber.id)
+            .delete(id = subscriber.email)
         this.driver = null
         driverLocalDataSource.delete()
     }

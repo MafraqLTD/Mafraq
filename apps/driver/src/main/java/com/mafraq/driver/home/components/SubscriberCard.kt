@@ -1,7 +1,6 @@
 package com.mafraq.driver.home.components
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,19 +11,16 @@ import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.google.android.play.integrity.internal.c
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.components.AppCard
 import com.mafraq.presentation.design.components.ColumnPreview
@@ -38,12 +34,12 @@ import com.mafraq.presentation.utils.extensions.string
 fun SubscriberCard(
     profilePic: String,
     name: String,
-    collageName: String,
+    workPlace: String,
     title: String,
-    area: String,
+    homePlace: String,
     phone: String,
     distance: String,
-    workDays: String,
+    offDays: String,
     cancelButtonTitle: String,
     onLocationClick: () -> Unit = {},
     onCancelClick: () -> Unit = {},
@@ -65,14 +61,14 @@ fun SubscriberCard(
 
             TwoLineText(
                 title = name,
-                description = collageName,
+                description = workPlace,
                 titleColor = MafraqTheme.colors.contentPrimary,
                 descriptionColor = MafraqTheme.colors.secondary
             )
 
             TwoLineText(
                 title = title,
-                description = area,
+                description = homePlace,
                 horizontalAlignment = Alignment.End,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -84,7 +80,7 @@ fun SubscriberCard(
                 Text(
                     text = listOf(
                         R.string.phone_with_arg.string(phone),
-                        R.string.workdays_with_arg.string(workDays),
+                        R.string.workdays_with_arg.string(offDays),
                         R.string.distance_with_arg.string(distance),
                     )[index],
                     style = MafraqTheme.typography.titleMedium,
@@ -138,12 +134,12 @@ private fun Preview() = ColumnPreview {
     SubscriberCard(
         profilePic = "",
         name = "Mostafa mohamed",
-        collageName = "collageName",
+        workPlace = "collageName",
         phone = "05532415",
         title = "Subscribed",
-        area = "Zhoor",
+        homePlace = "Zhoor",
         distance = "1.4 km",
-        workDays = "Mon, Sun, Tus",
+        offDays = "Mon, Sun, Tus",
         cancelButtonTitle = "Cancel"
     )
 }

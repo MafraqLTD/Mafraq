@@ -17,7 +17,6 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -29,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.mafraq.data.utils.formatted
 import com.mafraq.driver.home.components.SubscriberCard
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.components.AppCard
@@ -66,8 +66,6 @@ fun HomeScreen(
         locationSettingsDelegate = viewModel
     )
 
-    SideEffect(listener::reload)
-
     VerificationStatus(
         verified = viewModel.isEmailVerified,
         onDoneClicked = viewModel::onVerificationDone
@@ -94,6 +92,7 @@ fun Content(
     val focusManager = LocalFocusManager.current
     val scrollState: LazyListState = rememberLazyListState()
     val showTitleSpacer by remember { derivedStateOf { scrollState.firstVisibleItemIndex > 2 } }
+    val pendingSubscribers by state.pendingFlow.collectAsState(initial = emptyList())
 
     LazyColumn(
         state = scrollState,
@@ -113,33 +112,34 @@ fun Content(
             SupportCard(onClick = listener::navigateToSupportChat)
         }
 
-        stickyHeader {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(colors.background)
-            ) {
-                Text(
-                    text = R.string.subscribe_requests.string,
-                    style = typography.titleMedium
-                )
+        if (pendingSubscribers.isNotEmpty())
+            stickyHeader {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(colors.background)
+                ) {
+                    Text(
+                        text = R.string.subscribe_requests.string,
+                        style = typography.titleMedium
+                    )
 
-                AnimatedVisibility(showTitleSpacer) {
-                    Spacer.Small()
+                    AnimatedVisibility(showTitleSpacer) {
+                        Spacer.Small()
+                    }
                 }
             }
-        }
 
-        itemsIndexed(items = state.ads + state.ads) { index, item ->
+        itemsIndexed(items = pendingSubscribers) { index, item ->
             SubscriberCard(
                 profilePic = item.imageUrl,
-                name = "Mostafa mohamed",
-                collageName = "collageName",
-                phone = "05532415",
-                title = "Subscribed",
-                area = "Zhoor",
-                distance = "1.4 km",
-                workDays = "Mon, Sun, Tus",
+                name = item.name,
+                workPlace = item.workLocation.formattedAddress,
+                phone = item.phone,
+                title = R.string.pending.string,
+                homePlace = item.homeLocation.formattedAddress,
+                distance = "-",
+                offDays = item.offDays.formatted,
                 cancelButtonTitle = R.string.cancel.string
             )
         }

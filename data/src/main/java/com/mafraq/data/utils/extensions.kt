@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.google.gson.JsonElement
 import com.mafraq.data.entities.map.Location
+import com.mafraq.data.entities.profile.DayOff
 import com.mafraq.data.remote.errors.EmptyBodyException
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
@@ -133,3 +134,6 @@ fun LocalDate.toFormattedString(format: String = "dd/MM/yyyy"): String {
 fun String.toLocalDate(format: String = "dd/MM/yyyy"): LocalDate {
     return LocalDate.parse(this, DateTimeFormatter.ofPattern(format))
 }
+
+val List<DayOff>.formatted: String
+    get() = joinToString{ it.name.take(3) }

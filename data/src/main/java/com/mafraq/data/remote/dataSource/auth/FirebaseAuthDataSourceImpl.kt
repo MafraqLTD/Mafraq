@@ -29,7 +29,7 @@ class FirebaseAuthDataSourceImpl @Inject constructor(
 
         if (isSuccess)
             sessionLocalDataSource.save(
-                userId = body.email,
+                email = body.email,
                 subscriptionId = null,
                 driverId = null
             )
@@ -44,7 +44,7 @@ class FirebaseAuthDataSourceImpl @Inject constructor(
             auth.currentUser?.sendEmailVerification()
                 ?.awaitBoolean("sendEmailVerification()")
             sessionLocalDataSource.save(
-                userId = body.email,
+                email = body.email,
                 subscriptionId = null,
                 driverId = null
             )

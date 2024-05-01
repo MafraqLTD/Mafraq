@@ -1,9 +1,11 @@
 package com.mafraq.driver.home
 
 import com.altaie.prettycode.core.utils.extenstions.isTrue
+import com.mafraq.data.entities.Subscriber
 import com.mafraq.data.local.session.SessionLocalDataSource
 import com.mafraq.data.repository.auth.AuthRepository
 import com.mafraq.data.repository.crm.CRMRepository
+import com.mafraq.data.repository.subscription.driver.DriverSubscriptionRepository
 import com.mafraq.data.repository.subscription.employee.EmployeeSubscriptionRepository
 import com.mafraq.presentation.features.base.BaseViewModel
 import com.mafraq.presentation.utils.location.LocationSettingsDelegate
@@ -16,10 +18,13 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val crmRepository: CRMRepository,
-    private val sessionLocalDataSource: SessionLocalDataSource,
     private val locationSettingsDelegate: LocationSettingsDelegateImpl,
-    private val employeeSubscriptionRepository: EmployeeSubscriptionRepository
-) : BaseViewModel<HomeUiState, HomeEvent>(HomeUiState()), HomeInteractionListener,
+    private val driverSubscriptionRepository: DriverSubscriptionRepository,
+) : BaseViewModel<HomeUiState, HomeEvent>(
+    initState = HomeUiState(
+        pendingFlow = driverSubscriptionRepository.pendingFlow
+    )
+), HomeInteractionListener,
     LocationSettingsDelegate by locationSettingsDelegate {
 
     init {
@@ -30,16 +35,24 @@ class HomeViewModel @Inject constructor(
         emitNewEvent(HomeEvent.NavigateToMap)
     }
 
-    override fun onFindDriver() {
-        navigateToMap()
-    }
-
     override fun navigateToGroupChat() {
         emitNewEvent(HomeEvent.NavigateToChatGroup)
     }
 
     override fun navigateToSupportChat() {
         emitNewEvent(HomeEvent.NavigateToSupportChat)
+    }
+
+    override fun acceptSubscribeRequest(subscriber: Subscriber) {
+        tryToExecute(
+            block = { driverSubscriptionRepository.accept(subscriber) },
+            onSuccess = {
+
+            },
+            onError = {
+                // TODO ( HANDLE ERROR STATE )
+            }
+        )
     }
 
     val isEmailVerified: Boolean
@@ -49,13 +62,11 @@ class HomeViewModel @Inject constructor(
         authRepository.isAuthorized()
     }
 
-    override fun cancelSubscribeRequest() {
+    override fun cancelSubscribeRequest(subscriber: Subscriber) {
         tryToExecute(
-            block = { employeeSubscriptionRepository.cancel() },
+            block = { driverSubscriptionRepository.cancel(subscriber) },
             onSuccess = {
-                updateState {
-                    copy(pendingDriver = null)
-                }
+
             },
             onError = {
                 // TODO ( HANDLE ERROR STATE )
@@ -63,18 +74,7 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    override fun reload() {
-        val isSubscribed = sessionLocalDataSource.get()?.subscriptionId.isNullOrEmpty().not()
-        updateState {
-            copy(
-                isSubscribed = isSubscribed,
-                pendingDriver = employeeSubscriptionRepository.pendingDriver
-            )
-        }
-    }
-
     private fun initialization() {
-        reload()
         tryToExecute(
             block = crmRepository::getDriverAds,
             onSuccess = {

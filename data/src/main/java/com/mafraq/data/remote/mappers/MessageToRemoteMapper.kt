@@ -10,7 +10,7 @@ import javax.inject.Inject
 class MessageToRemoteMapper @Inject constructor(
     sessionLocalDataSource: SessionLocalDataSource
 ) : Mapper<Message, MessageRemote> {
-    private val userId = requireNotNull(sessionLocalDataSource.get()?.userId)
+    private val userId = requireNotNull(sessionLocalDataSource.get()?.email)
 
     override fun map(from: Message): MessageRemote = from.run {
         MessageRemote(

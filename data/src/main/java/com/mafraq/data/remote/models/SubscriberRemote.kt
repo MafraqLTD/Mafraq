@@ -1,15 +1,15 @@
-package com.mafraq.data.entities
+package com.mafraq.data.remote.models
 
 import com.mafraq.data.entities.map.Location
 import com.mafraq.data.entities.profile.DayOff
 
 
-data class Subscriber(
+data class SubscriberRemote(
     val email: String = "",
     val name: String = "",
     val imageUrl: String = "",
     val homeLocation: Location = Location(),
     val workLocation: Location = Location(),
-    val offDays: List<DayOff> = emptyList(),
+    val offDays: List<String> = emptyList(),
     val phone: String = ""
 )

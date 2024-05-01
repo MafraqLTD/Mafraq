@@ -9,8 +9,8 @@ interface CRMRemoteDataSource {
     suspend fun getDriverAds() : List<Ad>
     suspend fun getEmployeeAds() : List<Ad>
     suspend fun getDrivers() : List<Driver>
-    suspend fun getDriver(id: String) : Driver
-    suspend fun getEmployee(id: String) : Employee
+    suspend fun getDriver(email: String) : Driver
+    suspend fun getEmployee(email: String) : Employee
     suspend fun createEmployee(value: Employee) : Boolean
     suspend fun updateEmployee(value: Employee) : Boolean
 }

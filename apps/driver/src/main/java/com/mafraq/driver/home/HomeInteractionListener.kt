@@ -1,20 +1,20 @@
 package com.mafraq.driver.home
 
+import com.mafraq.data.entities.Subscriber
+
 
 interface HomeInteractionListener {
     fun navigateToMap()
-    fun onFindDriver()
     fun navigateToGroupChat()
     fun navigateToSupportChat()
-    fun cancelSubscribeRequest()
-    fun reload()
+    fun acceptSubscribeRequest(subscriber: Subscriber)
+    fun cancelSubscribeRequest(subscriber: Subscriber)
 
     object Preview : HomeInteractionListener {
-        override fun reload() {}
-        override fun onFindDriver() {}
         override fun navigateToMap() {}
         override fun navigateToGroupChat() {}
         override fun navigateToSupportChat() {}
-        override fun cancelSubscribeRequest() {}
+        override fun acceptSubscribeRequest(subscriber: Subscriber) {}
+        override fun cancelSubscribeRequest(subscriber: Subscriber) {}
     }
 }
