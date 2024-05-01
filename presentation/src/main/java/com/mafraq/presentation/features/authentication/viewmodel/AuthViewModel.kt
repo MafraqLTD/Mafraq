@@ -55,7 +55,7 @@ class AuthViewModel @Inject constructor(
         val confirmPasswordValidation = if (isRegister)
             validateConfirmPassword()
         else
-            ValidationState.Empty
+            passwordValidation
 
         return when {
             emailValidation.isEmpty
@@ -63,7 +63,8 @@ class AuthViewModel @Inject constructor(
                     && confirmPasswordValidation.isEmpty -> ValidationState.Empty
 
             emailValidation.isValid
-                    && passwordValidation.isValid -> ValidationState.Valid
+                    && passwordValidation.isValid
+                    && confirmPasswordValidation.isValid -> ValidationState.Valid
 
             else -> ValidationState.Invalid
         }
@@ -73,7 +74,9 @@ class AuthViewModel @Inject constructor(
     private fun validateConfirmPassword(): ValidationState = state.value.confirmPassword.run {
         when {
             isEmpty() -> ValidationState.Empty
-            length >= PASSWORD_MIN_LENGTH -> ValidationState.Valid
+            (length >= PASSWORD_MIN_LENGTH)
+                    && (state.value.password == this) -> ValidationState.Valid
+
             else -> ValidationState.Invalid
         }.also { updateState { copy(isConfirmPasswordInvalid = it.isInvalid) } }
     }
@@ -91,8 +94,8 @@ class AuthViewModel @Inject constructor(
             onSuccess = {
                 val event = if (authRepository.isProfileFilled)
                     RegisterEvent.OnRegister
-                    else
-                        RegisterEvent.OnNavigateToLoginProfile
+                else
+                    RegisterEvent.OnNavigateToLoginProfile
                 updateState(notifyEvent = event) {
                     copy(
                         error = null,
