@@ -1,8 +1,9 @@
-package com.mafraq.presentation.navigation.destinations
+package com.mafraq.employee.navigation.destinations
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.mafraq.employee.features.EmployeeAuthViewModel
 import com.mafraq.presentation.features.authentication.ui.LoginScreen
 import com.mafraq.presentation.features.authentication.viewmodel.AuthViewModel
 import com.mafraq.presentation.navigation.Screen
@@ -16,11 +17,12 @@ fun NavController.navigateToLogin() {
 
 fun NavGraphBuilder.loginDestination(navController: NavController, navigateToHome: () -> Unit) {
     composable(Screen.Login.route) {
-        val viewModel = it.sharedViewModel<AuthViewModel>(navController = navController)
+        val viewModel = it.sharedViewModel<EmployeeAuthViewModel>(navController = navController)
         LoginScreen(
             viewModel = viewModel,
             navController = navController,
-            navigateToHome = navigateToHome
+            navigateToHome = navigateToHome,
+            navigateToRegister = navController::navigateToRegister
         )
     }
 }

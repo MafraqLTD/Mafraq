@@ -9,10 +9,8 @@ import com.mafraq.driver.navigation.destinations.navigateToHome
 import com.mafraq.presentation.navigation.Screen
 import com.mafraq.presentation.navigation.destinations.chatSupportDestination
 import com.mafraq.presentation.navigation.destinations.chatGroupDestination
-import com.mafraq.presentation.navigation.destinations.loginDestination
 import com.mafraq.presentation.navigation.destinations.notificationsDestination
 import com.mafraq.presentation.navigation.destinations.profileDestination
-import com.mafraq.presentation.navigation.destinations.registerDestination
 
 
 @Composable

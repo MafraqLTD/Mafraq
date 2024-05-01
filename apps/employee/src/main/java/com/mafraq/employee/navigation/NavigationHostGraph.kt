@@ -8,13 +8,13 @@ import com.mafraq.presentation.navigation.Screen
 import com.mafraq.presentation.navigation.destinations.chatSupportDestination
 import com.mafraq.presentation.navigation.destinations.chatGroupDestination
 import com.mafraq.employee.navigation.destinations.homeDestination
-import com.mafraq.presentation.navigation.destinations.loginDestination
+import com.mafraq.employee.navigation.destinations.loginDestination
 import com.mafraq.presentation.navigation.destinations.mapDestination
 import com.mafraq.employee.navigation.destinations.navigateToHome
 import com.mafraq.employee.navigation.destinations.navigateToSearch
 import com.mafraq.presentation.navigation.destinations.notificationsDestination
 import com.mafraq.presentation.navigation.destinations.profileDestination
-import com.mafraq.presentation.navigation.destinations.registerDestination
+import com.mafraq.employee.navigation.destinations.registerDestination
 import com.mafraq.employee.navigation.destinations.searchDestination
 
 
