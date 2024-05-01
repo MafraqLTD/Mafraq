@@ -5,16 +5,20 @@ import com.mafraq.data.entities.map.Driver
 import com.mafraq.data.entities.map.DriverSubscriptionStatus
 import com.mafraq.data.remote.models.ApiResponseRemote
 import com.mafraq.data.remote.models.DriverRemote
+import com.mafraq.data.repository.map.MapPlacesRepositoryImpl
+import com.mafraq.data.utils.toFormattedString
+import com.mafraq.data.utils.toLocalDate
 import javax.inject.Inject
 
 
-class DriverFromRemoteMapper @Inject constructor()
-    : MapperList<ApiResponseRemote.RowRemote<DriverRemote>, Driver> {
+class DriverFromRemoteMapper @Inject constructor(
+    private val placesRepository: MapPlacesRepositoryImpl
+) : MapperList<ApiResponseRemote.RowRemote<DriverRemote>, Driver> {
 
     override fun map(from: ApiResponseRemote.RowRemote<DriverRemote>) = from.item.run {
         Driver(
             rowId = from.rowId,
-            birthday = birthday.orEmpty(),
+            birthday = birthday?.toLocalDate()?.toFormattedString("yyyy-MM-dd").orEmpty(),
             email = email.orEmpty(),
             fullName = fullName.orEmpty(),
             id = id.orEmpty(),
@@ -30,5 +34,23 @@ class DriverFromRemoteMapper @Inject constructor()
         )
     }
 
-    override fun mapList(from: List<ApiResponseRemote.RowRemote<DriverRemote>>): List<Driver> = from.map(::map)
+    override fun mapList(from: List<ApiResponseRemote.RowRemote<DriverRemote>>): List<Driver> =
+        from.map(::map)
+
+    suspend fun find(
+        from: List<ApiResponseRemote.RowRemote<DriverRemote>>,
+        selector: (Driver) -> Boolean
+    ): Driver {
+        val driver = mapList(from).firstOrNull(selector) ?: error("Driver not found")
+        var location = driver.location
+        with(location) {
+            if (formattedAddress.isEmpty())
+                location = placesRepository.getLocationInfo(
+                    latitude = latitude,
+                    longitude = longitude
+                )
+        }
+
+        return driver.copy(location = location)
+    }
 }

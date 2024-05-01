@@ -21,10 +21,7 @@ interface RetableService {
     suspend fun getDrivers(): Response<ApiResponseRemote<DriverRemote>>
 
     @GET(DRIVER_PATH)
-    suspend fun getDriver(
-        @Query("row_id")
-        driverId: String
-    ): Response<ApiResponseRemote<DriverRemote>>
+    suspend fun getDriver(): Response<ApiResponseRemote<DriverRemote>>
 
     @GET(EMPLOYEES_PATH)
     suspend fun getEmployees(): Response<ApiResponseRemote<EmployeeRemote>>
