@@ -9,8 +9,9 @@ import com.mafraq.presentation.navigation.destinations.chatSupportDestination
 import com.mafraq.presentation.navigation.destinations.chatGroupDestination
 import com.mafraq.employee.navigation.destinations.homeDestination
 import com.mafraq.employee.navigation.destinations.loginDestination
-import com.mafraq.presentation.navigation.destinations.mapDestination
+import com.mafraq.employee.navigation.destinations.mapDestination
 import com.mafraq.employee.navigation.destinations.navigateToHome
+import com.mafraq.employee.navigation.destinations.navigateToMap
 import com.mafraq.employee.navigation.destinations.navigateToSearch
 import com.mafraq.presentation.navigation.destinations.notificationsDestination
 import com.mafraq.presentation.navigation.destinations.profileDestination
@@ -31,7 +32,12 @@ fun NavigationHostGraph(
     homeDestination(navController)
     searchDestination(navController)
     profileDestination(
-        navController,
+        navigateToMap = { fromProfile, addressId ->
+            navController.navigateToMap(
+                fromProfile = fromProfile,
+                addressId = addressId
+            )
+        },
         navigateToHome = navController::navigateToHome,
         navigateToSearch = navController::navigateToSearch
     )

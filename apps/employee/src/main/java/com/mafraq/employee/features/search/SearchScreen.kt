@@ -24,7 +24,7 @@ import com.mafraq.presentation.design.components.SearchField
 import com.mafraq.presentation.design.components.container.Loading
 import com.mafraq.presentation.design.theme.MafraqTheme.sizes
 import com.mafraq.employee.features.search.components.SearchResultItem
-import com.mafraq.presentation.navigation.destinations.navigateToMap
+import com.mafraq.employee.navigation.destinations.navigateToMap
 import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.painter
 import com.mafraq.presentation.utils.extensions.string

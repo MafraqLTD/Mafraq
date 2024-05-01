@@ -70,5 +70,6 @@
     <string name="group_chat">Group chat</string>
     <string name="pending">Pending</string>
     <string name="subscribe_requests">Subscribe requests</string>
+    <string name="confirm_subscribe_request">Confirm subscribe request</string>
 
 </resources>

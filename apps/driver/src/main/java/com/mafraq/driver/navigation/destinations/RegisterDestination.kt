@@ -1,9 +1,9 @@
-package com.mafraq.employee.navigation.destinations
+package com.mafraq.driver.navigation.destinations
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.mafraq.employee.features.auth.EmployeeAuthViewModel
+import com.mafraq.driver.features.auth.DriverAuthViewModel
 import com.mafraq.presentation.features.authentication.ui.RegisterScreen
 import com.mafraq.presentation.navigation.Screen
 import com.mafraq.presentation.utils.extensions.navigate
@@ -16,7 +16,7 @@ fun NavController.navigateToRegister() {
 
 fun NavGraphBuilder.registerDestination(navController: NavController, navigateToHome: () -> Unit) {
     composable(Screen.Register.route) {
-        val viewModel = it.sharedViewModel<EmployeeAuthViewModel>(navController = navController)
+        val viewModel = it.sharedViewModel<DriverAuthViewModel>(navController = navController)
         RegisterScreen(
             viewModel = viewModel,
             navController = navController,

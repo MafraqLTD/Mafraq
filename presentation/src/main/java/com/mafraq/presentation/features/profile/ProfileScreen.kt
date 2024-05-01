@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.components.AppContainer
 import com.mafraq.presentation.design.components.AppOutlinedTextField
@@ -20,9 +19,9 @@ import com.mafraq.presentation.design.components.GenderDropdownMenu
 import com.mafraq.presentation.design.components.Spacer
 import com.mafraq.presentation.design.components.buttons.AppButton
 import com.mafraq.presentation.design.components.container.OutlinedContainer
+import com.mafraq.presentation.design.components.navigation.LocalAppUserType
 import com.mafraq.presentation.features.profile.components.OffDaysChipset
 import com.mafraq.presentation.features.profile.components.PickLocation
-import com.mafraq.presentation.navigation.destinations.navigateToMap
 import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.painter
 import com.mafraq.presentation.utils.extensions.string
@@ -32,8 +31,8 @@ import com.mafraq.presentation.utils.rememberLocationRequester
 @Composable
 fun ProfileScreen(
     viewModel: ProfileViewModel,
-    navController: NavController,
     navigateToHome: () -> Unit,
+    navigateToMap: (fromProfile: Boolean, addressId: Int) -> Unit,
     navigateToSearch: (fromProfile: Boolean) -> Unit
 ) {
     val state: ProfileUiState by viewModel.state.collectAsStateWithLifecycle()
@@ -43,10 +42,7 @@ fun ProfileScreen(
     var addressId = remember { 0 }
     val locationRequester = rememberLocationRequester(
         onLocationSatisfied = {
-            navController.navigateToMap(
-                fromProfile = true,
-                addressId = addressId
-            )
+            navigateToMap(true, addressId)
         },
         locationSettingsDelegate = viewModel
     )
@@ -77,6 +73,8 @@ private fun Content(
     state: ProfileUiState = ProfileUiState(),
     listener: ProfileInteractionListener = ProfileInteractionListener.PreviewInstance
 ) {
+    val appUserType = LocalAppUserType.current
+
     AppContainer { focusManager ->
         PickLocation(
             label = R.string.home_address.string,
@@ -87,32 +85,37 @@ private fun Content(
 
         Spacer.Medium()
 
-        PickLocation(
-            label = R.string.work_address.string,
-            painter = R.drawable.work_address.painter,
-            formattedAddress = state.workLocation.formattedAddress,
-            onClick = listener::onWorkAddressClicked
-        )
-
-        Spacer.Medium()
-
-        HorizontalDivider()
-        Spacer.Medium()
-
-        OutlinedContainer(
-            border = false,
-            fieldHeight = false,
-            label = R.string.off_days.string
-        ) {
-            OffDaysChipset(
-                selectedItems = state.offDays,
-                onItemChanged = listener::setOffDays
+        if (appUserType.isEmployeeApp) {
+            PickLocation(
+                label = R.string.work_address.string,
+                painter = R.drawable.work_address.painter,
+                formattedAddress = state.workLocation.formattedAddress,
+                onClick = listener::onWorkAddressClicked
             )
+
+            Spacer.Medium()
         }
-        Spacer.Medium()
 
         HorizontalDivider()
         Spacer.Medium()
+
+        if (appUserType.isEmployeeApp) {
+            OutlinedContainer(
+                border = false,
+                fieldHeight = false,
+                label = R.string.off_days.string
+            ) {
+                OffDaysChipset(
+                    selectedItems = state.offDays,
+                    onItemChanged = listener::setOffDays
+                )
+            }
+
+            Spacer.Medium()
+
+            HorizontalDivider()
+            Spacer.Medium()
+        }
 
         AppOutlinedTextField(
             label = R.string.fullname.string,

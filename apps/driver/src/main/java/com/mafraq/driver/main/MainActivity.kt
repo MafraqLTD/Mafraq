@@ -6,8 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
+import com.mafraq.data.entities.AppUserType
 import com.mafraq.data.local.session.SessionLocalDataSource
 import com.mafraq.data.repository.auth.AuthRepository
+import com.mafraq.presentation.design.components.navigation.LocalAppUserType
 import com.mafraq.presentation.design.components.navigation.LocalNavigationProvider
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -22,6 +24,9 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var sessionLocalDataSource: SessionLocalDataSource
 
+    @Inject
+    lateinit var appUserType: AppUserType
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val isAuthorized = authRepository.isAuthorized()
@@ -32,6 +37,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             CompositionLocalProvider(
+                LocalAppUserType provides appUserType,
                 LocalNavigationProvider provides rememberNavController()
             ) {
                 App(

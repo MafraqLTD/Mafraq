@@ -8,16 +8,22 @@ import javax.inject.Inject
 
 class DriverSubscriptionRepositoryImpl @Inject constructor(
     private val driverSubscriptionDataSource: DriverSubscriptionDataSource
-): DriverSubscriptionRepository {
+) : DriverSubscriptionRepository {
+    private var selectedSubscriber: Subscriber? = null
     override val membersFlow: Flow<List<Subscriber>> =
         driverSubscriptionDataSource.membersFlow
 
     override val pendingFlow: Flow<List<Subscriber>> =
         driverSubscriptionDataSource.pendingFlow
 
+    override fun select(subscriber: Subscriber?) {
+        selectedSubscriber = subscriber
+    }
+
     override suspend fun cancel(subscriber: Subscriber) =
         driverSubscriptionDataSource.cancel(subscriber)
 
-    override suspend fun accept(subscriber: Subscriber) =
-        driverSubscriptionDataSource.accept(subscriber)
+    override suspend fun accept() = driverSubscriptionDataSource.accept(
+        subscriber = selectedSubscriber ?: error("No Subscriber Selected!")
+    )
 }

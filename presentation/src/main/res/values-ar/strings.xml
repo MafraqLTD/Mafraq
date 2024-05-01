@@ -70,4 +70,5 @@
     <string name="group_chat">دردشة المجموعة</string>
     <string name="pending">قيد الانتظار</string>
     <string name="subscribe_requests">طلبات الاشترك</string>
+    <string name="confirm_subscribe_request">تأكيد طلب الاشتراك</string>
 </resources>

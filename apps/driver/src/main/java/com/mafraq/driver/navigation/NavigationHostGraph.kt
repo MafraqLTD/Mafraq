@@ -5,7 +5,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.mafraq.driver.navigation.destinations.homeDestination
+import com.mafraq.driver.navigation.destinations.loginDestination
+import com.mafraq.driver.navigation.destinations.mapDestination
 import com.mafraq.driver.navigation.destinations.navigateToHome
+import com.mafraq.driver.navigation.destinations.navigateToMap
+import com.mafraq.driver.navigation.destinations.registerDestination
 import com.mafraq.presentation.navigation.Screen
 import com.mafraq.presentation.navigation.destinations.chatSupportDestination
 import com.mafraq.presentation.navigation.destinations.chatGroupDestination
@@ -24,7 +28,16 @@ fun NavigationHostGraph(
     startDestination = startDestination.route
 ) {
     homeDestination(navController)
-    profileDestination(navController, navigateToHome = navController::navigateToHome)
+    mapDestination(navController)
+    profileDestination(
+        navigateToMap = { fromProfile, addressId ->
+            navController.navigateToMap(
+                fromProfile = fromProfile,
+                addressId = addressId
+            )
+        },
+        navigateToHome = navController::navigateToHome
+    )
     loginDestination(navController, navigateToHome = navController::navigateToHome)
     registerDestination(navController, navigateToHome = navController::navigateToHome)
     notificationsDestination(navController)

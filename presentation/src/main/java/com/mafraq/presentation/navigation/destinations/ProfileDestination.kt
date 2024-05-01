@@ -17,7 +17,7 @@ import com.mafraq.presentation.utils.extensions.navigate
 fun NavController.navigateToProfile(
     latitude: Float,
     longitude: Float,
-    addressId: Int,
+    addressId: Int = 0,
 ) {
     navigate(screen = Screen.Profile.withArgs(latitude, longitude, addressId), popBackstack = true)
 }
@@ -31,8 +31,8 @@ fun NavController.navigateToLoginProfile() {
 }
 
 fun NavGraphBuilder.profileDestination(
-    navController: NavController,
     navigateToHome: () -> Unit,
+    navigateToMap: (fromProfile: Boolean, addressId: Int) -> Unit,
     navigateToSearch: (fromProfile: Boolean) -> Unit = {}
 ) {
     composable(
@@ -45,7 +45,7 @@ fun NavGraphBuilder.profileDestination(
     ) {
         ProfileScreen(
             viewModel = hiltViewModel(),
-            navController = navController,
+            navigateToMap = navigateToMap,
             navigateToHome = navigateToHome,
             navigateToSearch = navigateToSearch
         )
@@ -54,7 +54,7 @@ fun NavGraphBuilder.profileDestination(
     composable(route = Screen.Profile.route) {
         ProfileScreen(
             viewModel = hiltViewModel(),
-            navController = navController,
+            navigateToMap = navigateToMap,
             navigateToHome = navigateToHome,
             navigateToSearch = navigateToSearch
         )    }
@@ -62,7 +62,7 @@ fun NavGraphBuilder.profileDestination(
     composable(route = Screen.LoginProfile.route) {
         ProfileScreen(
             viewModel = hiltViewModel(),
-            navController = navController,
+            navigateToMap = navigateToMap,
             navigateToHome = navigateToHome,
             navigateToSearch = navigateToSearch
         )    }

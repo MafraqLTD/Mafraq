@@ -47,10 +47,10 @@ import com.mafraq.presentation.design.theme.MafraqTheme.sizes
 import com.mafraq.presentation.design.theme.MafraqTheme.typography
 import com.mafraq.presentation.design.components.home.AdsCarouselCard
 import com.mafraq.presentation.design.components.home.VerificationStatus
-import com.mafraq.presentation.features.map.components.Rating
+import com.mafraq.employee.features.map.components.Rating
 import com.mafraq.presentation.navigation.destinations.navigateToChatGroup
 import com.mafraq.presentation.navigation.destinations.navigateToChatSupport
-import com.mafraq.presentation.navigation.destinations.navigateToMap
+import com.mafraq.employee.navigation.destinations.navigateToMap
 import com.mafraq.employee.navigation.destinations.navigateToSearch
 import com.mafraq.presentation.design.components.home.TwoLineText
 import com.mafraq.presentation.utils.extensions.Listen
