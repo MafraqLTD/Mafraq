@@ -1,4 +1,4 @@
-package com.mafraq.driver.di
+package com.mafraq.data.di
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

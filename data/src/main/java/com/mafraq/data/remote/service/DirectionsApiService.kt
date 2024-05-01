@@ -20,11 +20,9 @@ interface DirectionsApiService {
         REFERER_HEADER,
         SEC_CH_UA_HEADER,
         SEC_CH_UA_MOBILE_HEADER,
-        SEC_CH_UA_PLATFORM_HEADER,
         SEC_FETCH_DEST_HEADER,
         SEC_FETCH_MODE_HEADER,
         SEC_FETCH_SITE_HEADER,
-        USER_AGENT_HEADER,
         X_GOOG_API_KEY_HEADER,
         X_GOOG_FIELDMASK_HEADER
     )
@@ -54,13 +52,10 @@ interface DirectionsApiService {
         const val SEC_CH_UA_HEADER =
             "sec-ch-ua: \"Microsoft Edge\";v=\"123\", \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"123\""
         const val SEC_CH_UA_MOBILE_HEADER = "sec-ch-ua-mobile: ?0"
-        const val SEC_CH_UA_PLATFORM_HEADER = "sec-ch-ua-platform: \"macOS\""
         const val SEC_FETCH_DEST_HEADER = "sec-fetch-dest: empty"
         const val SEC_FETCH_MODE_HEADER = "sec-fetch-mode: cors"
         const val SEC_FETCH_SITE_HEADER = "sec-fetch-site: cross-site"
-        const val USER_AGENT_HEADER =
-            "user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36 Edg/123.0.0.0"
-        const val X_GOOG_API_KEY_HEADER = "x-goog-api-key: ${BuildConfig.ROUTES_API_KEY}"
+         const val X_GOOG_API_KEY_HEADER = "x-goog-api-key: ${BuildConfig.ROUTES_API_KEY}"
         const val X_GOOG_FIELDMASK_HEADER = "x-goog-fieldmask: *"
     }
 }

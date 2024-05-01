@@ -27,14 +27,14 @@ import kotlin.coroutines.suspendCoroutine
 
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class GooglePlacesDataSourceImpl @Inject constructor(
+class PlacesDataSourceImpl @Inject constructor(
     private val geocoder: Geocoder,
     private val placesClient: PlacesClient,
     private val autocompleteSessionToken: AutocompleteSessionToken,
     private val placeSuggestionMapper: PlaceSuggestionMapper,
     private val hardwareRepository: HardwareRepository,
     private val directionsApiService: DirectionsApiService,
-) : GooglePlacesDataSource, BaseRemoteDataSource {
+) : PlacesDataSource, BaseRemoteDataSource {
 
     override suspend fun getPlaceSuggestions(query: String): List<PlaceSuggestion> {
         val lastLocation = hardwareRepository.getLastLocation()
