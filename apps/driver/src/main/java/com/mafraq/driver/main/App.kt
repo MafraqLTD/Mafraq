@@ -18,6 +18,7 @@ import com.mafraq.presentation.design.components.snackbar.LocalSnackState
 import com.mafraq.presentation.design.components.snackbar.Snackbar
 import com.mafraq.presentation.design.theme.MafraqTheme
 import com.mafraq.driver.main.components.BottomNavigationBar
+import com.mafraq.driver.main.components.LocalAppStateProvider
 import com.mafraq.driver.navigation.NavigationHostGraph
 import com.mafraq.presentation.navigation.Screen
 import com.mafraq.presentation.utils.extensions.currentRoute
@@ -26,9 +27,9 @@ import com.mafraq.presentation.utils.extensions.currentRoute
 @Composable
 fun App(
     isAuthorized: Boolean,
-    isSubscribed: Boolean,
     isProfileFilled: Boolean,
 ) {
+    val appState = LocalAppStateProvider.current
 
     MafraqTheme {
         val navController = LocalNavigationProvider.current
@@ -72,7 +73,7 @@ fun App(
                 ) {
                     BottomNavigationBar(
                         navController = navController,
-                        isSubscribed = isSubscribed
+                        hasSubscribers = appState.hasSubscribers
                     )
                 }
             }

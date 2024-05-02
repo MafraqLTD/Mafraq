@@ -3,9 +3,14 @@ package com.mafraq.data.repository.chat.group
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mafraq.data.entities.Session
+import com.mafraq.data.entities.chat.GroupChatState
 import com.mafraq.data.local.session.SessionLocalDataSource
+import com.mafraq.data.remote.dataSource.subscription.driver.DriverSubscriptionDataSource
 import com.mafraq.data.remote.mappers.MessageFromRemoteMapper
 import com.mafraq.data.remote.mappers.MessageToRemoteMapper
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -14,15 +19,22 @@ class GroupChatRepositoryImpl @Inject constructor(
     sessionLocalDataSource: SessionLocalDataSource,
     messageToRemoteMapper: MessageToRemoteMapper,
     messageFromRemoteMapper: MessageFromRemoteMapper,
+    driverSubscriptionDataSource: DriverSubscriptionDataSource
 ) : GroupChatRepository(messageToRemoteMapper, messageFromRemoteMapper) {
     private val session: Session? = sessionLocalDataSource.get()
     override val chatCollection: CollectionReference by lazy {
         firestore
             .collection(DRIVERS_COLLECTION)
             .document(requireNotNull(session?.driverId))
-//            .collection(SUBSCRIPTIONS_COLLECTION)
-//            .document(requireNotNull(session?.subscriptionId))
             .collection(MESSAGES_COLLECTION)
+    }
+
+    override val stateFlow: Flow<GroupChatState> = driverSubscriptionDataSource.membersFlow.map { subscribers ->
+        GroupChatState(
+            members = subscribers.size,
+            activeMembers = subscribers.count { it.active },
+            title = subscribers.firstOrNull()?.workLocation?.formattedAddress.orEmpty(),
+        )
     }
 
     companion object {
@@ -30,6 +42,5 @@ class GroupChatRepositoryImpl @Inject constructor(
         const val MESSAGES_COLLECTION = "Messages"
         const val MEMBERS_COLLECTION = "Members"
         const val PENDING_COLLECTION = "Pending"
-//        const val SUBSCRIPTIONS_COLLECTION = "Subscriptions"
     }
 }

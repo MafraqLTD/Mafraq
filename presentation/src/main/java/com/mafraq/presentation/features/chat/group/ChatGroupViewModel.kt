@@ -10,9 +10,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChatGroupViewModel @Inject constructor(
-    private val groupChatRepository: GroupChatRepository
-) : BaseViewModel<ChatGroupUiState, ChatGroupEvent>(ChatGroupUiState()),
-    ChatGroupInteractionListener {
+    private val groupChatRepository: GroupChatRepository,
+) : BaseViewModel<ChatGroupUiState, ChatGroupEvent>(
+    initState = ChatGroupUiState(
+        groupStateFlow = groupChatRepository.stateFlow,
+    )
+), ChatGroupInteractionListener {
+
     override fun onSendMessage() {
         val message = Message(
             content = state.value.message,

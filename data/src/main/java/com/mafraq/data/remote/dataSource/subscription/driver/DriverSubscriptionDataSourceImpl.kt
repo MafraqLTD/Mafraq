@@ -4,7 +4,6 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mafraq.data.entities.Session
 import com.mafraq.data.entities.Subscriber
-import com.mafraq.data.entities.profile.DayOff
 import com.mafraq.data.local.session.SessionLocalDataSource
 import com.mafraq.data.remote.dataSource.chat.asFlow
 import com.mafraq.data.remote.dataSource.chat.delete
@@ -16,6 +15,7 @@ import com.mafraq.data.repository.chat.group.GroupChatRepositoryImpl.Companion.M
 import com.mafraq.data.repository.chat.group.GroupChatRepositoryImpl.Companion.PENDING_COLLECTION
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.tasks.asDeferred
 import javax.inject.Inject
 
 
@@ -39,6 +39,9 @@ class DriverSubscriptionDataSourceImpl @Inject constructor(
     private val pendingCollection: CollectionReference by lazy {
         root.collection(PENDING_COLLECTION)
     }
+
+    override suspend fun hasSubscribers(): Boolean =
+         membersCollection.get().asDeferred().await().isEmpty.not()
 
     override val membersFlow: Flow<List<Subscriber>> by lazy {
         membersCollection.asFlow<SubscriberRemote>()

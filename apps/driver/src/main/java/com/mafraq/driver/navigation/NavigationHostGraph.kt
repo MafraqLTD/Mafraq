@@ -42,5 +42,5 @@ fun NavigationHostGraph(
     registerDestination(navController, navigateToHome = navController::navigateToHome)
     notificationsDestination(navController)
     chatSupportDestination(navController)
-    chatGroupDestination(navController)
+    chatGroupDestination()
 }

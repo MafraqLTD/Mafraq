@@ -11,5 +11,6 @@ data class Subscriber(
     val homeLocation: Location = Location(),
     val workLocation: Location = Location(),
     val offDays: List<DayOff> = emptyList(),
-    val phone: String = ""
+    val phone: String = "",
+    val active: Boolean = false
 )

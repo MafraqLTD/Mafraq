@@ -20,7 +20,7 @@ import com.mafraq.presentation.utils.extensions.string
 
 @Composable
 fun BottomNavigationBar(
-    isSubscribed: Boolean,
+    hasSubscribers: Boolean,
     navController: NavController
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -36,7 +36,7 @@ fun BottomNavigationBar(
             onClick = navController::navigateToHome
         )
 
-        if (isSubscribed) {
+        if (hasSubscribers) {
             val isGroupChatSelected =
                 remember(currentRoute) { Screen.ChatGroup.route == currentRoute }
             NavigationBarItem(

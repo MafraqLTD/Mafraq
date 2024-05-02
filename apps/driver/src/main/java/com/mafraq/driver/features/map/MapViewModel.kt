@@ -64,7 +64,7 @@ class MapViewModel @Inject constructor(
     override fun acceptSubscribeRequest() {
         tryToExecute(
             block = { driverSubscriptionRepository.accept() },
-            onSuccess = { },
+            onSuccess = { emitNewEvent(MapEvent.OnNavigateBack) },
             onError = { }
         )
     }

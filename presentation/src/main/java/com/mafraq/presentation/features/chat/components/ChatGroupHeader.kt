@@ -17,7 +17,7 @@ import com.mafraq.presentation.utils.extensions.string
 fun ChatGroupHeader(
     title: String,
     members: Int,
-    connectedMembers: Int
+    activeMembers: Int
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
@@ -33,11 +33,10 @@ fun ChatGroupHeader(
                     style = MafraqTheme.typography.titleLarge
                 )
 
-                if (connectedMembers > 0)
-                    Text(
-                        text = R.string.members_with_arg.string(members, connectedMembers),
-                        style = MafraqTheme.typography.label
-                    )
+                Text(
+                    text = R.string.members_with_arg.string(members, activeMembers),
+                    style = MafraqTheme.typography.label
+                )
             }
         },
         scrollBehavior = scrollBehavior,

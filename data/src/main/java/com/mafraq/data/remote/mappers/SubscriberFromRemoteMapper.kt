@@ -4,6 +4,7 @@ import com.altaie.prettycode.core.mapper.base.MapperList
 import com.mafraq.data.entities.Subscriber
 import com.mafraq.data.entities.profile.DayOff
 import com.mafraq.data.remote.models.SubscriberRemote
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -18,8 +19,8 @@ class SubscriberFromRemoteMapper @Inject constructor(
             homeLocation = homeLocation,
             workLocation = workLocation,
             offDays = offDays.map { DayOff.fromString(it) },
-            phone = phone
-
+            phone = phone,
+            active = active
         )
     }
 

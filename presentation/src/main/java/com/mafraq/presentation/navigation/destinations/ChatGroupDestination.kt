@@ -13,8 +13,8 @@ fun NavController.navigateToChatGroup() {
     navigate(screen = Screen.ChatGroup, popBackstack = true)
 }
 
-fun NavGraphBuilder.chatGroupDestination(navController: NavController) {
+fun NavGraphBuilder.chatGroupDestination() {
     composable(Screen.ChatGroup.route) {
-        ChatGroupScreen(viewModel = hiltViewModel(), navController = navController)
+        ChatGroupScreen(viewModel = hiltViewModel())
     }
 }
