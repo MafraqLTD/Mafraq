@@ -16,7 +16,7 @@ class SubscribersViewModel @Inject constructor(
     private val driverSubscriptionRepository: DriverSubscriptionRepository,
 ) : BaseViewModel<SubscribersUiState, SubscribersEvent>(
     initState = SubscribersUiState(
-        pendingFlow = driverSubscriptionRepository.membersFlow
+        pendingFlow = driverSubscriptionRepository.subscribersFlow
     )
 ), SubscribersInteractionListener,
     LocationSettingsDelegate by locationSettingsDelegate {

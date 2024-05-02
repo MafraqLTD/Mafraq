@@ -1,15 +1,22 @@
-package com.mafraq.driver.main.components
+package com.mafraq.employee.main.components
 
 import androidx.compose.runtime.ProvidableCompositionLocal
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
+import com.mafraq.data.entities.AppUserType
+import com.mafraq.data.local.session.SessionLocalDataSource
+import com.mafraq.data.remote.dataSource.subscription.driver.DriverSubscriptionDataSource
 import com.mafraq.data.repository.auth.AuthRepository
 import com.mafraq.data.repository.subscription.driver.DriverSubscriptionRepository
+import com.mafraq.data.repository.subscription.employee.EmployeeSubscriptionRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -20,10 +27,10 @@ val LocalAppStateProvider: ProvidableCompositionLocal<AppState> = staticComposit
 
 class AppState @Inject constructor(
     authRepository: AuthRepository,
-    driverSubscriptionRepository: DriverSubscriptionRepository
+    employeeSubscriptionRepository: EmployeeSubscriptionRepository
 ) {
     private val scope = CoroutineScope(Dispatchers.IO)
-    var hasSubscribers: Boolean by mutableStateOf(false)
+    var isSubscribed: Boolean by mutableStateOf(false)
         private set
 
     val isAuthorized: Boolean = authRepository.isAuthorized()
@@ -31,8 +38,8 @@ class AppState @Inject constructor(
 
     init {
         scope.launch {
-            driverSubscriptionRepository.subscribersFlow.collect {
-                hasSubscribers = it.isNotEmpty()
+            employeeSubscriptionRepository.subscribeRequestStatusFlow.collect {
+                isSubscribed = it.isAccepted
             }
         }
     }

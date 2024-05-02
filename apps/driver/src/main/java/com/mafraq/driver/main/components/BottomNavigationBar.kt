@@ -19,12 +19,10 @@ import com.mafraq.presentation.utils.extensions.string
 
 
 @Composable
-fun BottomNavigationBar(
-    hasSubscribers: Boolean,
-    navController: NavController
-) {
+fun BottomNavigationBar(navController: NavController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry.currentRoute
+    val hasSubscribers: Boolean = LocalAppStateProvider.current.hasSubscribers
 
     NavigationBar {
         val isHomeSelected = remember(currentRoute) { Screen.Home.route == currentRoute }

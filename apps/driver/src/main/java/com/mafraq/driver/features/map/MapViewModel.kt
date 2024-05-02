@@ -48,7 +48,7 @@ class MapViewModel @Inject constructor(
 
     override fun onMapClicked(location: Location) {
         updateState { copy(currentLocation = location) }
-        findBestRoute()
+//        findBestRoute()
     }
 
     override fun onConfirmDestination() {
@@ -78,7 +78,7 @@ class MapViewModel @Inject constructor(
                 },
                 onCompleted = {
                     hardwareRepository.removeLocationUpdates()
-                    findBestRoute()
+//                    findBestRoute()
                 }
             )
     }

@@ -16,7 +16,6 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val crmRepository: CRMRepository,
-    private val sessionLocalDataSource: SessionLocalDataSource,
     private val locationSettingsDelegate: LocationSettingsDelegateImpl,
     private val employeeSubscriptionRepository: EmployeeSubscriptionRepository
 ) : BaseViewModel<HomeUiState, HomeEvent>(HomeUiState()), HomeInteractionListener,
@@ -68,17 +67,21 @@ class HomeViewModel @Inject constructor(
     }
 
     override fun reload() {
-        val isSubscribed = sessionLocalDataSource.get()?.subscriptionId.isNullOrEmpty().not()
         updateState {
-            copy(
-                isSubscribed = isSubscribed,
-                pendingDriver = employeeSubscriptionRepository.pendingDriver
-            )
+            copy(pendingDriver = employeeSubscriptionRepository.pendingDriver)
         }
     }
 
     private fun initialization() {
         reload()
+        tryToCollect(
+            block = { employeeSubscriptionRepository.subscribeRequestStatusFlow },
+            onNewValue = { requestStatus ->
+                if (requestStatus.isCancelled || requestStatus.isAccepted)
+                    reload()
+            }
+        )
+
         tryToExecute(
             block = crmRepository::getEmployeeAds,
             onSuccess = {

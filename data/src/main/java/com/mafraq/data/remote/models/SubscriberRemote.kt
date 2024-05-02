@@ -12,5 +12,6 @@ data class SubscriberRemote(
     val workLocation: Location = Location(),
     val offDays: List<String> = emptyList(),
     val phone: String = "",
+    val status: String = "",
     val active: Boolean = false
 )

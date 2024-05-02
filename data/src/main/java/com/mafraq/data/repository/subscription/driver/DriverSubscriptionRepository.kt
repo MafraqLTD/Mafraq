@@ -5,9 +5,8 @@ import kotlinx.coroutines.flow.Flow
 
 
 interface DriverSubscriptionRepository {
-    val membersFlow : Flow<List<Subscriber>>
+    val subscribersFlow : Flow<List<Subscriber>>
     val pendingFlow : Flow<List<Subscriber>>
-    suspend fun hasSubscribers(): Boolean
     fun select(subscriber: Subscriber?)
     suspend fun cancel(subscriber: Subscriber)
     suspend fun unsubscribe(subscriber: Subscriber)

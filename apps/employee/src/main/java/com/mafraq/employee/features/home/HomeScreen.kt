@@ -16,6 +16,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.mafraq.presentation.design.components.home.CarCard
 import com.mafraq.employee.features.home.components.PendingSubscribeRequest
+import com.mafraq.employee.main.components.LocalAppStateProvider
 import com.mafraq.presentation.design.components.home.SupportCard
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.components.ColumnPreview
@@ -77,6 +78,7 @@ fun Content(
     listener: HomeInteractionListener = HomeInteractionListener.Preview
 ) {
     val focusManager = LocalFocusManager.current
+    val isSubscribed = LocalAppStateProvider.current.isSubscribed
 
     Column(
         modifier = Modifier
@@ -101,7 +103,7 @@ fun Content(
 
         if (state.pendingDriver == null)
             CarCard(
-                isSubscribed = state.isSubscribed,
+                isSubscribed = isSubscribed,
                 onFindDriverClick = listener::onFindDriver,
                 onGroupChatClick = listener::navigateToGroupChat,
             )

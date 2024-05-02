@@ -5,8 +5,8 @@ import kotlinx.coroutines.flow.Flow
 
 
 interface DriverSubscriptionDataSource {
-    suspend fun hasSubscribers(): Boolean
-    val membersFlow : Flow<List<Subscriber>>
+    val allMembersFlow : Flow<List<Subscriber>>
+    val subscribersFlow : Flow<List<Subscriber>>
     val pendingFlow : Flow<List<Subscriber>>
     suspend fun unsubscribe(subscriber: Subscriber)
     suspend fun cancel(subscriber: Subscriber)

@@ -8,11 +8,11 @@ import com.mafraq.data.local.session.SessionLocalDataSource
 import com.mafraq.data.remote.dataSource.chat.asFlow
 import com.mafraq.data.remote.dataSource.chat.delete
 import com.mafraq.data.remote.dataSource.chat.insert
+import com.mafraq.data.remote.dataSource.subscription.employee.SubscribeRequestStatus
 import com.mafraq.data.remote.mappers.SubscriberFromRemoteMapper
 import com.mafraq.data.remote.models.SubscriberRemote
 import com.mafraq.data.repository.chat.group.GroupChatRepositoryImpl.Companion.DRIVERS_COLLECTION
 import com.mafraq.data.repository.chat.group.GroupChatRepositoryImpl.Companion.MEMBERS_COLLECTION
-import com.mafraq.data.repository.chat.group.GroupChatRepositoryImpl.Companion.PENDING_COLLECTION
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.tasks.asDeferred
@@ -36,33 +36,33 @@ class DriverSubscriptionDataSourceImpl @Inject constructor(
         root.collection(MEMBERS_COLLECTION)
     }
 
-    private val pendingCollection: CollectionReference by lazy {
-        root.collection(PENDING_COLLECTION)
-    }
-
-    override suspend fun hasSubscribers(): Boolean =
-         membersCollection.get().asDeferred().await().isEmpty.not()
-
-    override val membersFlow: Flow<List<Subscriber>> by lazy {
+    override val allMembersFlow: Flow<List<Subscriber>> by lazy {
         membersCollection.asFlow<SubscriberRemote>()
             .map(subscriberFromRemoteMapper::mapList)
     }
 
-    override val pendingFlow: Flow<List<Subscriber>> by lazy {
-        pendingCollection.asFlow<SubscriberRemote>()
-            .map(subscriberFromRemoteMapper::mapList)
-    }
+    override val subscribersFlow: Flow<List<Subscriber>> =
+        allMembersFlow.map { subscribers ->
+            subscribers.filter { it.status.isAccepted }
+        }
+
+    override val pendingFlow: Flow<List<Subscriber>> =
+        allMembersFlow.map { subscribers ->
+            subscribers.filter { it.status.isPending }
+        }
 
     override suspend fun unsubscribe(subscriber: Subscriber) {
         membersCollection.delete(subscriber.email)
     }
 
     override suspend fun cancel(subscriber: Subscriber) {
-        pendingCollection.delete(subscriber.email)
+        membersCollection.delete(subscriber.email)
     }
 
     override suspend fun accept(subscriber: Subscriber) {
-        cancel(subscriber)
-        membersCollection.insert(id = subscriber.email, entry = subscriber)
+        membersCollection.insert(
+            id = subscriber.email,
+            entry = subscriber.copy(status = SubscribeRequestStatus.Accepted)
+        )
     }
 }

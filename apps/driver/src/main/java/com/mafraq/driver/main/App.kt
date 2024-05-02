@@ -29,7 +29,6 @@ fun App(
     isAuthorized: Boolean,
     isProfileFilled: Boolean,
 ) {
-    val appState = LocalAppStateProvider.current
 
     MafraqTheme {
         val navController = LocalNavigationProvider.current
@@ -71,10 +70,7 @@ fun App(
                     enter = EnterTransition.None,
                     exit = ExitTransition.None
                 ) {
-                    BottomNavigationBar(
-                        navController = navController,
-                        hasSubscribers = appState.hasSubscribers
-                    )
+                    BottomNavigationBar(navController = navController)
                 }
             }
         ) { paddingValues ->
