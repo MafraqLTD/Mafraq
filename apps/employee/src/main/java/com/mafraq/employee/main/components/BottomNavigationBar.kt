@@ -9,8 +9,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.components.navigation.NavigationBarItem
 import com.mafraq.presentation.navigation.Screen
-import com.mafraq.driver.navigation.destinations.navigateToChatGroup
 import com.mafraq.employee.navigation.destinations.navigateToHome
+import com.mafraq.presentation.navigation.destinations.navigateToChatGroup
 import com.mafraq.presentation.navigation.destinations.navigateToNotifications
 import com.mafraq.presentation.navigation.destinations.navigateToProfile
 import com.mafraq.presentation.utils.extensions.currentRoute

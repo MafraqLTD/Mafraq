@@ -6,7 +6,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.mafraq.presentation.navigation.Screen
 import com.mafraq.presentation.navigation.destinations.chatSupportDestination
-import com.mafraq.driver.navigation.destinations.chatGroupDestination
 import com.mafraq.employee.navigation.destinations.homeDestination
 import com.mafraq.employee.navigation.destinations.loginDestination
 import com.mafraq.employee.navigation.destinations.mapDestination
@@ -17,6 +16,7 @@ import com.mafraq.presentation.navigation.destinations.notificationsDestination
 import com.mafraq.presentation.navigation.destinations.profileDestination
 import com.mafraq.employee.navigation.destinations.registerDestination
 import com.mafraq.employee.navigation.destinations.searchDestination
+import com.mafraq.presentation.navigation.destinations.chatGroupDestination
 
 
 @Composable
@@ -45,6 +45,6 @@ fun NavigationHostGraph(
     registerDestination(navController, navigateToHome = navController::navigateToHome)
     notificationsDestination(navController)
     chatSupportDestination(navController)
-    com.mafraq.driver.navigation.destinations.chatGroupDestination()
+    chatGroupDestination(navController)
     mapDestination(navController)
 }

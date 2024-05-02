@@ -11,10 +11,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -25,6 +25,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.mafraq.data.utils.formatted
 import com.mafraq.driver.features.home.components.SubscriberCard
+import com.mafraq.driver.main.components.LocalAppStateProvider
 import com.mafraq.driver.navigation.destinations.navigateToMap
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.components.ColumnPreview
@@ -46,6 +47,10 @@ fun SubscribersScreen(
     val state: SubscribersUiState by viewModel.state.collectAsStateWithLifecycle()
     val event: SubscribersEvent? by viewModel.event.collectAsState(null)
     val listener: SubscribersInteractionListener = viewModel
+
+    if (LocalAppStateProvider.current.hasSubscribers.not()) SideEffect {
+        navController.navigateUp()
+    }
 
     val locationRequester = rememberLocationRequester(
         onLocationSatisfied = {

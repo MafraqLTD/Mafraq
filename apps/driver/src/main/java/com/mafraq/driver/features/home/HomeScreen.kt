@@ -1,16 +1,12 @@
 package com.mafraq.driver.features.home
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
@@ -25,18 +21,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.mafraq.data.utils.formatted
 import com.mafraq.driver.features.home.components.SubscriberCard
+import com.mafraq.driver.main.components.LocalAppStateProvider
 import com.mafraq.driver.navigation.destinations.navigateToMap
 import com.mafraq.presentation.R
-import com.mafraq.presentation.design.components.AppCard
 import com.mafraq.presentation.design.components.ColumnPreview
 import com.mafraq.presentation.design.components.Spacer
-import com.mafraq.presentation.design.components.TextIcon
 import com.mafraq.presentation.design.components.home.AdsCarouselCard
+import com.mafraq.presentation.design.components.home.CarCard
+import com.mafraq.presentation.design.components.home.SupportCard
 import com.mafraq.presentation.design.components.home.VerificationStatus
 import com.mafraq.presentation.design.theme.MafraqTheme.colors
 import com.mafraq.presentation.design.theme.MafraqTheme.sizes
@@ -45,7 +41,6 @@ import com.mafraq.presentation.navigation.destinations.navigateToChatGroup
 import com.mafraq.presentation.navigation.destinations.navigateToChatSupport
 import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.detectTapGestures
-import com.mafraq.presentation.utils.extensions.painter
 import com.mafraq.presentation.utils.extensions.string
 import com.mafraq.presentation.utils.rememberLocationRequester
 
@@ -97,6 +92,7 @@ fun Content(
     val scrollState: LazyListState = rememberLazyListState()
     val showTitleSpacer by remember { derivedStateOf { scrollState.firstVisibleItemIndex > 2 } }
     val pendingSubscribers by state.pendingFlow.collectAsState(initial = emptyList())
+    val hasSubscribers = LocalAppStateProvider.current.hasSubscribers
 
     LazyColumn(
         state = scrollState,
@@ -111,6 +107,14 @@ fun Content(
         item {
             AdsCarouselCard(ads = state.ads, onClick = {})
         }
+
+        if (hasSubscribers)
+            item {
+                CarCard(
+                    text = R.string.chat_with_your_subscribers.string,
+                    onClick = listener::navigateToGroupChat
+                )
+            }
 
         item {
             SupportCard(onClick = listener::navigateToSupportChat)
@@ -157,38 +161,9 @@ fun Content(
     }
 }
 
-@Composable
-private fun SupportCard(onClick: () -> Unit) {
-    AppCard(
-        modifier = Modifier.clickable(onClick = onClick),
-        containerColor = colors.onPrimary,
-        contentPadding = PaddingValues(sizes.medium),
-        rowContent = {
-            Column {
-                Text(
-                    text = R.string.have_questions.string,
-                    color = colors.contentPrimary,
-                    style = typography.titleMedium
-                )
-                TextIcon(
-                    text = R.string.chat_with_support.string,
-                    style = typography.titleSmall,
-                    icon = R.drawable.ic_forward_arrow.painter,
-                    onClick = onClick,
-                )
-            }
-
-            Image(
-                painter = R.drawable.chat.painter,
-                contentDescription = null,
-                modifier = Modifier.size(56.dp)
-            )
-        }
-    )
-}
 
 @Preview(showBackground = true)
 @Composable
-fun HomeScreenPreview() = ColumnPreview {
+private fun Preview() = ColumnPreview {
     Content()
 }
