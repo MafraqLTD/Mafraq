@@ -12,6 +12,7 @@ import com.mafraq.driver.navigation.destinations.navigateToMap
 import com.mafraq.driver.navigation.destinations.registerDestination
 import com.mafraq.presentation.navigation.Screen
 import com.mafraq.presentation.navigation.destinations.chatSupportDestination
+import com.mafraq.driver.navigation.destinations.subscribersDestination
 import com.mafraq.presentation.navigation.destinations.chatGroupDestination
 import com.mafraq.presentation.navigation.destinations.notificationsDestination
 import com.mafraq.presentation.navigation.destinations.profileDestination
@@ -42,5 +43,6 @@ fun NavigationHostGraph(
     registerDestination(navController, navigateToHome = navController::navigateToHome)
     notificationsDestination(navController)
     chatSupportDestination(navController)
-    chatGroupDestination()
+    subscribersDestination(navController)
+    chatGroupDestination(navController)
 }

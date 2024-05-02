@@ -7,10 +7,10 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.mafraq.driver.navigation.destinations.navigateToHome
+import com.mafraq.driver.navigation.destinations.navigateToSubscribers
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.components.navigation.NavigationBarItem
 import com.mafraq.presentation.navigation.Screen
-import com.mafraq.presentation.navigation.destinations.navigateToChatGroup
 import com.mafraq.presentation.navigation.destinations.navigateToNotifications
 import com.mafraq.presentation.navigation.destinations.navigateToProfile
 import com.mafraq.presentation.utils.extensions.currentRoute
@@ -37,14 +37,14 @@ fun BottomNavigationBar(
         )
 
         if (hasSubscribers) {
-            val isGroupChatSelected =
-                remember(currentRoute) { Screen.ChatGroup.route == currentRoute }
+            val isSubscribersSelected =
+                remember(currentRoute) { Screen.Subscribers.route == currentRoute }
             NavigationBarItem(
-                label = R.string.group.string,
+                label = R.string.subscribers.string,
                 icon = R.drawable.users_group_outlined.painter,
                 iconSelected = R.drawable.users_group_filled.painter,
-                selected = isGroupChatSelected,
-                onClick = navController::navigateToChatGroup
+                selected = isSubscribersSelected,
+                onClick = navController::navigateToSubscribers
             )
         }
 

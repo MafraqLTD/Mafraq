@@ -11,7 +11,7 @@ import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.tooling.preview.Preview
 import com.mafraq.presentation.R
-import com.mafraq.presentation.design.components.AppContainer
+import com.mafraq.presentation.design.components.container.AppContainer
 import com.mafraq.presentation.design.components.ColumnPreview
 import com.mafraq.presentation.design.components.Spacer
 import com.mafraq.presentation.design.theme.MafraqTheme

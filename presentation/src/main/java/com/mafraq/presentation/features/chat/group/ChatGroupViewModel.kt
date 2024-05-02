@@ -17,6 +17,10 @@ class ChatGroupViewModel @Inject constructor(
     )
 ), ChatGroupInteractionListener {
 
+    override fun onNavigateBack() {
+        emitNewEvent(ChatGroupEvent.OnNavigateBack)
+    }
+
     override fun onSendMessage() {
         val message = Message(
             content = state.value.message,

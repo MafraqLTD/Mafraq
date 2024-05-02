@@ -10,5 +10,6 @@ interface DriverSubscriptionRepository {
     suspend fun hasSubscribers(): Boolean
     fun select(subscriber: Subscriber?)
     suspend fun cancel(subscriber: Subscriber)
+    suspend fun unsubscribe(subscriber: Subscriber)
     suspend fun accept()
 }

@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -134,13 +134,14 @@ fun Content(
                 }
             }
 
-        itemsIndexed(items = pendingSubscribers) { index, item ->
+        items(items = pendingSubscribers) { item ->
             SubscriberCard(
                 profilePic = item.imageUrl,
                 name = item.name,
                 workPlace = item.workLocation.formattedAddress,
                 phone = item.phone,
-                title = R.string.pending.string,
+                status = R.string.pending.string,
+                statusColor = colors.warning,
                 homePlace = item.homeLocation.formattedAddress,
                 distance = "-",
                 offDays = item.offDays.formatted,

@@ -71,4 +71,7 @@
     <string name="pending">قيد الانتظار</string>
     <string name="subscribe_requests">طلبات الاشترك</string>
     <string name="confirm_subscribe_request">تأكيد طلب الاشتراك</string>
+    <string name="manage_your_subscribers">إدارة مشتركيك</string>
+    <string name="subscribed">Subscribed</string>
+    <string name="subscribers">Subscribers</string>
 </resources>

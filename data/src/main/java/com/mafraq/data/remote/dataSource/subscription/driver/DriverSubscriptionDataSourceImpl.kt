@@ -53,6 +53,10 @@ class DriverSubscriptionDataSourceImpl @Inject constructor(
             .map(subscriberFromRemoteMapper::mapList)
     }
 
+    override suspend fun unsubscribe(subscriber: Subscriber) {
+        membersCollection.delete(subscriber.email)
+    }
+
     override suspend fun cancel(subscriber: Subscriber) {
         pendingCollection.delete(subscriber.email)
     }

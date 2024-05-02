@@ -29,6 +29,9 @@ class DriverSubscriptionRepositoryImpl @Inject constructor(
     override suspend fun cancel(subscriber: Subscriber) =
         driverSubscriptionDataSource.cancel(subscriber)
 
+    override suspend fun unsubscribe(subscriber: Subscriber) =
+        driverSubscriptionDataSource.unsubscribe(subscriber)
+
     override suspend fun accept() = driverSubscriptionDataSource.accept(
         subscriber = selectedSubscriber ?: error("No Subscriber Selected!")
     )

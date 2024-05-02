@@ -48,7 +48,7 @@ import com.mafraq.presentation.design.theme.MafraqTheme.typography
 import com.mafraq.presentation.design.components.home.AdsCarouselCard
 import com.mafraq.presentation.design.components.home.VerificationStatus
 import com.mafraq.employee.features.map.components.Rating
-import com.mafraq.presentation.navigation.destinations.navigateToChatGroup
+import com.mafraq.driver.navigation.destinations.navigateToChatGroup
 import com.mafraq.presentation.navigation.destinations.navigateToChatSupport
 import com.mafraq.employee.navigation.destinations.navigateToMap
 import com.mafraq.employee.navigation.destinations.navigateToSearch
@@ -92,7 +92,7 @@ fun HomeScreen(
         when (currentEvent) {
             HomeEvent.NavigateToMap -> locationRequester.request()
             HomeEvent.NavigateToSearch -> navController.navigateToSearch()
-            HomeEvent.NavigateToChatGroup -> navController.navigateToChatGroup()
+            HomeEvent.NavigateToChatGroup -> com.mafraq.driver.navigation.destinations.navigateToChatGroup()
             HomeEvent.NavigateToSupportChat -> navController.navigateToChatSupport()
         }
     }

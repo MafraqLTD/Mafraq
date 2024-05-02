@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -35,12 +36,13 @@ fun SubscriberCard(
     profilePic: String,
     name: String,
     workPlace: String,
-    title: String,
+    status: String,
     homePlace: String,
     phone: String,
     distance: String,
     offDays: String,
     cancelButtonTitle: String,
+    statusColor: Color = MafraqTheme.colors.primary,
     onLocationClick: () -> Unit = {},
     onCancelClick: () -> Unit = {},
 ) {
@@ -67,8 +69,9 @@ fun SubscriberCard(
             )
 
             TwoLineText(
-                title = title,
+                title = status,
                 description = homePlace,
+                titleColor = statusColor,
                 horizontalAlignment = Alignment.End,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -136,7 +139,7 @@ private fun Preview() = ColumnPreview {
         name = "Mostafa mohamed",
         workPlace = "collageName",
         phone = "05532415",
-        title = "Subscribed",
+        status = "Subscribed",
         homePlace = "Zhoor",
         distance = "1.4 km",
         offDays = "Mon, Sun, Tus",

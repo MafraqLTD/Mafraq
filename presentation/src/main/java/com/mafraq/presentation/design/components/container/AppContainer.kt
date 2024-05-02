@@ -1,4 +1,4 @@
-package com.mafraq.presentation.design.components
+package com.mafraq.presentation.design.components.container
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
