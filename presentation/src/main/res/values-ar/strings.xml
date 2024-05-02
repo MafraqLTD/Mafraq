@@ -52,7 +52,7 @@
     <string name="edit">تعديل</string>
     <string name="delete">حذف</string>
     <string name="edit_message">تعديل الرسالة</string>
-    <string name="workdays_with_arg">أيام العمل: %1$s</string>
+    <string name="offdays_with_arg">أيام العمل: %1$s</string>
     <string name="distance_with_arg">المسافة: %1$s</string>
     <string name="unsubscribe">إلغاء الاشتراك</string>
     <string name="location">الموقع</string>
@@ -72,7 +72,7 @@
     <string name="subscribe_requests">طلبات الاشترك</string>
     <string name="confirm_subscribe_request">تأكيد طلب الاشتراك</string>
     <string name="manage_your_subscribers">إدارة مشتركيك</string>
-    <string name="subscribed">Subscribed</string>
-    <string name="subscribers">Subscribers</string>
-    <string name="chat_with_your_subscribers">Chat with your subscribers</string>
+    <string name="subscribed">مشترك</string>
+    <string name="subscribers">مشتركين</string>
+    <string name="chat_with_your_subscribers">الدردشة مع مشتركيك</string>
 </resources>

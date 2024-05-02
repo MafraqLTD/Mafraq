@@ -10,6 +10,7 @@ import com.mafraq.data.remote.mappers.MessageFromRemoteMapper
 import com.mafraq.data.remote.mappers.MessageToRemoteMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -28,13 +29,22 @@ class GroupChatRepositoryImpl @Inject constructor(
             .collection(MESSAGES_COLLECTION)
     }
 
-    override val stateFlow: Flow<GroupChatState> = driverSubscriptionDataSource.allMembersFlow.map { subscribers ->
-        GroupChatState(
-            members = subscribers.size,
-            activeMembers = subscribers.count { it.active },
-            title = subscribers.firstOrNull()?.workLocation?.formattedAddress.orEmpty(),
-        )
-    }
+    override val stateFlow: Flow<GroupChatState> =
+        driverSubscriptionDataSource.allMembersFlow.map { subscribers ->
+            Timber.d("subscribers: $subscribers")
+            GroupChatState(
+                members = subscribers.size + 1,
+                activeMembers = subscribers.count { it.active },
+                title = subscribers.find {
+                    it.workLocation
+                        .formattedAddress
+                        .isNotEmpty()
+                }
+                    ?.workLocation
+                    ?.formattedAddress
+                    .orEmpty(),
+            )
+        }
 
     companion object {
         const val DRIVERS_COLLECTION = "Drivers"

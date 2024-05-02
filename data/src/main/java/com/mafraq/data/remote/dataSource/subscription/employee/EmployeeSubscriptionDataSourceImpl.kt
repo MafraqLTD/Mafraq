@@ -55,6 +55,8 @@ class EmployeeSubscriptionDataSourceImpl @Inject constructor(
             id = subscriber.email,
             entry = subscriber
         )
+
+        subscribeRequestStatusFlow.emit(subscriber.status)
         observeRequestStatus(subscriber)
     }
 
@@ -71,7 +73,6 @@ class EmployeeSubscriptionDataSourceImpl @Inject constructor(
 
     private fun observeRequestStatus(subscriber: Subscriber) {
         scope = CoroutineScope(Dispatchers.IO)
-        subscribeRequestStatusFlow.value = subscriber.status
         val memberFlow = memberCollection.asFlow<SubscriberRemote>()
             .map(subscriberFromRemoteMapper::mapList)
             .map { subscribers ->
@@ -82,12 +83,12 @@ class EmployeeSubscriptionDataSourceImpl @Inject constructor(
             memberFlow.collect {
                 when (it?.status) {
                     null -> {
-                        subscribeRequestStatusFlow.value = SubscribeRequestStatus.Cancelled
+                        subscribeRequestStatusFlow.emit(SubscribeRequestStatus.Cancelled)
                         cleanUp()
                     }
 
                     SubscribeRequestStatus.Accepted -> {
-                        subscribeRequestStatusFlow.value = it.status
+                        subscribeRequestStatusFlow.emit(it.status)
                         cleanUp()
                     }
 
@@ -104,7 +105,6 @@ class EmployeeSubscriptionDataSourceImpl @Inject constructor(
     }
 
     private fun cleanUp() {
-        driverLocalDataSource.delete()
         driver = null
         scope?.cancel()
         scope = null

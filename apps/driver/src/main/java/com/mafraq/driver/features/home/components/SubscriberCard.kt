@@ -72,6 +72,7 @@ fun SubscriberCard(
                 title = status,
                 description = homePlace,
                 titleColor = statusColor,
+                descriptionColor = MafraqTheme.colors.primary,
                 horizontalAlignment = Alignment.End,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -83,7 +84,7 @@ fun SubscriberCard(
                 Text(
                     text = listOf(
                         R.string.phone_with_arg.string(phone),
-                        R.string.workdays_with_arg.string(offDays),
+                        R.string.offdays_with_arg.string(offDays),
                         R.string.distance_with_arg.string(distance),
                     )[index],
                     style = MafraqTheme.typography.titleMedium,
