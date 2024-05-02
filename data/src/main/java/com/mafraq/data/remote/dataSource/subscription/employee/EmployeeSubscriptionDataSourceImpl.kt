@@ -20,6 +20,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -79,7 +80,6 @@ class EmployeeSubscriptionDataSourceImpl @Inject constructor(
 
         scope?.launch {
             memberFlow.collect {
-
                 when (it?.status) {
                     null -> {
                         subscribeRequestStatusFlow.value = SubscribeRequestStatus.Cancelled

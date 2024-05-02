@@ -70,7 +70,7 @@ class MapViewModel @Inject constructor(
     }
 
     override fun updateLocation() {
-        if (hardwareRepository.isLocationSettingSatisfied)
+        if (hardwareRepository.isLocationSettingSatisfied && state.value.isViewOnly.not())
             tryToCollect(
                 block = hardwareRepository::requestLocationUpdates,
                 onNewValue = {
@@ -116,8 +116,8 @@ class MapViewModel @Inject constructor(
             updateState {
                 copy(
                     isViewOnly = true,
-                    isLoading = true,
-                    destinationLocation = Location(
+                    isLoading = false,
+                    currentLocation = Location(
                         args.latitude?.toDouble()!!,
                         args.longitude?.toDouble()!!
                     )
