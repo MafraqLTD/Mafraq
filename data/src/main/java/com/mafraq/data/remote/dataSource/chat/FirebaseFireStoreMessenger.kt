@@ -17,7 +17,7 @@ abstract class FirebaseFireStoreMessenger(
 ) {
     val chatFlow: Flow<List<Message>> by lazy {
         chatCollection.asFlow<MessageRemote>().map { messages ->
-            messages.map(messageFromRemoteMapper::map)
+            messages.map(messageFromRemoteMapper::map).sortedBy { it.receivedAt }
         }
     }
 

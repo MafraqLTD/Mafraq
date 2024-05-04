@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.flow
 
 data class ChatGroupUiState(
     val groupStateFlow: Flow<GroupChatState> = flow {},
+    val chatFlow: Flow<List<Message>> = flow {},
     val message: String = emptyString(),
-    val messages: List<Message> = emptyList(),
     val isUserActive: Boolean = false,
 )

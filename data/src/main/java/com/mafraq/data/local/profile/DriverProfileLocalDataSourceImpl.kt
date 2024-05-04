@@ -3,24 +3,24 @@ package com.mafraq.data.local.profile
 import android.content.SharedPreferences
 import com.altaie.prettycode.core.utils.extenstions.fromJson
 import com.altaie.prettycode.core.utils.extenstions.toJson
-import com.mafraq.data.entities.profile.Employee
+import com.mafraq.data.entities.map.Driver
 import com.mafraq.data.utils.delete
 import com.mafraq.data.utils.putString
 import javax.inject.Inject
 
 
-class ProfileLocalDataSourceImpl @Inject constructor(
+class DriverProfileLocalDataSourceImpl @Inject constructor(
     private val sharedPref: SharedPreferences
-) : ProfileLocalDataSource {
+) : ProfileLocalDataSource<Driver> {
 
-    override fun save(value: Employee) =
+    override fun save(value: Driver) =
         sharedPref.putString(key, value.toJson())
 
     override fun delete() = sharedPref.delete(key)
 
-    override fun get(): Employee? {
+    override fun get(): Driver? {
         val userJson = sharedPref.getString(key, null)
-        return runCatching { userJson.fromJson<Employee>() }.getOrNull()
+        return runCatching { userJson.fromJson<Driver>() }.getOrNull()
     }
 
     override fun isProfileFilled(): Boolean = (get() != null)

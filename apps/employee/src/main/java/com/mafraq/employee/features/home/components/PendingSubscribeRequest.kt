@@ -36,7 +36,7 @@ fun PendingSubscribeRequest(state: HomeUiState, onCancelClick: () -> Unit) {
             ) {
                 Row {
                     AsyncImage(
-                        model = state.pendingDriver?.profilePicture.orEmpty(),
+                        model = state.pendingDriver?.profilePictureUrl.orEmpty(),
                         contentDescription = null,
                         modifier = Modifier
                             .size(48.dp)
@@ -48,7 +48,7 @@ fun PendingSubscribeRequest(state: HomeUiState, onCancelClick: () -> Unit) {
 
                     TwoLineText(
                         title = state.pendingDriver?.fullName.orEmpty(),
-                        description = state.pendingDriver?.car.orEmpty(),
+                        description = state.pendingDriver?.carName.orEmpty(),
                         titleColor = MafraqTheme.colors.background,
                         descriptionColor = MafraqTheme.colors.background
                     )

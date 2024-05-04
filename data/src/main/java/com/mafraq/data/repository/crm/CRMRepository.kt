@@ -3,7 +3,7 @@ package com.mafraq.data.repository.crm
 import com.mafraq.data.entities.home.Ad
 import com.mafraq.data.entities.map.Driver
 import com.mafraq.data.entities.profile.Employee
-import com.mafraq.data.entities.profile.EmployeeProfile
+import com.mafraq.data.entities.profile.GeneralProfile
 
 
 interface CRMRepository {
@@ -12,5 +12,6 @@ interface CRMRepository {
     suspend fun getDrivers() : List<Driver>
     suspend fun getDriver() : Driver
     suspend fun getEmployee() : Employee
-    suspend fun saveProfile(value: EmployeeProfile) : Boolean
+    suspend fun saveDriverProfile(value: GeneralProfile) : Boolean
+    suspend fun saveEmployeeProfile(value: GeneralProfile) : Boolean
 }

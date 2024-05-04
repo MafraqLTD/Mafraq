@@ -24,12 +24,12 @@ class EmployeeFromRemoteMapper @Inject constructor(
             email = email.orEmpty(),
             fullName = fullName.orEmpty(),
             id = employeeID.orEmpty(),
-            driverId = driverId.orEmpty(),
+            driverEmail = driverEmail.orEmpty(),
             homeLocation = homeLocation.toDomain(),
             workLocation = workLocation.toDomain(),
             phone = phone.orEmpty(),
             gender = gender.orEmpty(),
-            profilePicture = profilePicture.orEmpty(),
+            profilePictureUrl = profilePictureUrl.orEmpty(),
             offDays = offDays?.value?.map(DayOff::fromString).orEmpty(),
             subscriptionStatus = EmployeeSubscriptionStatus.fromString(subscriptionStatus)
         )

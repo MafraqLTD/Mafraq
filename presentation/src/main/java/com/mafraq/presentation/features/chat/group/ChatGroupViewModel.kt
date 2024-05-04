@@ -13,6 +13,7 @@ class ChatGroupViewModel @Inject constructor(
     private val groupChatRepository: GroupChatRepository,
 ) : BaseViewModel<ChatGroupUiState, ChatGroupEvent>(
     initState = ChatGroupUiState(
+        chatFlow = groupChatRepository.chatFlow,
         groupStateFlow = groupChatRepository.stateFlow,
     )
 ), ChatGroupInteractionListener {
@@ -22,16 +23,9 @@ class ChatGroupViewModel @Inject constructor(
     }
 
     override fun onSendMessage() {
-        val message = Message(
-            content = state.value.message,
-        )
+        val message = Message(content = state.value.message,)
 
-        updateState {
-            copy(
-                message = emptyString(),
-                messages = messages + message
-            )
-        }
+        clearMessageField()
 
         tryToExecute(
             block = { groupChatRepository.sendMessage(message) },
@@ -45,19 +39,10 @@ class ChatGroupViewModel @Inject constructor(
     }
 
     override fun onEditMessage(originalMessage: Message, index: Int) {
-        val messages = state.value.messages.toMutableList()
         val message = originalMessage.copy(content = state.value.message)
         tryToExecute(
             block = { groupChatRepository.sendMessage(message) },
-            onSuccess = {
-                messages[index] = message
-                updateState {
-                    copy(
-                        message = emptyString(),
-                        messages = messages
-                    )
-                }
-            },
+            onSuccess = { clearMessageField() },
             onError = {
                 // TODO: Handle error
             }
@@ -65,12 +50,10 @@ class ChatGroupViewModel @Inject constructor(
     }
 
     override fun onDeleteMessage(messageId: String, index: Int) {
-        val messages = state.value.messages.toMutableList()
         tryToExecute(
             block = { groupChatRepository.deleteMessage(messageId) },
             onSuccess = {
-                messages.removeAt(index)
-                updateState { copy(messages = messages) }
+                // TODO: Handle success
             },
             onError = {
                 // TODO: Handle error
@@ -81,4 +64,6 @@ class ChatGroupViewModel @Inject constructor(
     override fun onMessageChange(value: String) = updateState {
         copy(message = value)
     }
+
+    private fun clearMessageField() = updateState { copy(message = emptyString()) }
 }

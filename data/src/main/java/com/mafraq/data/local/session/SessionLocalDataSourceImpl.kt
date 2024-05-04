@@ -13,11 +13,10 @@ class SessionLocalDataSourceImpl @Inject constructor(
     private val sharedPref: SharedPreferences
 ) : SessionLocalDataSource {
 
-    override fun save(driverId: String?, email: String?, subscriptionId: String?) {
+    override fun save(driverEmail: String?, email: String?) {
         val session = Session(
-            driverId = driverId,
+            driverEmail = driverEmail,
             email = email,
-            subscriptionId = subscriptionId
         )
         sharedPref.putString(key, session.toJson())
     }

@@ -35,10 +35,11 @@ private fun Content(
     state: ChatGroupUiState = ChatGroupUiState(),
     listener: ChatGroupInteractionListener = ChatGroupInteractionListener.Preview
 ) {
+    val messages by state.chatFlow.collectAsStateWithLifecycle(initialValue = emptyList())
     val groupState by state.groupStateFlow.collectAsStateWithLifecycle(initialValue = GroupChatState())
     ChatScreenTemplate(
         messageContent = state.message,
-        messages = state.messages,
+        messages = messages,
         listener = listener,
         header = {
             ChatGroupHeader(

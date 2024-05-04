@@ -11,11 +11,11 @@ class DriverSubscriptionRepositoryImpl @Inject constructor(
 ) : DriverSubscriptionRepository {
     private var selectedSubscriber: Subscriber? = null
 
-    override val subscribersFlow: Flow<List<Subscriber>> =
-        driverSubscriptionDataSource.subscribersFlow
+    override val subscribersFlow: Flow<List<Subscriber>>
+        get() = driverSubscriptionDataSource.subscribersFlow
 
-    override val pendingFlow: Flow<List<Subscriber>> =
-        driverSubscriptionDataSource.pendingFlow
+    override val pendingFlow: Flow<List<Subscriber>>
+    get() = driverSubscriptionDataSource.pendingFlow
 
     override fun select(subscriber: Subscriber?) {
         selectedSubscriber = subscriber

@@ -8,6 +8,7 @@ import com.mafraq.driver.navigation.destinations.homeDestination
 import com.mafraq.driver.navigation.destinations.loginDestination
 import com.mafraq.driver.navigation.destinations.mapDestination
 import com.mafraq.driver.navigation.destinations.navigateToHome
+import com.mafraq.driver.navigation.destinations.navigateToLogin
 import com.mafraq.driver.navigation.destinations.navigateToMap
 import com.mafraq.driver.navigation.destinations.registerDestination
 import com.mafraq.presentation.navigation.Screen
@@ -37,7 +38,8 @@ fun NavigationHostGraph(
                 addressId = addressId
             )
         },
-        navigateToHome = navController::navigateToHome
+        navigateToHome = navController::navigateToHome,
+        navigateToLogin = navController::navigateToLogin
     )
     loginDestination(navController, navigateToHome = navController::navigateToHome)
     registerDestination(navController, navigateToHome = navController::navigateToHome)

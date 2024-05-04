@@ -4,6 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -23,6 +25,7 @@ import com.mafraq.presentation.utils.extensions.detectTapGestures
 
 @Composable
 fun AppContainer(
+    actions: @Composable (RowScope.() -> Unit)? = null,
     content: @Composable ColumnScope.(FocusManager) -> Unit
 ) {
     val focusManager = LocalFocusManager.current
@@ -36,6 +39,14 @@ fun AppContainer(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+        actions?.let {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.End
+            ) { actions() }
+        }
+
         ContainerCard(content = { content(focusManager) })
     }
 }

@@ -4,8 +4,10 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mafraq.data.entities.Subscriber
 import com.mafraq.data.entities.map.Driver
+import com.mafraq.data.entities.profile.Employee
 import com.mafraq.data.local.driver.DriverLocalDataSource
 import com.mafraq.data.local.profile.ProfileLocalDataSource
+import com.mafraq.data.local.session.SessionLocalDataSource
 import com.mafraq.data.remote.dataSource.chat.asFlow
 import com.mafraq.data.remote.dataSource.chat.delete
 import com.mafraq.data.remote.dataSource.chat.insert
@@ -27,7 +29,8 @@ import javax.inject.Inject
 class EmployeeSubscriptionDataSourceImpl @Inject constructor(
     firestore: FirebaseFirestore,
     private val driverLocalDataSource: DriverLocalDataSource,
-    private val profileLocalDataSource: ProfileLocalDataSource,
+    private val profileLocalDataSource: ProfileLocalDataSource<Employee>,
+    private val sessionLocalDataSource: SessionLocalDataSource,
     private val subscriberFromRemoteMapper: SubscriberFromRemoteMapper,
     private val subscriberFromEmployeeMapper: SubscriberFromEmployeeMapper,
 ) : EmployeeSubscriptionDataSource {
@@ -89,6 +92,10 @@ class EmployeeSubscriptionDataSourceImpl @Inject constructor(
 
                     SubscribeRequestStatus.Accepted -> {
                         subscribeRequestStatusFlow.emit(it.status)
+                        sessionLocalDataSource.save(
+                            driverEmail = driver?.email,
+                            email = subscriber.email
+                        )
                         cleanUp()
                     }
 

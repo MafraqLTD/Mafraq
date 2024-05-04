@@ -10,7 +10,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
-import com.google.android.play.integrity.internal.o
 import com.mafraq.data.entities.map.Driver
 import com.mafraq.data.entities.map.Location
 import com.mafraq.data.remote.mappers.toLocation
@@ -116,7 +115,7 @@ fun MapScreenWithMarkers(
                 iconSize = 1.3,
                 textSize = 11.5,
                 point = point,
-                textField = driver.car,
+                textField = driver.carName,
                 textOffset = listOf(0.0, -3.5),
                 textAnchor = TextAnchor.TOP,
                 textJustify = TextJustify.CENTER,

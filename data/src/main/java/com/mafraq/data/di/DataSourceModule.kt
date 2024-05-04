@@ -1,10 +1,13 @@
 package com.mafraq.data.di
 
 
+import com.mafraq.data.entities.map.Driver
+import com.mafraq.data.entities.profile.Employee
 import com.mafraq.data.local.driver.DriverLocalDataSource
 import com.mafraq.data.local.driver.DriverLocalDataSourceImpl
+import com.mafraq.data.local.profile.DriverProfileLocalDataSourceImpl
 import com.mafraq.data.local.profile.ProfileLocalDataSource
-import com.mafraq.data.local.profile.ProfileLocalDataSourceImpl
+import com.mafraq.data.local.profile.EmployeeProfileLocalDataSourceImpl
 import com.mafraq.data.local.session.SessionLocalDataSource
 import com.mafraq.data.local.session.SessionLocalDataSourceImpl
 import com.mafraq.data.remote.dataSource.auth.FirebaseAuthDataSource
@@ -42,8 +45,11 @@ interface DataSourceModule {
 
     @Binds
     @Singleton
-    fun bindProfileLocalDataSource(source: ProfileLocalDataSourceImpl): ProfileLocalDataSource
+    fun bindEmployeeProfileLocalDataSource(source: EmployeeProfileLocalDataSourceImpl): ProfileLocalDataSource<Employee>
 
+    @Binds
+    @Singleton
+    fun bindDriverProfileLocalDataSource(source: DriverProfileLocalDataSourceImpl): ProfileLocalDataSource<Driver>
 
     @Binds
     @Singleton

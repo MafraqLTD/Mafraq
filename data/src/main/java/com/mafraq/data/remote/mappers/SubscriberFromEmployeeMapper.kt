@@ -12,7 +12,7 @@ class SubscriberFromEmployeeMapper @Inject constructor(
         Subscriber(
             email = email,
             name = fullName,
-            imageUrl = profilePicture,
+            imageUrl = profilePictureUrl,
             homeLocation = homeLocation,
             workLocation = workLocation,
             offDays = offDays,

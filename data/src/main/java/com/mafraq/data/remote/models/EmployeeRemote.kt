@@ -15,7 +15,7 @@ data class EmployeeRemote(
     @SerializedName("Employee ID")
     val employeeID: String? = UUID.randomUUID().toString(),
     @SerializedName("Driver ID")
-    val driverId: String?,
+    val driverEmail: String?,
     @SerializedName("Full Name")
     val fullName: String?,
     @SerializedName("Gender")
@@ -27,7 +27,7 @@ data class EmployeeRemote(
     @SerializedName("Phone")
     val phone: String?,
     @SerializedName("Profile Picture")
-    val profilePicture: String?,
+    val profilePictureUrl: String?,
     @SerializedName("Subscription Status")
     val subscriptionStatus: String?,
 )

@@ -3,7 +3,7 @@ package com.mafraq.employee.features.map
 import androidx.lifecycle.SavedStateHandle
 import com.mafraq.data.entities.map.Driver
 import com.mafraq.data.entities.map.Location
-import com.mafraq.data.entities.profile.EmployeeProfile
+import com.mafraq.data.entities.profile.GeneralProfile
 import com.mafraq.data.remote.mappers.toPoint
 import com.mafraq.data.repository.crm.CRMRepository
 import com.mafraq.data.repository.hardware.HardwareRepository
@@ -68,7 +68,7 @@ class MapViewModel @Inject constructor(
         else
             tryToExecute(
                 block = {
-                    crmRepository.saveProfile(EmployeeProfile(workLocation = destination))
+                    crmRepository.saveEmployeeProfile(GeneralProfile(workLocation = destination))
                 },
                 onSuccess = {
                     emitNewEvent(MapEvent.OnNavigateBack)

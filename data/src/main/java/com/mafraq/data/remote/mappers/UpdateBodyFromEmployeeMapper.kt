@@ -1,19 +1,15 @@
 package com.mafraq.data.remote.mappers
 
 import com.altaie.prettycode.core.mapper.base.Mapper
-import com.altaie.prettycode.core.utils.extenstions.toJson
-import com.google.android.play.integrity.internal.f
-import com.mafraq.data.entities.map.Location
 import com.mafraq.data.entities.profile.Employee
-import com.mafraq.data.local.profile.ProfileLocalDataSourceImpl
-import com.mafraq.data.remote.models.InsertRowBody
+import com.mafraq.data.local.profile.EmployeeProfileLocalDataSourceImpl
 import com.mafraq.data.remote.models.UpdateRowBody
 import com.mafraq.data.utils.serializedWithSeparator
 import javax.inject.Inject
 
 
 class UpdateBodyFromEmployeeMapper @Inject constructor(
-    private val profileLocalDataSource: ProfileLocalDataSourceImpl
+    private val profileLocalDataSource: EmployeeProfileLocalDataSourceImpl
 ) : Mapper<Employee, UpdateRowBody> {
 
     override fun map(from: Employee): UpdateRowBody = from.run {
@@ -23,13 +19,13 @@ class UpdateBodyFromEmployeeMapper @Inject constructor(
             "cm6TKIRbdzcwUOLt" to offDays.serializedWithSeparator { it.name },
             "3NugnVDLDBCDst4x" to savedValue?.email.updatedOrEmpty(email),
 //            "uwsRtDxOv83FsWPL" to email, // ID
-            "MFSzAjyB5cKPffWC" to savedValue?.driverId.updatedOrEmpty(driverId),
+            "MFSzAjyB5cKPffWC" to savedValue?.driverEmail.updatedOrEmpty(driverEmail),
             "geU4o1VQrUH0gJLO" to savedValue?.fullName.updatedOrEmpty(fullName),
             "HKT8vh8KsERfeWvN" to savedValue?.gender.updatedOrEmpty(gender),
             "bn1RfhqUM27zkACQ" to savedValue?.homeLocation?.latLng.updatedOrEmpty(homeLocation.latLng),
             "kD9MZqEmmDd9dFVE" to savedValue?.workLocation?.latLng.updatedOrEmpty(workLocation.latLng),
             "v51SdBH4T4HvTLaL" to savedValue?.phone.updatedOrEmpty(phone),
-            "Nd4WH9qQzuZL0qza" to savedValue?.profilePicture.updatedOrEmpty(profilePicture),
+            "Nd4WH9qQzuZL0qza" to savedValue?.profilePictureUrl.updatedOrEmpty(profilePictureUrl),
             "DT13E8TN2406YACQ" to savedValue?.subscriptionStatus?.name.updatedOrEmpty(
                 subscriptionStatus.name
             )

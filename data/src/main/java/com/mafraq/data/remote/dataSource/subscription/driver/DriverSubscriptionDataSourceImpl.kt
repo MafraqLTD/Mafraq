@@ -4,6 +4,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mafraq.data.entities.Session
 import com.mafraq.data.entities.Subscriber
+import com.mafraq.data.entities.map.Driver
 import com.mafraq.data.local.session.SessionLocalDataSource
 import com.mafraq.data.remote.dataSource.chat.asFlow
 import com.mafraq.data.remote.dataSource.chat.delete
@@ -22,32 +23,27 @@ import javax.inject.Inject
 class DriverSubscriptionDataSourceImpl @Inject constructor(
     firestore: FirebaseFirestore,
     sessionLocalDataSource: SessionLocalDataSource,
-    subscriberFromRemoteMapper: SubscriberFromRemoteMapper
+    private val subscriberFromRemoteMapper: SubscriberFromRemoteMapper
 ) : DriverSubscriptionDataSource {
     private val session: Session? = sessionLocalDataSource.get()
-    private val email = requireNotNull(session?.email)
-    private val root by lazy {
-        firestore
-            .collection(DRIVERS_COLLECTION)
-            .document(email)
-    }
+    private val root by lazy { firestore.collection(DRIVERS_COLLECTION) }
 
-    private val membersCollection: CollectionReference by lazy {
-        root.collection(MEMBERS_COLLECTION)
-    }
+    private val membersCollection: CollectionReference
+        get() = session?.email?.let {
+            root.document(it).collection(MEMBERS_COLLECTION)
+        } ?: root
 
-    override val allMembersFlow: Flow<List<Subscriber>> by lazy {
-        membersCollection.asFlow<SubscriberRemote>()
+    override val allMembersFlow: Flow<List<Subscriber>>
+        get() = membersCollection.asFlow<SubscriberRemote>()
             .map(subscriberFromRemoteMapper::mapList)
-    }
 
-    override val subscribersFlow: Flow<List<Subscriber>> =
-        allMembersFlow.map { subscribers ->
+    override val subscribersFlow: Flow<List<Subscriber>>
+        get() = allMembersFlow.map { subscribers ->
             subscribers.filter { it.status.isAccepted }
         }
 
-    override val pendingFlow: Flow<List<Subscriber>> =
-        allMembersFlow.map { subscribers ->
+    override val pendingFlow: Flow<List<Subscriber>>
+        get() = allMembersFlow.map { subscribers ->
             subscribers.filter { it.status.isPending }
         }
 

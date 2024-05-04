@@ -25,13 +25,12 @@ class GroupChatRepositoryImpl @Inject constructor(
     override val chatCollection: CollectionReference by lazy {
         firestore
             .collection(DRIVERS_COLLECTION)
-            .document(requireNotNull(session?.driverId))
+            .document(requireNotNull(session?.driverEmail))
             .collection(MESSAGES_COLLECTION)
     }
 
     override val stateFlow: Flow<GroupChatState> =
         driverSubscriptionDataSource.allMembersFlow.map { subscribers ->
-            Timber.d("subscribers: $subscribers")
             GroupChatState(
                 members = subscribers.size + 1,
                 activeMembers = subscribers.count { it.active },

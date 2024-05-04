@@ -10,6 +10,7 @@ import com.mafraq.employee.navigation.destinations.homeDestination
 import com.mafraq.employee.navigation.destinations.loginDestination
 import com.mafraq.employee.navigation.destinations.mapDestination
 import com.mafraq.employee.navigation.destinations.navigateToHome
+import com.mafraq.employee.navigation.destinations.navigateToLogin
 import com.mafraq.employee.navigation.destinations.navigateToMap
 import com.mafraq.employee.navigation.destinations.navigateToSearch
 import com.mafraq.presentation.navigation.destinations.notificationsDestination
@@ -39,7 +40,8 @@ fun NavigationHostGraph(
             )
         },
         navigateToHome = navController::navigateToHome,
-        navigateToSearch = navController::navigateToSearch
+        navigateToSearch = navController::navigateToSearch,
+        navigateToLogin = navController::navigateToLogin
     )
     loginDestination(navController, navigateToHome = navController::navigateToHome)
     registerDestination(navController, navigateToHome = navController::navigateToHome)

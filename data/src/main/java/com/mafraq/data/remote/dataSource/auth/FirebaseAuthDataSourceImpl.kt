@@ -4,9 +4,16 @@ import androidx.core.net.toUri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.userProfileChangeRequest
+import com.mafraq.data.entities.AppUserType
 import com.mafraq.data.entities.login.AuthUser
 import com.mafraq.data.entities.login.LoginBody
+import com.mafraq.data.entities.map.Driver
+import com.mafraq.data.entities.profile.Employee
 import com.mafraq.data.entities.register.RegisterBody
+import com.mafraq.data.local.driver.DriverLocalDataSource
+import com.mafraq.data.local.profile.DriverProfileLocalDataSourceImpl
+import com.mafraq.data.local.profile.EmployeeProfileLocalDataSourceImpl
+import com.mafraq.data.local.profile.ProfileLocalDataSource
 import com.mafraq.data.local.session.SessionLocalDataSource
 import com.mafraq.data.remote.mappers.UserAuthFromRemoteMapper
 import com.mafraq.data.utils.awaitBoolean
@@ -17,8 +24,12 @@ import kotlin.coroutines.suspendCoroutine
 
 class FirebaseAuthDataSourceImpl @Inject constructor(
     private val auth: FirebaseAuth,
+    private val appUserType: AppUserType,
+    private val driverLocalDataSource: DriverLocalDataSource,
+    private val sessionLocalDataSource: SessionLocalDataSource,
     private val userAuthFromRemoteMapper: UserAuthFromRemoteMapper,
-    private val sessionLocalDataSource: SessionLocalDataSource
+    private val driverProfileLocalDataSource: ProfileLocalDataSource<Driver>,
+    private val employeeProfileLocalDataSource: ProfileLocalDataSource<Employee>,
 ) : FirebaseAuthDataSource {
     override val currentUser: AuthUser?
         get() = auth.currentUser?.let(userAuthFromRemoteMapper::map)
@@ -30,8 +41,7 @@ class FirebaseAuthDataSourceImpl @Inject constructor(
         if (isSuccess)
             sessionLocalDataSource.save(
                 email = body.email,
-                subscriptionId = null,
-                driverId = null
+                driverEmail = if (appUserType.isDriverApp) body.email else null
             )
         return isSuccess
     }
@@ -45,19 +55,19 @@ class FirebaseAuthDataSourceImpl @Inject constructor(
                 ?.awaitBoolean("sendEmailVerification()")
             sessionLocalDataSource.save(
                 email = body.email,
-                subscriptionId = null,
-                driverId = null
+                driverEmail = null
             )
         }
 
         return isSuccess
     }
 
-    override suspend fun logout(): Boolean = suspendCoroutine { continuation ->
+    override fun logout() {
         auth.signOut()
-        FirebaseAuth.AuthStateListener {
-            continuation.resume(auth.currentUser == null)
-        }
+        driverLocalDataSource.delete()
+        sessionLocalDataSource.delete()
+        driverProfileLocalDataSource.delete()
+        employeeProfileLocalDataSource.delete()
     }
 
     override suspend fun updateUser(user: AuthUser): Boolean {

@@ -88,11 +88,11 @@ private fun Content(
     if (state.showDriverDetails)
         with(state.selectedDriver) {
             DriverBottomSheet(
-                car = car,
+                car = carName,
                 name = fullName,
                 rating = rating,
                 carNumber = carNumber,
-                profilePic = profilePicture,
+                profilePic = profilePictureUrl,
                 snippet = snippet,
                 onAccept = listener::onSubscriptionRequest,
                 onDismissRequest = listener::onDismissDriverDetails,
