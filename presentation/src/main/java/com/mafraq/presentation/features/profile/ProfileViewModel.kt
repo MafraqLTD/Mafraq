@@ -2,8 +2,10 @@ package com.mafraq.presentation.features.profile
 
 
 import androidx.lifecycle.SavedStateHandle
+import com.mafraq.data.entities.AppUserType
 import com.mafraq.data.entities.profile.DayOff
 import com.mafraq.data.entities.profile.Gender
+import com.mafraq.data.repository.auth.AuthRepository
 import com.mafraq.data.repository.crm.CRMRepository
 import com.mafraq.data.repository.map.MapPlacesRepository
 import com.mafraq.presentation.features.base.BaseViewModel
@@ -18,7 +20,9 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    private val userType: AppUserType,
     private val crmRepository: CRMRepository,
+    private val authRepository: AuthRepository,
     private val placesRepository: MapPlacesRepository,
     private val locationSettingsDelegate: LocationSettingsDelegateImpl
 ) : BaseViewModel<ProfileUiState, ProfileEvent>(ProfileUiState()),
@@ -33,6 +37,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     override fun onLogout() {
+        authRepository.logout()
         emitNewEvent(ProfileEvent.OnLogout)
     }
 
@@ -42,7 +47,11 @@ class ProfileViewModel @Inject constructor(
                 updateState {
                     copy(isLoading = true)
                 }
-                crmRepository.saveProfile(state.value.toProfile())
+                val saveProfile = if (userType.isDriverApp)
+                    crmRepository::saveDriverProfile
+                else
+                    crmRepository::saveEmployeeProfile
+                saveProfile(state.value.toProfile())
             },
             onSuccess = {
                 updateState {
@@ -77,17 +86,11 @@ class ProfileViewModel @Inject constructor(
 
     override fun setFullname(value: String) = updateState { copy(fullName = value, error = null) }
 
-    override fun validateFields(): Boolean = state.value.run {
-        listOf(
-            email,
-            workLocation.formattedAddress,
-            homeLocation.formattedAddress,
-            phone,
-            fullName,
-            birthday
-        ).all(String::isNotEmpty)
-                && gender != null
-                && offDays.isNotEmpty()
+    override fun validateFields(): Boolean {
+        return if (userType.isDriverApp)
+            validateDriverFields()
+        else
+            validateEmployeeFields()
     }
 
     override fun setGender(value: Gender) = updateState {
@@ -107,30 +110,27 @@ class ProfileViewModel @Inject constructor(
         copy(birthday = value)
     }
 
-    private fun initialize() {
+    override fun setNationalId(value: String) = updateState {
+        copy(nationalId = value)
+    }
 
-        tryToExecute(
-            block = { crmRepository.getEmployee() },
-            onSuccess = {
-                runCatching {
-                    updateState {
-                        copy(
-                            email = it.email,
-                            fullName = it.fullName,
-                            birthday = it.birthday,
-                            gender = Gender.fromString(it.gender),
-                            workLocation = it.workLocation,
-                            homeLocation = it.homeLocation,
-                            offDays = it.offDays.toSet(),
-                            phone = it.phone,
-                            error = null
-                        )
-                    }
-                }.onFailure {
-                    Timber.e(it)
-                }
-            },
-        )
+    override fun setCarName(value: String) = updateState {
+        copy(carName = value)
+    }
+
+    override fun setCarNumber(value: String) = updateState {
+        copy(carNumber = value)
+    }
+
+    override fun setSnippet(value: String) = updateState {
+        copy(snippet = value)
+    }
+
+    private fun initialize() {
+        if (userType.isDriverApp)
+            driverInitialize()
+        else
+            employeeInitialize()
 
         if (args.addressId == null) return
 
@@ -154,6 +154,85 @@ class ProfileViewModel @Inject constructor(
                 }
             }
         )
+    }
+
+    private fun driverInitialize() {
+        tryToExecute(
+            block = { crmRepository.getDriver() },
+            onSuccess = {
+                runCatching {
+                    updateState {
+                        copy(
+                            email = it.email,
+                            fullName = it.fullName,
+                            birthday = it.birthday,
+                            gender = Gender.fromString(it.gender),
+                            homeLocation = it.location,
+                            carName = it.carName,
+                            carNumber = it.carNumber,
+                            snippet = it.snippet,
+                            nationalId = it.nationalId,
+                            phone = it.phone,
+                            error = null
+                        )
+                    }
+                }.onFailure {
+                    Timber.e(it)
+                }
+            },
+        )
+    }
+
+    private fun employeeInitialize() {
+        tryToExecute(
+            block = { crmRepository.getEmployee() },
+            onSuccess = {
+                runCatching {
+                    updateState {
+                        copy(
+                            email = it.email,
+                            fullName = it.fullName,
+                            birthday = it.birthday,
+                            gender = Gender.fromString(it.gender),
+                            workLocation = it.workLocation,
+                            homeLocation = it.homeLocation,
+                            offDays = it.offDays.toSet(),
+                            phone = it.phone,
+                            error = null
+                        )
+                    }
+                }.onFailure {
+                    Timber.e(it)
+                }
+            },
+        )
+    }
+
+    private fun validateEmployeeFields(): Boolean = state.value.run {
+        listOf(
+            email,
+            workLocation.formattedAddress,
+            homeLocation.formattedAddress,
+            phone,
+            fullName,
+            birthday
+        ).all(String::isNotEmpty)
+                && gender != null
+                && offDays.isNotEmpty()
+    }
+
+    private fun validateDriverFields(): Boolean = state.value.run {
+        listOf(
+            email,
+            carName,
+            carNumber,
+            snippet,
+            nationalId,
+            homeLocation.formattedAddress,
+            phone,
+            fullName,
+            birthday
+        ).all(String::isNotEmpty) && gender != null
     }
 }
 

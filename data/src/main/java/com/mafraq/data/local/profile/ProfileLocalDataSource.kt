@@ -1,15 +1,13 @@
 package com.mafraq.data.local.profile
 
-import com.mafraq.data.entities.profile.Employee
 
+interface ProfileLocalDataSource<T> {
 
-interface ProfileLocalDataSource {
-
-    fun save(value: Employee)
+    fun save(value: T)
 
     fun delete()
 
-    fun get(): Employee?
+    fun get(): T?
 
     fun isProfileFilled(): Boolean
 

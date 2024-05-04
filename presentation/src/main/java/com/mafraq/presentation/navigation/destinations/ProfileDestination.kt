@@ -32,6 +32,7 @@ fun NavController.navigateToLoginProfile() {
 
 fun NavGraphBuilder.profileDestination(
     navigateToHome: () -> Unit,
+    navigateToLogin: () -> Unit,
     navigateToMap: (fromProfile: Boolean, addressId: Int) -> Unit,
     navigateToSearch: (fromProfile: Boolean) -> Unit = {}
 ) {
@@ -47,7 +48,8 @@ fun NavGraphBuilder.profileDestination(
             viewModel = hiltViewModel(),
             navigateToMap = navigateToMap,
             navigateToHome = navigateToHome,
-            navigateToSearch = navigateToSearch
+            navigateToSearch = navigateToSearch,
+            navigateToLogin = navigateToLogin
         )
     }
 
@@ -56,7 +58,8 @@ fun NavGraphBuilder.profileDestination(
             viewModel = hiltViewModel(),
             navigateToMap = navigateToMap,
             navigateToHome = navigateToHome,
-            navigateToSearch = navigateToSearch
+            navigateToSearch = navigateToSearch,
+            navigateToLogin = navigateToLogin
         )    }
 
     composable(route = Screen.LoginProfile.route) {
@@ -64,6 +67,7 @@ fun NavGraphBuilder.profileDestination(
             viewModel = hiltViewModel(),
             navigateToMap = navigateToMap,
             navigateToHome = navigateToHome,
-            navigateToSearch = navigateToSearch
+            navigateToSearch = navigateToSearch,
+            navigateToLogin = navigateToLogin
         )    }
 }
