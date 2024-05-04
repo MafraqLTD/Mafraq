@@ -9,6 +9,7 @@ import com.mafraq.data.repository.auth.AuthRepository
 import com.mafraq.data.repository.subscription.driver.DriverSubscriptionRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,21 +20,30 @@ val LocalAppStateProvider: ProvidableCompositionLocal<AppState> = staticComposit
 
 
 class AppState @Inject constructor(
-    authRepository: AuthRepository,
-    driverSubscriptionRepository: DriverSubscriptionRepository
+    private val authRepository: AuthRepository,
+    private val driverSubscriptionRepository: DriverSubscriptionRepository
 ) {
-    private val scope = CoroutineScope(Dispatchers.IO)
+    private var scope: CoroutineScope? = null
     var hasSubscribers: Boolean by mutableStateOf(false)
         private set
 
-    val isAuthorized: Boolean = authRepository.isAuthorized()
-    val isProfileFilled: Boolean = authRepository.isProfileFilled
+    val isAuthorized: Boolean
+        get() = authRepository.isAuthorized()
 
-    init {
-        scope.launch {
+    val isProfileFilled: Boolean
+        get() = authRepository.isProfileFilled
+
+    fun reload() {
+        scope?.cancel()
+        scope = CoroutineScope(Dispatchers.IO)
+        scope?.launch {
             driverSubscriptionRepository.subscribersFlow.collect {
                 hasSubscribers = it.isNotEmpty()
             }
         }
+    }
+
+    init {
+        reload()
     }
 }

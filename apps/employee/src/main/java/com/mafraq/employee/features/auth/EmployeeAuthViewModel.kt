@@ -2,6 +2,7 @@ package com.mafraq.employee.features.auth
 
 import com.mafraq.data.repository.auth.AuthRepository
 import com.mafraq.data.repository.crm.CRMRepository
+import com.mafraq.employee.main.components.AppState
 import com.mafraq.presentation.features.authentication.event.LoginEvent
 import com.mafraq.presentation.features.authentication.event.RegisterEvent
 import com.mafraq.presentation.features.authentication.viewmodel.AuthViewModel
@@ -11,6 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EmployeeAuthViewModel @Inject constructor(
+    private val appState: AppState,
     private val authRepository: AuthRepository,
     private val crmRepository: CRMRepository
 ): AuthViewModel() {
@@ -36,6 +38,7 @@ class EmployeeAuthViewModel @Inject constructor(
                         isLoading = false
                     )
                 }
+                appState.reload()
             },
             onError = { updateState { copy(error = it, isLoading = false) } })
     }
@@ -61,6 +64,7 @@ class EmployeeAuthViewModel @Inject constructor(
                         isLoading = false
                     )
                 }
+                appState.reload()
             },
             onError = { updateState { copy(error = it, isLoading = false) } }
         )

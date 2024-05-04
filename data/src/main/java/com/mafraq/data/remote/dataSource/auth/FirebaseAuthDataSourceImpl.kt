@@ -11,15 +11,11 @@ import com.mafraq.data.entities.map.Driver
 import com.mafraq.data.entities.profile.Employee
 import com.mafraq.data.entities.register.RegisterBody
 import com.mafraq.data.local.driver.DriverLocalDataSource
-import com.mafraq.data.local.profile.DriverProfileLocalDataSourceImpl
-import com.mafraq.data.local.profile.EmployeeProfileLocalDataSourceImpl
 import com.mafraq.data.local.profile.ProfileLocalDataSource
 import com.mafraq.data.local.session.SessionLocalDataSource
 import com.mafraq.data.remote.mappers.UserAuthFromRemoteMapper
 import com.mafraq.data.utils.awaitBoolean
 import javax.inject.Inject
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 
 class FirebaseAuthDataSourceImpl @Inject constructor(
