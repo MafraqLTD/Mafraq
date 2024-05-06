@@ -29,7 +29,7 @@ class DriverSubscriptionDataSourceImpl @Inject constructor(
     private val root by lazy { firestore.collection(DRIVERS_COLLECTION) }
 
     private val membersCollection: CollectionReference
-        get() = session?.email?.let {
+        get() = session?.driverEmail?.let {
             root.document(it).collection(MEMBERS_COLLECTION)
         } ?: root
 

@@ -30,8 +30,9 @@ class GroupChatRepositoryImpl @Inject constructor(
             .collection(MESSAGES_COLLECTION)
     }
 
-    override val stateFlow: Flow<GroupChatState> =
+    override val stateFlow: Flow<GroupChatState> by lazy {
         driverSubscriptionDataSource.allMembersFlow.map { subscribers ->
+            Timber.i("SUBSCRIBERS: $subscribers")
             GroupChatState(
                 members = subscribers.size + 1,
                 activeMembers = subscribers.count { it.active },
@@ -45,6 +46,7 @@ class GroupChatRepositoryImpl @Inject constructor(
                     .orEmpty(),
             )
         }
+    }
 
     companion object {
         const val DRIVERS_COLLECTION = "Drivers"
