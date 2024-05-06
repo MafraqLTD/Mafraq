@@ -22,23 +22,26 @@ class DriverAuthViewModel @Inject constructor(
 
         tryToExecute(
             block = {
-                authRepository.register(body = state.value.toRegisterBody()).also {
-                    runCatching { crmRepository.getDriver() }
-                }
+                authRepository.register(body = state.value.toRegisterBody())
             },
             checkSuccess = { it },
             onSuccess = {
-                val event = if (authRepository.isProfileFilled)
-                    RegisterEvent.OnRegister
-                else
-                    RegisterEvent.OnNavigateToLoginProfile
-                updateState(notifyEvent = event) {
-                    copy(
-                        error = null,
-                        isLoading = false
-                    )
-                }
-                appState.reload()
+                tryToExecute(
+                    block = crmRepository::getDriver,
+                    onSuccess = {
+                        val event = if (authRepository.isProfileFilled)
+                            RegisterEvent.OnRegister
+                        else
+                            RegisterEvent.OnNavigateToLoginProfile
+                        updateState(notifyEvent = event) {
+                            copy(
+                                error = null,
+                                isLoading = false
+                            )
+                        }
+                        appState.reload()
+                    }
+                )
             },
             onError = { updateState { copy(error = it, isLoading = false) } })
     }
@@ -48,23 +51,26 @@ class DriverAuthViewModel @Inject constructor(
 
         tryToExecute(
             block = {
-                authRepository.login(body = state.value.toLoginBody()).also {
-                    runCatching { crmRepository.getDriver() }
-                }
+                authRepository.login(body = state.value.toLoginBody())
             },
             checkSuccess = { it },
             onSuccess = {
-                val event = if (authRepository.isProfileFilled)
-                    LoginEvent.OnLogin
-                else
-                    LoginEvent.OnNavigateToLoginProfile
-                updateState(notifyEvent = event) {
-                    copy(
-                        error = null,
-                        isLoading = false
-                    )
-                }
-                appState.reload()
+                tryToExecute(
+                    block = crmRepository::getDriver,
+                    onSuccess = {
+                        val event = if (authRepository.isProfileFilled)
+                            LoginEvent.OnLogin
+                        else
+                            LoginEvent.OnNavigateToLoginProfile
+                        updateState(notifyEvent = event) {
+                            copy(
+                                error = null,
+                                isLoading = false
+                            )
+                        }
+                        appState.reload()
+                    }
+                )
             },
             onError = { updateState { copy(error = it, isLoading = false) } }
         )

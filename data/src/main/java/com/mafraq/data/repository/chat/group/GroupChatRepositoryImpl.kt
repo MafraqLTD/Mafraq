@@ -19,10 +19,11 @@ class GroupChatRepositoryImpl @Inject constructor(
     sessionLocalDataSource: SessionLocalDataSource,
     messageToRemoteMapper: MessageToRemoteMapper,
     messageFromRemoteMapper: MessageFromRemoteMapper,
-    driverSubscriptionDataSource: DriverSubscriptionDataSource
+    driverSubscriptionDataSource: DriverSubscriptionDataSource,
 ) : GroupChatRepository(messageToRemoteMapper, messageFromRemoteMapper) {
-    private val session: Session? = sessionLocalDataSource.get()
+    private val session: Session? by lazy { sessionLocalDataSource.get() }
     override val chatCollection: CollectionReference by lazy {
+        Timber.d("SESSION: $session")
         firestore
             .collection(DRIVERS_COLLECTION)
             .document(requireNotNull(session?.driverEmail))

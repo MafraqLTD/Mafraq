@@ -19,6 +19,6 @@ class EmployeeSubscriptionRepositoryImpl @Inject constructor(
     override suspend fun cancel() =
         employeeSubscriptionDataSource.cancel()
 
-    override val subscribeRequestStatusFlow: Flow<SubscribeRequestStatus> =
-        employeeSubscriptionDataSource.subscribeRequestStatusFlow
+    override val subscribeRequestStatusFlow: Flow<SubscribeRequestStatus>
+        get() = employeeSubscriptionDataSource.subscribeRequestStatusFlow
 }

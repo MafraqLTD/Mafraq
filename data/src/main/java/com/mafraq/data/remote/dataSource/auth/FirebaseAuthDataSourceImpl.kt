@@ -15,6 +15,7 @@ import com.mafraq.data.local.profile.ProfileLocalDataSource
 import com.mafraq.data.local.session.SessionLocalDataSource
 import com.mafraq.data.remote.mappers.UserAuthFromRemoteMapper
 import com.mafraq.data.utils.awaitBoolean
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -34,11 +35,13 @@ class FirebaseAuthDataSourceImpl @Inject constructor(
         val isSuccess = auth.signInWithEmailAndPassword(body.email, body.password)
             .awaitBoolean("signInWithEmailAndPassword()")
 
-        if (isSuccess)
+        if (isSuccess) {
+            Timber.i("AUTH")
             sessionLocalDataSource.save(
                 email = body.email,
                 driverEmail = if (appUserType.isDriverApp) body.email else null
             )
+        }
         return isSuccess
     }
 
@@ -49,9 +52,10 @@ class FirebaseAuthDataSourceImpl @Inject constructor(
         if (isSuccess) {
             auth.currentUser?.sendEmailVerification()
                 ?.awaitBoolean("sendEmailVerification()")
+            Timber.i("AUTH")
             sessionLocalDataSource.save(
                 email = body.email,
-                driverEmail = null
+                driverEmail = if (appUserType.isDriverApp) body.email else null
             )
         }
 

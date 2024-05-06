@@ -11,6 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
@@ -38,7 +39,7 @@ class AppState @Inject constructor(
         scope = CoroutineScope(Dispatchers.IO)
         scope?.launch {
             employeeSubscriptionRepository.subscribeRequestStatusFlow.collect {
-                isSubscribed = it.isAccepted
+                withContext(Dispatchers.Main) { isSubscribed = it.isAccepted }
             }
         }
     }

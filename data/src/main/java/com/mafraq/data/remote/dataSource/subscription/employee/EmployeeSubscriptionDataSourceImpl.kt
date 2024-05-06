@@ -2,6 +2,7 @@ package com.mafraq.data.remote.dataSource.subscription.employee
 
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.mafraq.data.entities.Session
 import com.mafraq.data.entities.Subscriber
 import com.mafraq.data.entities.map.Driver
 import com.mafraq.data.entities.profile.Employee
@@ -35,16 +36,11 @@ class EmployeeSubscriptionDataSourceImpl @Inject constructor(
     private val subscriberFromEmployeeMapper: SubscriberFromEmployeeMapper,
 ) : EmployeeSubscriptionDataSource {
     override var driver: Driver? = driverLocalDataSource.get()
+    private var session: Session? = sessionLocalDataSource.get()
     private val root by lazy { firestore.collection(DRIVERS_COLLECTION) }
-
-    init {
-        driver?.let {
-            initializeMemberCollection(it)
-            observeRequestStatus(subscriber = getSubscriber())
-        }
-    }
-
-    override val subscribeRequestStatusFlow = MutableStateFlow(SubscribeRequestStatus.Idle)
+    private val flow = MutableStateFlow(SubscribeRequestStatus.Idle)
+    override val subscribeRequestStatusFlow: MutableStateFlow<SubscribeRequestStatus>
+        get() = flow.also { reload() }
 
     private var scope: CoroutineScope? = null
     private lateinit var memberCollection: CollectionReference
@@ -70,7 +66,7 @@ class EmployeeSubscriptionDataSourceImpl @Inject constructor(
     }
 
     private fun getSubscriber(): Subscriber {
-        val employee = requireNotNull(profileLocalDataSource.get())
+        val employee = profileLocalDataSource.get() ?: Employee()
         return subscriberFromEmployeeMapper.map(employee)
     }
 
@@ -92,8 +88,9 @@ class EmployeeSubscriptionDataSourceImpl @Inject constructor(
 
                     SubscribeRequestStatus.Accepted -> {
                         subscribeRequestStatusFlow.emit(it.status)
+                        Timber.i("SUBSCRIPTION")
                         sessionLocalDataSource.save(
-                            driverEmail = driver?.email,
+                            driverEmail = driver?.email ?: session?.driverEmail,
                             email = subscriber.email
                         )
                         cleanUp()
@@ -115,6 +112,19 @@ class EmployeeSubscriptionDataSourceImpl @Inject constructor(
         driver = null
         scope?.cancel()
         scope = null
+    }
+
+    private fun reload() {
+        cleanUp()
+        driver = driverLocalDataSource.get()
+        session = sessionLocalDataSource.get()
+        driver?.let {
+            initializeMemberCollection(it)
+            observeRequestStatus(subscriber = getSubscriber())
+        } ?: session?.driverEmail?.run {
+            initializeMemberCollection(Driver(email = this))
+            observeRequestStatus(subscriber = getSubscriber())
+        }
     }
 
 }

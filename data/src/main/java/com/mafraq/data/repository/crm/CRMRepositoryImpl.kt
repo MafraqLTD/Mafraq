@@ -10,6 +10,7 @@ import com.mafraq.data.local.session.SessionLocalDataSource
 import com.mafraq.data.remote.dataSource.crm.CRMRemoteDataSource
 import com.mafraq.data.remote.mappers.DriverFromGeneralProfileMapper
 import com.mafraq.data.remote.mappers.EmployeeFromGeneralProfileMapper
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -46,6 +47,7 @@ class CRMRepositoryImpl @Inject constructor(
             ?: crmRemoteDataSource.getEmployee(requireNotNull(sessionLocalDataSource.get()?.email))
                 .also(employeeProfileLocalDataSource::save)
                 .also {
+                    Timber.i("CRM")
                     sessionLocalDataSource.save(
                         email = it.email,
                         driverEmail = it.driverEmail

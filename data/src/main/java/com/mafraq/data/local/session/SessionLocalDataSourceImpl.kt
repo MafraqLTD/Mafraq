@@ -6,6 +6,7 @@ import com.altaie.prettycode.core.utils.extenstions.toJson
 import com.mafraq.data.entities.Session
 import com.mafraq.data.utils.delete
 import com.mafraq.data.utils.putString
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -18,6 +19,7 @@ class SessionLocalDataSourceImpl @Inject constructor(
             driverEmail = driverEmail,
             email = email,
         )
+        Timber.wtf("SESSION_SAVED: $session")
         sharedPref.putString(key, session.toJson())
     }
 
