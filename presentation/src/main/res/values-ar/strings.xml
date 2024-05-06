@@ -79,4 +79,5 @@
     <string name="car_name">اسم السيارة</string>
     <string name="snippet">نبذة</string>
     <string name="car_number">رقم السيارة</string>
+    <string name="copy">نسخ</string>
 </resources>

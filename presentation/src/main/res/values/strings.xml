@@ -79,4 +79,5 @@
     <string name="car_name">Car Name</string>
     <string name="snippet">Snippet</string>
     <string name="car_number">Car Number</string>
+    <string name="copy">Copy</string>
 </resources>
