@@ -21,6 +21,7 @@ class MessageFromRemoteMapper @Inject constructor(
             senderImageUrl = senderImageUrl,
             isRead = read,
             isFromMe = userId == senderId,
+            timestamp = timestamp,
             receivedAt = timestamp.toFormattedDateTime()
         )
     }
