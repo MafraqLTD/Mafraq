@@ -19,7 +19,7 @@ fun MessageItemWithContextMenu(
             if (message.isFromMe)
                 true
             else
-                it != GroupChatContextMenuAction.Delete
+                it == GroupChatContextMenuAction.Copy
         },
         onActionClicked = { action ->
             when (action) {
