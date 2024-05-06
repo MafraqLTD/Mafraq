@@ -27,6 +27,7 @@ performance = "1.4.2"
 firebaseBom = "33.0.0"
 googleAuth = "21.1.1"
 kotlinx = "1.6.3"
+kotlinx-android-coroutines = "1.8.0"
 annotations = "28.0.0"
 material3 = "1.2.1"
 appcompat = "1.6.1"
@@ -46,6 +47,7 @@ androidx-lifecycle-ktx-runtime = { module = "androidx.lifecycle:lifecycle-runtim
 androidx-lifecycle-ktx-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle-ktx" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-appcompat-resources = { module = "androidx.appcompat:appcompat-resources", version.ref = "appcompat" }
+kotlinx-android-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-android-coroutines" }
 
 # TESTING
 test-junit = { module = "junit:junit", version.ref = "junit" }
@@ -179,6 +181,7 @@ implementation-utils = [
     'firebase-firestore',
     'firebase-crashlytics',
     'firebase-performance',
+    'kotlinx-android-coroutines',
     'kotlinx-serialization-json',
 ]
 
