@@ -4,29 +4,29 @@ import com.mafraq.data.entities.map.Directions
 import com.mafraq.data.entities.map.Location
 import com.mafraq.data.entities.map.PlaceSuggestion
 import com.mafraq.data.entities.map.PlaceSuggestionWithCoordinate
-import com.mafraq.data.remote.dataSource.map.GooglePlacesDataSource
+import com.mafraq.data.remote.dataSource.map.PlacesDataSource
 import javax.inject.Inject
 
 
 class MapPlacesRepositoryImpl @Inject constructor(
-    private val googlePlacesDataSource: GooglePlacesDataSource
+    private val placesDataSource: PlacesDataSource
 ) : MapPlacesRepository {
 
     override suspend fun getPlaceSuggestions(query: String): List<PlaceSuggestion> =
-        googlePlacesDataSource.getPlaceSuggestions(query)
+        placesDataSource.getPlaceSuggestions(query)
 
     override suspend fun selectSuggestedPlace(
         placeSuggestion: PlaceSuggestion
-    ): PlaceSuggestionWithCoordinate = googlePlacesDataSource.selectSuggestedPlace(placeSuggestion)
+    ): PlaceSuggestionWithCoordinate = placesDataSource.selectSuggestedPlace(placeSuggestion)
 
     override suspend fun getDirections(
         originLocation: Location,
         destinationLocation: Location
-    ): Directions = googlePlacesDataSource.getDirections(
+    ): Directions = placesDataSource.getDirections(
         originLocation = originLocation,
         destinationLocation = destinationLocation
     )
 
     override suspend fun getLocationInfo(latitude: Double, longitude: Double): Location =
-        googlePlacesDataSource.getLocationInfo(latitude, longitude)
+        placesDataSource.getLocationInfo(latitude, longitude)
 }

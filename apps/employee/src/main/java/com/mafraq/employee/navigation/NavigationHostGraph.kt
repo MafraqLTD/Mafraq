@@ -6,16 +6,18 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.mafraq.presentation.navigation.Screen
 import com.mafraq.presentation.navigation.destinations.chatSupportDestination
-import com.mafraq.presentation.navigation.destinations.chatGroupDestination
 import com.mafraq.employee.navigation.destinations.homeDestination
-import com.mafraq.presentation.navigation.destinations.loginDestination
-import com.mafraq.presentation.navigation.destinations.mapDestination
+import com.mafraq.employee.navigation.destinations.loginDestination
+import com.mafraq.employee.navigation.destinations.mapDestination
 import com.mafraq.employee.navigation.destinations.navigateToHome
+import com.mafraq.employee.navigation.destinations.navigateToLogin
+import com.mafraq.employee.navigation.destinations.navigateToMap
 import com.mafraq.employee.navigation.destinations.navigateToSearch
 import com.mafraq.presentation.navigation.destinations.notificationsDestination
 import com.mafraq.presentation.navigation.destinations.profileDestination
-import com.mafraq.presentation.navigation.destinations.registerDestination
+import com.mafraq.employee.navigation.destinations.registerDestination
 import com.mafraq.employee.navigation.destinations.searchDestination
+import com.mafraq.presentation.navigation.destinations.chatGroupDestination
 
 
 @Composable
@@ -31,9 +33,15 @@ fun NavigationHostGraph(
     homeDestination(navController)
     searchDestination(navController)
     profileDestination(
-        navController,
+        navigateToMap = { fromProfile, addressId ->
+            navController.navigateToMap(
+                fromProfile = fromProfile,
+                addressId = addressId
+            )
+        },
         navigateToHome = navController::navigateToHome,
-        navigateToSearch = navController::navigateToSearch
+        navigateToSearch = navController::navigateToSearch,
+        navigateToLogin = navController::navigateToLogin
     )
     loginDestination(navController, navigateToHome = navController::navigateToHome)
     registerDestination(navController, navigateToHome = navController::navigateToHome)

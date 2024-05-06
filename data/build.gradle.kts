@@ -17,10 +17,12 @@ android {
     namespace = "com.mafraq.data"
 
     applyConfiguration {
+        buildConfigField<String>(key = "BASE_URL")
         buildConfigField<String>(key = "MAPBOX_TOKEN")
         buildConfigField<String>(key = "ROUTES_API_KEY")
         buildConfigField<String>(key = "GEOCODING_API_KEY")
-        buildConfigField<String>(key = "BASE_URL")
+        buildConfigField<String>(key = "RETABLE_API_KEY")
+        buildConfigField<String>(key = "ROUTES_BASE_URL")
         buildConfigField<String>(key = "RETABLE_ADS_TABLE_ID")
         buildConfigField<String>(key = "RETABLE_DRIVER_TABLE_ID")
         buildConfigField<String>(key = "RETABLE_EMPLOYEE_TABLE_ID")

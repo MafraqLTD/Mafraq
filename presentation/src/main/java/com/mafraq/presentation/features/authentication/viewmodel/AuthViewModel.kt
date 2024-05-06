@@ -15,11 +15,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 
-@HiltViewModel
-class AuthViewModel @Inject constructor(
-    private val authRepository: AuthRepository,
-    private val crmRepository: CRMRepository
-) : BaseViewModel<AuthUiState, AuthEvent>(AuthUiState()),
+
+abstract class AuthViewModel : BaseViewModel<AuthUiState, AuthEvent>(AuthUiState()),
     RegisterInteractionListener, LoginInteractionListener {
 
     // SHARED INTERACTIONS
@@ -55,7 +52,7 @@ class AuthViewModel @Inject constructor(
         val confirmPasswordValidation = if (isRegister)
             validateConfirmPassword()
         else
-            ValidationState.Empty
+            passwordValidation
 
         return when {
             emailValidation.isEmpty
@@ -63,7 +60,8 @@ class AuthViewModel @Inject constructor(
                     && confirmPasswordValidation.isEmpty -> ValidationState.Empty
 
             emailValidation.isValid
-                    && passwordValidation.isValid -> ValidationState.Valid
+                    && passwordValidation.isValid
+                    && confirmPasswordValidation.isValid -> ValidationState.Valid
 
             else -> ValidationState.Invalid
         }
@@ -73,34 +71,11 @@ class AuthViewModel @Inject constructor(
     private fun validateConfirmPassword(): ValidationState = state.value.confirmPassword.run {
         when {
             isEmpty() -> ValidationState.Empty
-            length >= PASSWORD_MIN_LENGTH -> ValidationState.Valid
+            (length >= PASSWORD_MIN_LENGTH)
+                    && (state.value.password == this) -> ValidationState.Valid
+
             else -> ValidationState.Invalid
         }.also { updateState { copy(isConfirmPasswordInvalid = it.isInvalid) } }
-    }
-
-    override fun onRegister() {
-        updateState { copy(isLoading = true, error = null) }
-
-        tryToExecute(
-            block = {
-                authRepository.register(body = state.value.toRegisterBody()).also {
-                    runCatching { crmRepository.getEmployee() }
-                }
-            },
-            checkSuccess = { it },
-            onSuccess = {
-                val event = if (authRepository.isProfileFilled)
-                    RegisterEvent.OnRegister
-                    else
-                        RegisterEvent.OnNavigateToLoginProfile
-                updateState(notifyEvent = event) {
-                    copy(
-                        error = null,
-                        isLoading = false
-                    )
-                }
-            },
-            onError = { updateState { copy(error = it, isLoading = false) } })
     }
 
     override fun onNavigateToLogin() {
@@ -115,31 +90,6 @@ class AuthViewModel @Inject constructor(
     override fun validateRegisterFields(): ValidationState = validateFields(isRegister = true)
 
     // LOGIN INTERACTIONS
-    override fun onLogin() {
-        updateState { copy(isLoading = true, error = null) }
-
-        tryToExecute(
-            block = {
-                authRepository.login(body = state.value.toLoginBody()).also {
-                    runCatching { crmRepository.getEmployee() }
-                }
-            },
-            checkSuccess = { it },
-            onSuccess = {
-                val event = if (authRepository.isProfileFilled)
-                    LoginEvent.OnLogin
-                else
-                    LoginEvent.OnNavigateToLoginProfile
-                updateState(notifyEvent = event) {
-                    copy(
-                        error = null,
-                        isLoading = false
-                    )
-                }
-            },
-            onError = { updateState { copy(error = it, isLoading = false) } }
-        )
-    }
 
     override fun onNavigateToRegister() {
         updateState(notifyEvent = LoginEvent.OnNavigateToRegister) { copy(error = null) }

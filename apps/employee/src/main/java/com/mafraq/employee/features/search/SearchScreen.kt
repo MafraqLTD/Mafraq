@@ -24,8 +24,9 @@ import com.mafraq.presentation.design.components.SearchField
 import com.mafraq.presentation.design.components.container.Loading
 import com.mafraq.presentation.design.theme.MafraqTheme.sizes
 import com.mafraq.employee.features.search.components.SearchResultItem
-import com.mafraq.presentation.navigation.destinations.navigateToMap
+import com.mafraq.employee.navigation.destinations.navigateToMap
 import com.mafraq.presentation.utils.extensions.Listen
+import com.mafraq.presentation.utils.extensions.emptyString
 import com.mafraq.presentation.utils.extensions.painter
 import com.mafraq.presentation.utils.extensions.string
 import com.mafraq.presentation.utils.rememberLocationRequester
@@ -72,13 +73,14 @@ fun Content(
 ) {
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
+    val searchQuery by state.searchQuery.collectAsStateWithLifecycle(emptyString())
 
     LaunchedEffect(key1 = Unit) {
         focusRequester.requestFocus()
     }
 
     SearchField(
-        query = state.searchQuery,
+        query = searchQuery,
         active = true,
         placeholder = R.string.searchـforـdestination.string,
         onQueryChange = listener::onSearchQueryChange,

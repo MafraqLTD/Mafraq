@@ -9,7 +9,7 @@ interface FirebaseAuthDataSource {
     val currentUser: AuthUser?
     suspend fun login(body: LoginBody): Boolean
     suspend fun register(body: RegisterBody): Boolean
-    suspend fun logout(): Boolean
+    fun logout()
     suspend fun updateUser(user: AuthUser): Boolean
     fun isAuthorized(): Boolean
 }

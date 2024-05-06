@@ -24,12 +24,12 @@ class EmployeeFromRemoteMapper @Inject constructor(
             email = email.orEmpty(),
             fullName = fullName.orEmpty(),
             id = employeeID.orEmpty(),
-            driverId = driverId.orEmpty(),
+            driverEmail = driverEmail.orEmpty(),
             homeLocation = homeLocation.toDomain(),
             workLocation = workLocation.toDomain(),
             phone = phone.orEmpty(),
             gender = gender.orEmpty(),
-            profilePicture = profilePicture.orEmpty(),
+            profilePictureUrl = profilePictureUrl.orEmpty(),
             offDays = offDays?.value?.map(DayOff::fromString).orEmpty(),
             subscriptionStatus = EmployeeSubscriptionStatus.fromString(subscriptionStatus)
         )
@@ -38,8 +38,11 @@ class EmployeeFromRemoteMapper @Inject constructor(
     override fun mapList(from: List<ApiResponseRemote.RowRemote<EmployeeRemote>>): List<Employee> =
         from.map(::map)
 
-    suspend fun suspendMap(from: ApiResponseRemote.RowRemote<EmployeeRemote>): Employee {
-        val employee = map(from)
+    suspend fun find(
+        from: List<ApiResponseRemote.RowRemote<EmployeeRemote>>,
+        selector: (Employee) -> Boolean
+    ): Employee {
+        val employee = mapList(from).firstOrNull(selector) ?: error("Employee not found")
         var homeLocation = employee.homeLocation
         var workLocation = employee.workLocation
 
@@ -64,7 +67,4 @@ class EmployeeFromRemoteMapper @Inject constructor(
             workLocation = workLocation
         )
     }
-
-    suspend fun suspendMapList(from: List<ApiResponseRemote.RowRemote<EmployeeRemote>>): List<Employee> =
-        from.map { suspendMap(it) }
 }

@@ -6,8 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
+import com.mafraq.data.entities.AppUserType
 import com.mafraq.data.local.session.SessionLocalDataSource
 import com.mafraq.data.repository.auth.AuthRepository
+import com.mafraq.driver.main.components.AppState
+import com.mafraq.driver.main.components.LocalAppStateProvider
+import com.mafraq.presentation.design.components.navigation.LocalAppUserType
 import com.mafraq.presentation.design.components.navigation.LocalNavigationProvider
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -17,27 +21,25 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
     @Inject
-    lateinit var authRepository: AuthRepository
+    lateinit var appUserType: AppUserType
 
     @Inject
-    lateinit var sessionLocalDataSource: SessionLocalDataSource
+    lateinit var appState: AppState
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val isAuthorized = authRepository.isAuthorized()
-        val isProfileFilled = authRepository.isProfileFilled
-        val isSubscribed = sessionLocalDataSource.get()?.subscriptionId.isNullOrEmpty().not()
 
         installSplashScreen()
 
         setContent {
             CompositionLocalProvider(
+                LocalAppUserType provides appUserType,
+                LocalAppStateProvider provides appState,
                 LocalNavigationProvider provides rememberNavController()
             ) {
                 App(
-                    isAuthorized = isAuthorized,
-                    isProfileFilled = isProfileFilled,
-                    isSubscribed = isSubscribed
+                    isAuthorized = appState.isAuthorized,
+                    isProfileFilled = appState.isProfileFilled,
                 )
             }
         }

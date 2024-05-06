@@ -29,7 +29,7 @@ class MafraqApplication : Application() {
                  * Override [log] to modify the tag and add a "global tag" prefix to it. You can rename the String "global_tag_" as you see fit.
                  */
                 override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-                    super.log(priority, "DEBUGGING_$tag", message, t)
+                    super.log(priority, "DEBUGGING", "$tag -> $message", t)
                 }
 
                 /**
@@ -37,9 +37,10 @@ class MafraqApplication : Application() {
                  */
                 override fun createStackElementTag(element: StackTraceElement): String {
                     return String.format(
-                        "%s:%s",
+                        "%s:%s$%s()",
+                        element.fileName,
+                        element.lineNumber,
                         element.methodName,
-                        super.createStackElementTag(element)
                     )
                 }
             })

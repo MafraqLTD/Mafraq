@@ -8,6 +8,5 @@ import com.mafraq.presentation.utils.extensions.emptyString
 
 data class HomeUiState(
     val ads: List<Ad> = emptyList(),
-    val isSubscribed: Boolean = false,
     val pendingDriver: Driver? = null
 )

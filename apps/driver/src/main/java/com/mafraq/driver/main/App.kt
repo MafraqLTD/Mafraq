@@ -18,6 +18,7 @@ import com.mafraq.presentation.design.components.snackbar.LocalSnackState
 import com.mafraq.presentation.design.components.snackbar.Snackbar
 import com.mafraq.presentation.design.theme.MafraqTheme
 import com.mafraq.driver.main.components.BottomNavigationBar
+import com.mafraq.driver.main.components.LocalAppStateProvider
 import com.mafraq.driver.navigation.NavigationHostGraph
 import com.mafraq.presentation.navigation.Screen
 import com.mafraq.presentation.utils.extensions.currentRoute
@@ -26,7 +27,6 @@ import com.mafraq.presentation.utils.extensions.currentRoute
 @Composable
 fun App(
     isAuthorized: Boolean,
-    isSubscribed: Boolean,
     isProfileFilled: Boolean,
 ) {
 
@@ -36,7 +36,7 @@ fun App(
         val showNavigationBar = with(backStackEntry) {
             currentRoute in listOf(
                 Screen.Home.route,
-                Screen.ChatGroup.route,
+                Screen.Subscribers.route,
                 Screen.Profile.route,
                 Screen.Profile.destination.route,
                 Screen.Notifications.route,
@@ -70,10 +70,7 @@ fun App(
                     enter = EnterTransition.None,
                     exit = ExitTransition.None
                 ) {
-                    BottomNavigationBar(
-                        navController = navController,
-                        isSubscribed = isSubscribed
-                    )
+                    BottomNavigationBar(navController = navController)
                 }
             }
         ) { paddingValues ->

@@ -8,6 +8,7 @@ import com.mafraq.data.remote.mappers.HttpExceptionMapper
 import org.apache.http.HttpStatus
 import retrofit2.HttpException
 import retrofit2.Response
+import timber.log.Timber
 
 
 interface BaseRemoteDataSource {
@@ -25,7 +26,7 @@ interface BaseRemoteDataSource {
         mapper: suspend (T) -> R
     ): Resource<R> = if (result.isSuccessful)
         result.body()?.run {
-            Resource.Success(mapper(this))
+            Resource.Success(mapper(this).also { Timber.d("Response: $it") })
         } ?: Resource.Empty
     else if (result.code() == HttpStatus.SC_UNPROCESSABLE_ENTITY)
         throw runCatching {

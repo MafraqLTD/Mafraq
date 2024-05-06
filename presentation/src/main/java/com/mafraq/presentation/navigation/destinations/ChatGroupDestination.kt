@@ -9,8 +9,8 @@ import com.mafraq.presentation.navigation.Screen
 import com.mafraq.presentation.utils.extensions.navigate
 
 
-fun NavController.navigateToChatGroup() {
-    navigate(screen = Screen.ChatGroup, popBackstack = true)
+fun NavController.navigateToChatGroup(popBackstack: Boolean = true) {
+    navigate(screen = Screen.ChatGroup, popBackstack = popBackstack)
 }
 
 fun NavGraphBuilder.chatGroupDestination(navController: NavController) {

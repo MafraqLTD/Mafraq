@@ -23,7 +23,7 @@ class SupportChatRepositoryImpl @Inject constructor(
 
     override val chatCollection: CollectionReference by lazy {
         firestore.collection(SUPPORT_CHAT_COLLECTION)
-            .document(requireNotNull(session?.userId))
+            .document(requireNotNull(session?.email))
             .collection(MESSAGES_COLLECTION)
     }
 

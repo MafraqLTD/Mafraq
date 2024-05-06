@@ -21,6 +21,8 @@ open class Screen(val route: String) {
     data object Notifications : Screen("notifications_screen")
     data object ChatSupport : Screen("chat_support_screen")
     data object ChatGroup : Screen("chat_group_screen")
+    data object Subscribers : Screen("subscribers_screen")
+
     data object Map : Screen("map_screen") {
         const val IS_FROM_PROFILE_ARG = "is_from_profile"
         const val LATITUDE_ARG = "latitude"

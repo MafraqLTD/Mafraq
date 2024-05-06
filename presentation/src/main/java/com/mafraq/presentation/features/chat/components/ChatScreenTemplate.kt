@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalFocusManager
 import com.mafraq.data.entities.chat.Message
 import com.mafraq.presentation.R
@@ -25,6 +26,7 @@ import com.mafraq.presentation.utils.extensions.detectTapGestures
 import com.mafraq.presentation.utils.extensions.emptyString
 import com.mafraq.presentation.utils.extensions.painter
 import com.mafraq.presentation.utils.extensions.string
+import com.mafraq.presentation.utils.extensions.toRichText
 
 
 @Composable
@@ -35,6 +37,7 @@ fun ChatScreenTemplate(
     header: @Composable () -> Unit = {},
 ) {
     val focusManager = LocalFocusManager.current
+    var clipboardManager = LocalClipboardManager.current
     var isEditMode by remember { mutableStateOf(false) }
     var originalMessage by remember { mutableStateOf(emptyString()) }
     var onSendClick: () -> Unit by remember { mutableStateOf(listener::onSendMessage) }
@@ -79,6 +82,9 @@ fun ChatScreenTemplate(
                             index = index
                         )
                     },
+                    onCopyMessage = {
+                        clipboardManager.setText(message.content.toRichText())
+                    }
                 )
             }
         }

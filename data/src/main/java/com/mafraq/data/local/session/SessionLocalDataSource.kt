@@ -5,7 +5,7 @@ import com.mafraq.data.entities.Session
 
 interface SessionLocalDataSource {
 
-    fun save(driverId: String?, userId: String?, subscriptionId: String?)
+    fun save(driverEmail: String?, email: String?)
 
     fun delete()
 

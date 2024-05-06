@@ -30,7 +30,7 @@ fun DriverRemote.toSubscribers(): List<Subscriber> {
 
     return ids.mapIndexed { index, id ->
         Subscriber(
-            id = id,
+            email = id,
             name = names[index],
             imageUrl = imageUrls[index],
             homeLocation = locations[index].toDomain(),

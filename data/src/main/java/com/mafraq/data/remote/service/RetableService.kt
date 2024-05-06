@@ -21,10 +21,7 @@ interface RetableService {
     suspend fun getDrivers(): Response<ApiResponseRemote<DriverRemote>>
 
     @GET(DRIVER_PATH)
-    suspend fun getDriver(
-        @Query("row_id")
-        driverId: String
-    ): Response<ApiResponseRemote<DriverRemote>>
+    suspend fun getDriver(): Response<ApiResponseRemote<DriverRemote>>
 
     @GET(EMPLOYEES_PATH)
     suspend fun getEmployees(): Response<ApiResponseRemote<EmployeeRemote>>
@@ -44,6 +41,18 @@ interface RetableService {
         body: UpdateRowBody
     ): Response<Any?>
 
+    @POST(CREATE_OR_UPDATE_DRIVER_PATH)
+    suspend fun createDriver(
+        @Body
+        body: InsertRowBody
+    ): Response<Any?>
+
+    @PUT(CREATE_OR_UPDATE_DRIVER_PATH)
+    suspend fun updateDriver(
+        @Body
+        body: UpdateRowBody
+    ): Response<Any?>
+
     companion object {
         private const val PREFIX = "public/retable/"
         private const val SUFFIX = "/data"
@@ -52,5 +61,6 @@ interface RetableService {
         const val DRIVER_PATH = "${PREFIX}${BuildConfig.RETABLE_DRIVER_TABLE_ID}${SUFFIX}"
         const val EMPLOYEES_PATH = "${PREFIX}${BuildConfig.RETABLE_EMPLOYEE_TABLE_ID}${SUFFIX}"
         const val CREATE_OR_UPDATE_EMPLOYEE_PATH = "${BASE_URL_V1}${PREFIX}${BuildConfig.RETABLE_EMPLOYEE_TABLE_ID}${SUFFIX}"
+        const val CREATE_OR_UPDATE_DRIVER_PATH = "${BASE_URL_V1}${PREFIX}${BuildConfig.RETABLE_DRIVER_TABLE_ID}${SUFFIX}"
     }
 }

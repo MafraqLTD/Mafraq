@@ -18,7 +18,7 @@ data class DriverRemote(
     @SerializedName("Phone")
     val phone: String?,
     @SerializedName("Profile Picture")
-    val profilePicture: String?,
+    val profilePictureUrl: String?,
     @SerializedName("Subscription Status")
     val subscriptionStatus: String?,
     @SerializedName("Subscribers Ids")
@@ -36,5 +36,9 @@ data class DriverRemote(
     @SerializedName("Rating")
     val rating: String?,
     @SerializedName("Snippet")
-    val snippet: String?
+    val snippet: String?,
+    @SerializedName("Gender")
+    val gender: String?,
+    @SerializedName("National ID")
+    val nationalId: String?
 )

@@ -23,7 +23,6 @@ import com.mafraq.presentation.features.authentication.ui.components.AuthContain
 import com.mafraq.presentation.features.authentication.ui.components.CredentialErrorState
 import com.mafraq.presentation.features.authentication.ui.components.HaveAnAccount
 import com.mafraq.presentation.features.authentication.viewmodel.AuthViewModel
-import com.mafraq.presentation.navigation.destinations.navigateToLogin
 import com.mafraq.presentation.navigation.destinations.navigateToLoginProfile
 import com.mafraq.presentation.utils.extensions.Listen
 import com.mafraq.presentation.utils.extensions.string
@@ -33,7 +32,8 @@ import com.mafraq.presentation.utils.extensions.string
 fun RegisterScreen(
     viewModel: AuthViewModel,
     navController: NavController,
-    navigateToHome: () -> Unit
+    navigateToHome: () -> Unit,
+    navigateToLogin: () -> Unit,
 ) {
     val state: AuthUiState by viewModel.state.collectAsStateWithLifecycle()
     val event: AuthEvent? by viewModel.event.collectAsState(null)
@@ -44,7 +44,7 @@ fun RegisterScreen(
     (event as? RegisterEvent)?.Listen { currentEvent ->
         when (currentEvent) {
             RegisterEvent.OnRegister -> navigateToHome()
-            RegisterEvent.OnNavigateToLogin -> navController.navigateToLogin()
+            RegisterEvent.OnNavigateToLogin -> navigateToLogin()
             RegisterEvent.OnNavigateToLoginProfile -> navController.navigateToLoginProfile()
         }
     }

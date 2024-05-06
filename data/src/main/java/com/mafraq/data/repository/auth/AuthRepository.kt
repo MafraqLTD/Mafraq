@@ -12,7 +12,7 @@ interface AuthRepository {
 
     suspend fun register(body: RegisterBody): Boolean
 
-    suspend fun logout(): Boolean
+    fun logout()
 
     fun isAuthorized(): Boolean
 

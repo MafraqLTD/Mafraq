@@ -7,10 +7,10 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.mafraq.driver.navigation.destinations.navigateToHome
+import com.mafraq.driver.navigation.destinations.navigateToSubscribers
 import com.mafraq.presentation.R
 import com.mafraq.presentation.design.components.navigation.NavigationBarItem
 import com.mafraq.presentation.navigation.Screen
-import com.mafraq.presentation.navigation.destinations.navigateToChatGroup
 import com.mafraq.presentation.navigation.destinations.navigateToNotifications
 import com.mafraq.presentation.navigation.destinations.navigateToProfile
 import com.mafraq.presentation.utils.extensions.currentRoute
@@ -19,12 +19,10 @@ import com.mafraq.presentation.utils.extensions.string
 
 
 @Composable
-fun BottomNavigationBar(
-    isSubscribed: Boolean,
-    navController: NavController
-) {
+fun BottomNavigationBar(navController: NavController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry.currentRoute
+    val hasSubscribers: Boolean = LocalAppStateProvider.current.hasSubscribers
 
     NavigationBar {
         val isHomeSelected = remember(currentRoute) { Screen.Home.route == currentRoute }
@@ -36,15 +34,15 @@ fun BottomNavigationBar(
             onClick = navController::navigateToHome
         )
 
-        if (isSubscribed) {
-            val isGroupChatSelected =
-                remember(currentRoute) { Screen.ChatGroup.route == currentRoute }
+        if (hasSubscribers) {
+            val isSubscribersSelected =
+                remember(currentRoute) { Screen.Subscribers.route == currentRoute }
             NavigationBarItem(
-                label = R.string.group.string,
+                label = R.string.subscribers.string,
                 icon = R.drawable.users_group_outlined.painter,
                 iconSelected = R.drawable.users_group_filled.painter,
-                selected = isGroupChatSelected,
-                onClick = navController::navigateToChatGroup
+                selected = isSubscribersSelected,
+                onClick = navController::navigateToSubscribers
             )
         }
 
